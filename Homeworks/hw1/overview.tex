@@ -1,0 +1,159 @@
+\documentclass{article}
+
+\title{Homework 1}
+\date{09-26-2023}
+\author{Danny Zou}
+
+\usepackage[left=.7in, right=.7in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage{amsmath}
+
+\begin{document}
+    \pagenumbering{gobble}
+    \maketitle
+
+    \section{Overview}
+    
+    \subsection*{4.15.1}
+    \paragraph*{1} A personal computer is a computer designed for individual use, usually incorporating hardwares like a monitor for graphical display and a keyboard/mouse for input.
+    \paragraph*{2} A embedded computer is a computer inside of another device designed to perform dedicated functions or tasks within a larger system. Unlike general-purpose computers like desktops or laptops, embedded computers are typically designed for specific applications and are integrated into other devices or systems.
+    \paragraph*{3} A server is a computer used for running larger programs for multiple users, often simultaneously, and typically only accessed via networks. Used to store and manage data in most cases.
+    
+    \subsection*{4.15.2}
+    \paragraph*{a} Assembly lines in automobile manufacturing - Make the common case fast
+    \paragraph*{b} Suspension bridge cables - Performance via Pipelining
+    \paragraph*{c} Aircraft and marine navigation systems that incorporate wind information - Performance via Prediction
+    \paragraph*{d} Express elevators in buildings - Performance via Parallelism
+    \paragraph*{e} Library reserve desk - Use Abstraction to Simplify Design
+    \paragraph*{f} Increasing the gate area on a CMOS transistor to decrease its switching time - Hierarchy of Memories
+    \paragraph*{g} Building self-driving cars whose control systems partially rely on existing sensor systems already installed into the base vehicle, such as lane departure systems and smart cruise control systems - Dependability via Redundancy
+
+    \subsection*{4.15.3}
+    \paragraph*{a} So it starts off with obviously the programmers(us) writing a program in a high-level language like C, then the compiler converts this high level program into an assembly language program(like MIPS). Lastly the assembler coverts the assembly language program into binary language that gets executed by our cpu.
+
+    \subsection*{4.15.4}
+    \paragraph*{a} 
+    Frame Buffer Size = (Frame Width * Frame Height * Color Depth) / 8 \\
+
+    Frame Width = 1024px 
+
+    Frame Height = 1280px 
+
+    Color Depth = 8 + 8 + 8 \\
+
+    Frame Buffer Size = (1024 * 1280 * 24) / 8 = 3,932,160 Bytes \\
+    
+    Mininum size in bytes of the frame buffer to store a frame is 3932160 Bytes
+    \paragraph*{b} Framesize in Bits = 3932160 x 8 = 31457280 bits \\
+    
+    100Mbits = 100,000,000 bits
+
+    Time(s) = 31457280 / 100000000 = .3145728 secs\\
+
+    It would take at minumum 0.3145728 seconds for the frame to be over a 100 Mbits/s network.
+
+    \subsection*{4.15.6}
+    \paragraph*{a} 
+    Number of Years = 2019 - 2010 = 9
+    \subparagraph*{Tech Average Yearly Increase and Years to double}
+    
+    \[ \text{Initial Value} = \left(\frac{1}{32}\right)^2 = 0.00097 \]   
+    \[ \text{Final Value} = \left(\frac{1}{14}\right)^2 = 0.0051 \]    
+
+   \begin{align*}
+        \frac{0.0051-0.00097}{9(0.00097)} * 100 = 47.30%
+    \end{align*}
+    Increases at a average rate of 47.30\% per year
+    \begin{align*}
+        \frac{\log(2)}{\log(1+.4730)} = 1.78
+    \end{align*}
+    Takes approximately 1.8 years to double
+
+    \subparagraph*{Max. Clock Speed (GHz) Average Yearly Increase and Years to double}
+    
+    \[ \text{Initial Value} = 3.33 \]   
+    \[ \text{Final Value} = 4.90 \]    
+
+   \begin{align*}
+        \frac{4.90-3.33}{9(3.33)} * 100 = 5.24%
+    \end{align*}
+    Increases at a average rate of 5.24\% per year
+    \begin{align*}
+        \frac{\log(2)}{\log(1+.0524)} = 13.57
+    \end{align*}
+    Takes approximately 13.5 years to double
+
+    \subparagraph*{Integer IPC/ core Average Yearly Increase and Years to double}
+    
+    \[ \text{Initial Value} = 4 \]   
+    \[ \text{Final Value} = 8 \]    
+
+   \begin{align*}
+        \frac{8-4}{9(4)} * 100 = 11.11%
+    \end{align*}
+    Increases at a average rate of 11.11\% per year
+    \begin{align*}
+        \frac{\log(2)}{\log(1+.1111)} = 6.58  
+    \end{align*}
+    Takes approximately 6.5 years to double
+
+    \subparagraph*{Cores Average Yearly Increase and Years to double}
+    
+    \[ \text{Initial Value} = 2 \]   
+    \[ \text{Final Value} = 8 \]    
+
+   \begin{align*}
+        \frac{8-2}{9(2)} * 100 = 33.33%
+    \end{align*}
+    Increases at a average rate of 33.33\% per year
+    \begin{align*}
+        \frac{\log(2)}{\log(1+.4444)} = 2.41
+    \end{align*}
+    Takes approximately 2.5 years to double
+
+    \subparagraph*{Max. DRAM Bandwidth (GB/s) Average Yearly Increase and Years to double}
+    
+    \[ \text{Initial Value} = 17.1 \]   
+    \[ \text{Final Value} = 42.7 \]    
+
+   \begin{align*}
+        \frac{42.7-17.1}{9(17.1)} * 100 = 16.63%
+    \end{align*}
+    Increases at a average rate of 16.63\% per year
+    \begin{align*}
+        \frac{\log(2)}{\log(1+.1663)} = 4.5
+    \end{align*}
+    Takes approximately 4.5 years to double
+
+    \subparagraph*{SP floating point (Gflop/s) Average Yearly Increase and Years to double}
+    
+    \[ \text{Initial Value} = 107 \]   
+    \[ \text{Final Value} = 627 \]    
+
+   \begin{align*}
+        \frac{627-107}{9(107)} * 100 = 54.00%
+    \end{align*}
+    Increases at a average rate of 54\% per year
+    \begin{align*}
+        \frac{\log(2)}{\log(1+5.77777)} = 1.6
+    \end{align*}
+    Takes approximately 1.6 years to double
+
+    \subparagraph*{L3 Cache (MiB) Average Yearly Increase and Years to double}
+    
+    \[ \text{Initial Value} = 4 \]   
+    \[ \text{Final Value} = 12 \]    
+
+   \begin{align*}
+        \frac{12-4}{9(4)} * 100 = 22.22%
+    \end{align*}
+    Increases at a average rate of 5777.77\% per year
+    \begin{align*}
+        \frac{\log(2)}{\log(1+.2222)} = 3.45
+    \end{align*}
+    Takes approximately 3.5 years to double
+
+    
+
+
+    
+\end{document}
