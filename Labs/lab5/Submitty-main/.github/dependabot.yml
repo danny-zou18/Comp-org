@@ -1,0 +1,45 @@
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/site"
+    schedule:
+      interval: "monthly"
+    labels:
+      - dependencies
+    versioning-strategy: increase
+    commit-message:
+      prefix: "[Dependency] "
+      prefix-development: "[DevDependency] "
+  - package-ecosystem: "npm"
+    directory: "/site"
+    schedule:
+      interval: "monthly"
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "[Dependency] "
+      prefix-development: "[DevDependency] "
+  - package-ecosystem: pip
+    directory: "/.setup/pip/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "[Dependency] "
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "[DevDependency] "
+  - package-ecosystem: "github-actions"
+    directory: "/actions/e2e-Setup-Composite"
+    schedule:
+      interval: "monthly"
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "[DevDependency] "

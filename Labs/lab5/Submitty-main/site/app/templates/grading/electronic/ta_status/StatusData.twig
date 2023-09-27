@@ -1,0 +1,210 @@
+<div id="numerical-data" class="page-content">
+    <div class = "row">
+        <div class = "box col-md-6" id = "left-grading-stats" >
+            {# LEFT CHUNK#}
+            {% if warnings|length > 0 %}
+                <ul>
+                    {% for warning in warnings %}
+                        <li style="color:red; margin-left:1em">{{ warning }}</li>
+                    {% endfor %}
+                </ul>
+                <br/>
+            {% endif %}
+
+            {% if core.getUser().getGroup() < 4 %}
+                {% if team_assignment %}
+                    <br/>
+                    <b>Students on a team:</b> {{ team_total }}/{{ total_students }} ({{ team_percentage }}%)
+                    <br/>
+                    <b>Students not on a team:</b> {{ no_team_total }}
+                    <br>
+                    <b>Number of teams:</b> {{ total_submissions }}
+                    <br/>
+                    <br/>
+                        {% if include_bad_submissions  == 'include' %}
+                        <b>Teams who have submitted:</b> {{ submitted_total }} / {{ total_submissions }} ({{ submitted_percentage }}%)
+                    {% else %}
+                        <b>Teams who have submitted on time:</b> {{ non_late_submitted_total }} / {{ total_submissions }} ({{ non_late_submitted_percentage }}%)
+                    {% endif %}
+                {% else %}
+                    {% if peer and not team_assignment %}
+                        <br/>
+                        <b>Students who have submitted:</b>  {{ total_students_submitted }} / {{ total_submissions }} ({{ submitted_percentage_peer }}%)
+                        <br/>
+                        <br/>
+                        <b>Current percentage of TA grading done:</b> {{ graded_total }} / {{ total_students_submitted }} ({{ total_grading_percentage }}%)
+                    {% else %}
+                        <br/>
+                        {% if include_bad_submissions == 'include'  %}
+
+                            <b>Students who have submitted:</b> {{ submitted_total }} / {{ total_submissions }} ({{ submitted_percentage }}%)
+                            <br/>
+                            <br/>
+                            <b>Current percentage of TA grading done:</b> {{ graded_total }} / {{ submitted_total }} ({{ total_grading_percentage }}%)
+                        {% else %}
+                            <b>Students who have submitted on time:</b> {{ non_late_submitted_total }} / {{ total_submissions }} ({{ non_late_submitted_percentage }}%)
+                            <br/>
+                            <br/>
+                            <b>Current percentage of TA grading done:</b> {{ non_late_graded_total }} / {{ non_late_submitted_total }} ({{ non_late_total_grading_percentage }}%)
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                <br/>
+                <br/>
+                <b>Submissions currently in the autograding queue:</b> {{ submissions_in_queue }}
+                <br/>
+                <br/>
+            {% endif %}
+            {% if peer and not team_assignment %}
+                <b>Current percentage of Peer grading done:</b> {{ entire_peer_percentage }}% ({{ entire_peer_graded }}/{{ entire_peer_total }})
+                <br>
+            {% endif %}
+                <b>TA Grading By Sections:</b>
+                <div style="margin-left: 20px">
+                    {% for key, section in sections %}
+                        {% if key != "peer_stu_grad"%}
+                                {% if include_bad_submissions  == 'include'  %}
+                                    {% if key == "NULL" and include_null_section != 'include' %}
+                                        {# Skip rendering this section #}
+                                     {% else %}
+                                        Section {{ key }}: {{ section.graded }} / {{ section.total }} ({{ section.percentage }}%)<br />
+                                    {% endif %}
+                                {% else %}
+                                    {% if key == "NULL" and include_null_section != 'include' %}
+                                        {# Skip rendering this section #}
+                                     {% else %}
+                                        Section {{ key }}: {{ section.non_late_graded }} / {{ section.non_late_total }} ({{ section.non_late_percentage }}%)<br />
+                                    {% endif %}    
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <br/>
+                <b>Graders:</b>
+                <div style="margin-left: 20px">
+                    {% for key, section in sections %}
+                        {% if key != "peer_stu_grad"%}
+                            Section {{ key }}:
+                            {% if section.valid_graders|length == 0 %}
+                                Nobody
+                            {% else %}
+                                {{ section.valid_graders | join(", ") }}
+                            {% endif %}
+                            <br/>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+
+            {% if ta_grades_released %}
+                {% if team_assignment %}
+                    {% if peer %}
+                        <br>
+                        <b>Number of teams where at least one member viewed their grade:</b> {{ viewed_grade }} / {{ total_submissions }} ({{ viewed_percent }}%)
+                        <br>
+                        <b>Number of students who have viewed their grade:</b>{{ individual_viewed_grade }} / {{ total_submissions }} ({{ individual_viewed_percent }}%)
+                    {% else %}
+                     <br/>
+                        <b>Number of teams where at least one member viewed their grade:</b> {{ viewed_grade }} / {{ total_submissions }} ({{ viewed_percent }}%)
+                        <br>
+                        <b>Number of students who have viewed their grade:</b>
+                            {{ individual_viewed_grade }} / {{ total_students_submitted }} ({{ individual_viewed_percent }}%)
+                    {% endif %}
+                {% elseif not team_assignment %}
+                    <br/>
+                    <b>Number of students who have viewed their grade:</b> {{ viewed_grade }} / {{ viewed_total }} ({{ viewed_percent }}%)
+                {% endif %}
+            {% endif %}
+
+            {% if grade_inquiry_allowed and not peer %}
+                <br/>
+                <br/>
+                <p><b>Number of unresolved grade inquiries:</b> {{ grade_inquiries }}</p>
+                <br/>
+                {% if  grade_inquiries > 0 %}
+                    <p><b>Number of unresolved grade inquiries per grader:</b></p>
+                    <div style="margin-left: 20px">
+                    {% for key, value in graders_of_inquiries %}
+                        <p>{{ key }}: {{ value }} </p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                    <br/>
+                {% if grade_inquiry_per_component_allowed %}
+                    {% for component in component_averages %}
+                        {% if  component.getActiveGradeInquiryCount() > 0 %}
+                            <p><b>Number of unresolved grade inquiries for {{ component.getTitle() }}:</b> {{ component.getActiveGradeInquiryCount() }} </p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {# LEFT CHUNK #}
+        </div>
+        <div class = "box col-md-6">
+            {# RIGHT CHUNK#}
+
+            {# Should Be visible if gradeable contains peer components, non-peer components or both #}
+                <br>
+                <b>Statistics for Completely Graded Assignments: </b>
+                <br/>
+                <div style="margin-left: 20px">
+                    {% if overall_average == null or overall_average.getCount() == 0 %}
+                        No assignments have been completely graded yet.
+                    {% else %}
+                        Average: {{ overall_average.getAverageScore() }} / {{ overall_total }} ({{ overall_percentage }}%)<br/>
+                        Standard Deviation: {{ overall_average.getStandardDeviation() }} <br/>
+                        Count: {{ overall_average.getCount() }} <br/>
+                    {% endif %}
+                </div>
+                {% if autograding_non_extra_credit != 0 %}
+                    {# Only show autograder if we have autograding points #}
+                    <br/>
+                    <b>Statistics for Autograding: </b>
+                    <br/>
+                    <div style="margin-left: 20px">
+                        {% if autograded_average == null or autograded_average.getCount() == 0 %}
+                            No assignments have been submitted yet.
+                        {% else %}
+                            Average: {{ autograded_average.getAverageScore() }} / {{ autograding_non_extra_credit }} ({{ autograded_percentage }}%)<br/>
+                            Standard Deviation: {{ autograded_average.getStandardDeviation() }} <br/>
+                            Count: {{ autograded_average.getCount() }} <br/>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <br/>
+                <b>Statistics for Manually Graded Components: </b>
+                <br/>
+                <div style="margin-left: 20px">
+                    {% if component_averages|length == 0 %}
+                        No components have been graded yet.
+                    {% else %}
+                        {% for component in component_averages %}
+                            {{ component.getTitle() }}:<br/>
+                            <div style="margin-left: 40px">
+                                Average:
+                                {% if component.getMaxValue() > 0 %}
+                                    {{ component.getAverageScore() }} / {{ component.getMaxValue() }} ({{ component_percentages[loop.index0] }}%)
+                                {% else %}
+                                    {{ component.getAverageScore() }}
+                                {% endif %}
+                                <br/>
+                                Standard Deviation: {{ component.getStandardDeviation() }} <br/>
+                                Count: {{ component.getCount() }} <br/>
+                                {% for grader, data in component.getGraderInfo() %}
+		                            {% if loop.first == grader %}
+		                                <p> Graders:
+		                            {% else %}
+		                                <p style="padding-left:3.7em">
+		                            {% endif %}
+		                            {{ grader }} (count {{ data['count'] }} - avg {{ data['avg'] }} - stddev {{ data['std_dev'] }}) </p>
+		                        {% endfor%}
+                            </div>
+                        {% endfor %}
+                        <br/>
+                        Overall Average: {{ component_overall_score }} / {{ component_overall_max }} ({{ component_overall_percentage }}%)
+                    {% endif %}
+                </div>
+            {# RIGHT CHUNK #}
+        </div>
+    </div>
+</div>
