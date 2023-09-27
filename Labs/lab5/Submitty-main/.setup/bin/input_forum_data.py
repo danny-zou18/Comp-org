@@ -43,7 +43,7 @@ if(__name__ == "__main__"):
 
 	print("WARNING: This tool is going to delete data from the following tables:\n\tthreads\n\tposts\n\tforum_posts_history\n\tstudent_favorites\n\tviewed_responses\n\tthread_categories\n\tcategories_list")
 
-	answer = input("Do you agree for this data to be removed from {:s}? [yes/no]: ".format(database)).strip()
+	answer = input(f"Do you agree for this data to be removed from {:s}? [yes/no]: "{database}).strip()
 
 	if(answer.lower() != "yes"):
 	    print("Exiting...")
@@ -63,10 +63,10 @@ if(__name__ == "__main__"):
 
 	for i in range(threads):
 			if((i+1) % 10 == 0):
-				print("Completed: {:d}/{:d}".format(i+1, threads))
-			os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c \"INSERT INTO threads (title, created_by, pinned, deleted, merged_thread_id, merged_post_id, is_visible) VALUES (\'{:s}\', \'{:s}\', false, false, -1, -1, true)\" > /dev/null""".format(*variables, "Thread{:d}".format(i+1), "aphacker"))
+				print(f"Completed: {:d}/{:d}"{i+1, threads})
+			os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c \"INSERT INTO threads (title, created_by, pinned, deleted, merged_thread_id, merged_post_id, is_visible) VALUES (\'{:s}\', \'{:s}\', false, false, -1, -1, true)\" > /dev/null""".format(*variables, f"Thread{:d}"{i+1}, "aphacker"))
 			os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c \"INSERT INTO thread_categories (thread_id, category_id) VALUES ({:d}, 1)\" > /dev/null""".format(*variables, i+1))
 			for pid in range(posts):
-				os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c \"INSERT INTO posts (thread_id, parent_id, author_user_id, content, timestamp, anonymous, deleted, type, has_attachment) VALUES ({}, {}, {}, {}, \'{}\', false, false, 0, false)\" > /dev/null""".format(*variables, i+1, -1 if pid == 0 else i*posts + pid, "'aphacker'", "'Post{:d}'".format(i*posts + pid+1), datetime.now()))
+				os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c \"INSERT INTO posts (thread_id, parent_id, author_user_id, content, timestamp, anonymous, deleted, type, has_attachment) VALUES ({}, {}, {}, {}, \'{}\', false, false, 0, false)\" > /dev/null""".format(*variables, i+1, -1 if pid == 0 else i*posts + pid, "'aphacker'", f"'Post{:d}'"{i*posts + pid+1}, datetime.now()))
 
 

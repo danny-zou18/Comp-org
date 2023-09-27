@@ -175,7 +175,7 @@ def grade_a_single_file(file, number_of_numbers):
       return_result(score=0, message="ERROR: The numbers do not sum correctly", status='failure')
     elif len(numbers[:-1]) != number_of_numbers:
       # If they do sum correctly, make sure that we have the desired number of numbers.
-      return_result(score=0, message="ERROR: Incorrect number of numbers ({0} instead of {1})".format(len(numbers[:-1]), number_of_numbers), status='failure')
+      return_result(score=0, message=f"ERROR: Incorrect number of numbers ({0} instead of {1})"{len(numbers[:-1]}, number_of_numbers), status='failure')
   except Exception as e:
     return_result(score=0, message="ERROR: Could not open output file.",status='failure')
   # If no exception occurred and the numbers sum, return them so that we can do one last processing step.

@@ -30,7 +30,7 @@ def load_data_yaml(file_path):
     :return: parsed YAML structure from loaded file
     """
     if not os.path.isfile(file_path):
-        raise IOError("Missing the yaml file {}".format(file_path))
+        raise IOError(f"Missing the yaml file {}"{file_path})
     with open(file_path) as open_file:
         yaml_file = yaml.load(open_file)
     return yaml_file

@@ -18,9 +18,9 @@ def up(config, database):
         db_info = json.load(db_file, object_pairs_hook=OrderedDict)
         if 'database_course_user' not in db_info or 'database_course_password' not in db_info:
             raise Exception('Make sure to read the SYSADMIN ACTION notes!')
-        res = database.execute("SELECT oid FROM pg_authid WHERE rolname='{}'".format(db_info['database_course_user']))
+        res = database.execute(f"SELECT oid FROM pg_authid WHERE rolname='{}'"{db_info['database_course_user']})
         if res.rowcount == 0:
-            database.execute("CREATE ROLE {} LOGIN PASSWORD '{}'".format(db_info['database_course_user'], db_info['database_course_password']))
+            database.execute(f"CREATE ROLE {} LOGIN PASSWORD '{}'"{db_info['database_course_user'], db_info['database_course_password']})
 
 
 def down(config, database):

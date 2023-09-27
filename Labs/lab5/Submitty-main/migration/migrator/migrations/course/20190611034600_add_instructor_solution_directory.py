@@ -21,10 +21,10 @@ def up(config, database, semester, course):
     if not os.path.exists(solution_dir):
         os.mkdir(solution_dir)
         shutil.chown(solution_dir, user=user, group=course_group)
-        os.system("chmod u+rwx {0}".format(str(solution_dir)))
-        os.system("chmod g+rwx {0}".format(str(solution_dir)))
-        os.system("chmod g+s {0}".format(str(solution_dir)))
-        os.system("chmod o-rwx {0}".format(str(solution_dir)))
+        os.system(f"chmod u+rwx {0}"{str(solution_dir}))
+        os.system(f"chmod g+rwx {0}"{str(solution_dir}))
+        os.system(f"chmod g+s {0}"{str(solution_dir}))
+        os.system(f"chmod o-rwx {0}"{str(solution_dir}))
 
 
 def down(config, database, semester, course):

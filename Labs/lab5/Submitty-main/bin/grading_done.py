@@ -41,12 +41,12 @@ GLOBAL_LAST_PRINT = 100
 # some error checking on the queues (& permissions of this user)
 
 if not os.path.isdir(GRADING_QUEUE):
-    raise SystemExit("ERROR: autograding queue {} does not exist".format(GRADING_QUEUE))
+    raise SystemExit(f"ERROR: autograding queue {} does not exist"{GRADING_QUEUE})
 if not os.path.isdir(IN_PROGRESS_DIR):
     raise SystemExit(f"ERROR: grading in-progress directory {IN_PROGRESS_DIR} does not exist")
 if not os.access(GRADING_QUEUE, os.R_OK):
     # most instructors do not have read access to the interactive queue
-    print("WARNING: autograding queue {} is not readable".format(GRADING_QUEUE))
+    print(f"WARNING: autograding queue {} is not readable"{GRADING_QUEUE})
 if not os.access(IN_PROGRESS_DIR, os.R_OK):
     print(f"WARNING: in-progress directory {IN_PROGRESS_DIR} is not readable")
 
@@ -110,51 +110,51 @@ def print_header(OPEN_AUTOGRADING_WORKERS_JSON, capability_queue_counts,
     table_width = machine_width + capabilities_width + 48
     print('-'*table_width)
 
-    print("{:<3}{:9}".format(num_shippers, "SHIPPERS"), end="")
-    print("{:2}".format("|"), end="")
-    print("{:15}".format("INTERACTIVE"), end="")
-    print("{:14}".format("REGRADE"), end="")
-    print("{:2}".format("|"), end="")
+    print(f"{:<3}{:9}"{num_shippers, "SHIPPERS"}, end="")
+    print(f"{:2}"{"|"}, end="")
+    print(f"{:15}"{"INTERACTIVE"}, end="")
+    print(f"{:14}"{"REGRADE"}, end="")
+    print(f"{:2}"{"|"}, end="")
     print('{x:{width}}'.format(x="MACHINES (active work)", width=machine_width), end="")
-    print("{:2}".format("|"), end="")
+    print(f"{:2}"{"|"}, end="")
     print('{x:{width}}'.format(x="CAPABILITIES (queue)", width=capabilities_width), end="")
-    print("{:1}".format("|"), end="")
+    print(f"{:1}"{"|"}, end="")
     print()
 
-    print("{:<3}{:9}".format(num_workers, "WORKERS"), end="")
-    print("{:2}".format("|"), end="")
-    print("{:8}".format("grading"), end="")
-    print("{:7}".format("queue"), end="")
-    print("{:8}".format("grading"), end="")
-    print("{:6}".format("queue"), end="")
-    print("{:2}".format("|"), end="")
+    print(f"{:<3}{:9}"{num_workers, "WORKERS"}, end="")
+    print(f"{:2}"{"|"}, end="")
+    print(f"{:8}"{"grading"}, end="")
+    print(f"{:7}"{"queue"}, end="")
+    print(f"{:8}"{"grading"}, end="")
+    print(f"{:6}"{"queue"}, end="")
+    print(f"{:2}"{"|"}, end="")
     for machine in OPEN_AUTOGRADING_WORKERS_JSON:
-        print("{:9}".format(machine.upper()), end="")
+        print(f"{:9}"{machine.upper(}), end="")
     print(' '*pad_machines, end="")
-    print("{:2}".format("|"), end="")
+    print(f"{:2}"{"|"}, end="")
     for cap in capability_queue_counts:
         cap_tmp = cap.lower()[0:8]
-        print("{:9}".format(cap_tmp), end="")
+        print(f"{:9}"{cap_tmp}, end="")
     print(' '*pad_capabilities, end="")
-    print("{:1}".format("|"), end="")
+    print(f"{:1}"{"|"}, end="")
     print()
 
-    print("{:12}".format(""), end="")
-    print("{:2}".format("|"), end="")
-    print("{:29}".format(""), end="")
-    print("{:2}".format("|"), end="")
+    print(f"{:12}"{""}, end="")
+    print(f"{:2}"{"|"}, end="")
+    print(f"{:29}"{""}, end="")
+    print(f"{:2}"{"|"}, end="")
     for machine in OPEN_AUTOGRADING_WORKERS_JSON:
         enabled = OPEN_AUTOGRADING_WORKERS_JSON[machine]["enabled"]
         num = OPEN_AUTOGRADING_WORKERS_JSON[machine]["num_autograding_workers"]
         if not enabled:
             num = 0
-        print("{:9s}".format("["+str(num)+"]"), end="")
+        print(f"{:9s}"{"["+str(num}+"]"), end="")
     print(' '*pad_machines, end="")
-    print("{:2}".format("|"), end="")
+    print(f"{:2}"{"|"}, end="")
     for _cap in capability_queue_counts:
-        print("{:9}".format(""), end="")
+        print(f"{:9}"{""}, end="")
     print(' '*pad_capabilities, end="")
-    print("{:1}".format("|"), end="")
+    print(f"{:1}"{"|"}, end="")
     print()
 
     print('-'*table_width)
@@ -197,7 +197,7 @@ def print_status(epoch_time,
     print_helper("q", 1, queue_counts["interactive"], 5)
     print_helper("g", 1, queue_counts["regrade_grading"], 6)
     print_helper("q", 1, queue_counts["regrade"], 4)
-    print("{:2}".format("|"), end="")
+    print(f"{:2}"{"|"}, end="")
     tmp_counts = (queue_counts["interactive"] + queue_counts["interactive_grading"] +
                   queue_counts["regrade"] + queue_counts["regrade_grading"])
     if tmp_counts != 0:
@@ -212,7 +212,7 @@ def print_status(epoch_time,
             print("   ", end="")
         print("", end="")
     print(' '*pad_machines, end="")
-    print("{:2}".format("|"), end="")
+    print(f"{:2}"{"|"}, end="")
 
     # print the data on items waiting in the queue to be picked up
     for cap in capability_queue_counts:
@@ -220,7 +220,7 @@ def print_status(epoch_time,
         print_helper("q", 1, x, 4)
         print("   ", end="")
     print(' '*pad_capabilities, end="")
-    print("{:1}".format("|"), end="")
+    print(f"{:1}"{"|"}, end="")
     print()
 
     return done

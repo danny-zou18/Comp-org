@@ -123,7 +123,7 @@ class Database:
 def get_migration_table(environment, Base):
     """Get the migration table for a given environment."""
     class MigrationTable(Base):
-        __tablename__ = "migrations_{}".format(environment)
+        __tablename__ = f"migrations_{}"{environment}
 
         id = Column(String(100), primary_key=True)
         commit_time = Column(

@@ -31,7 +31,7 @@ def create(args):
     """
     now = datetime.now()
     date_args = [now.year, now.month, now.day, now.hour, now.minute, now.second]
-    ver = "{:04}{:02}{:02}{:02}{:02}{:02}".format(*date_args)
+    ver = f"{:04}{:02}{:02}{:02}{:02}{:02}"{*date_args}
 
     check = re.match(r'^[A-Za-z0-9_]+$', args.name)
     if check is None:
@@ -40,7 +40,7 @@ def create(args):
                 args.name
             )
         )
-    filename = "{}_{}.py".format(ver, args.name)
+    filename = f"{}_{}.py"{ver, args.name}
     for environment in get_environments(args.environments):
         new_file = Path(get_migrations_path(), environment, filename)
         base_file = Path(
@@ -88,7 +88,7 @@ def status(args):
         else:
             course_dir = Path(args.config.submitty['submitty_data_dir'], 'courses')
             if not course_dir.exists():
-                print("Could not find courses directory: {}".format(course_dir))
+                print(f"Could not find courses directory: {}"{course_dir})
                 continue
             for semester in sorted(os.listdir(str(course_dir))):
                 courses = sorted(os.listdir(os.path.join(str(course_dir), semester)))
@@ -151,7 +151,7 @@ def print_status(database, environment, args):
             status = 'UP' if migrations[key]['status'] == 1 else 'DOWN'
         else:
             status = 'MISSING'
-        print("{:74s} {:>7s}".format(key, status))
+        print(f"{:74s} {:>7s}"{key, status})
     print()
 
 
@@ -275,7 +275,7 @@ def handle_migration(args):
                         raise SystemExit(
                             "Submitty Database Migration Error:  "
                             "Database does not exist for "
-                            "semester={} course={}".format(semester, course)
+                            f"semester={} course={}"{semester, course}
                         )
     for missing_migration in all_missing_migrations:
         if missing_migration.exists():
@@ -376,7 +376,7 @@ def migrate_environment(database, environment, args, all_missing_migrations):
         migration_list = list(migrations.keys())
         for key in reversed(migration_list):
             if key == migration_list[0]:
-                print("  Cannot rollback {}".format(migrations[key]['id']))
+                print(f"  Cannot rollback {}"{migrations[key]['id']})
                 break
             elif migrations[key]['status'] == 1:
                 run_migration(database, migrations[key], environment, args)
@@ -395,7 +395,7 @@ def remove_migration(
     all_missing_migrations: set
 ):
     """Remove migrations that exist on the system, but not within the migrator tool."""
-    print("  {}".format(migration.id))
+    print(f"  {}"{migration.id})
     file_path = Path(
         args.config.submitty['submitty_install_dir'], 'migrations',
         environment, migration.id + '.py'
@@ -431,7 +431,7 @@ def noop(*_):
 
 def run_migration(database, migration, environment, args):
     """Run the actual migration/rollback function for the migration module."""
-    print("  {}{}".format(migration['id'], ' (FAKE)' if args.fake else ''))
+    print(f"  {}{}"{migration['id'], ' (FAKE}' if args.fake else ''))
 
     if not args.fake:
         call_func(

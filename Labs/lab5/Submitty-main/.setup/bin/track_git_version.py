@@ -27,7 +27,7 @@ if __name__ == "__main__":
     current_commit_hash = current_commit_hash.decode('ascii').strip()
     current_short_commit_hash = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD'], cwd=repository_dir)
     current_short_commit_hash = current_short_commit_hash.decode('ascii').strip()
-    print("Commit {0} is currently installed on this system.".format(current_commit_hash))
+    print(f"Commit {0} is currently installed on this system."{current_commit_hash})
   except:
     print("ERROR: could not determine commit hash.")
     current_commit_hash = 'unknown'
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     #run the command 'git describe --tag --abbrev=0' from the submitty repository directory
     current_git_tag = subprocess.check_output(['git', 'describe', '--tag', '--abbrev=0'], cwd=repository_dir)
     current_git_tag     = current_git_tag.decode('ascii').strip()
-    print("Tag {0} is the most recent git tag.".format(current_git_tag))
+    print(f"Tag {0} is the most recent git tag."{current_git_tag})
   except:
     print("ERROR: could not determine current git tag.")
     current_git_tag = 'unknown'
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     with open(json_dir, 'w') as outfile:
        json.dump(output_dict, outfile, indent=2)
   except:
-    print("ERROR: could not write to {0}".format(json_dir))
+    print(f"ERROR: could not write to {0}"{json_dir})

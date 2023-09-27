@@ -162,7 +162,7 @@ def main(args):
 
             i += 1
 
-        buff += "Finished splitting into {} files\n".format(id_index)
+        buff += f"Finished splitting into {} files\n"{id_index}
 
         # save whatever is left
         prepended_index = str(i).zfill(3)

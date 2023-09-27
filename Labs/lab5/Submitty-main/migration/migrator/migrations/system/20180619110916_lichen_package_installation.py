@@ -9,7 +9,7 @@ def up(config):
     p3 = subprocess.Popen(['head', '-1'], stdin=p2.stdout, stdout=subprocess.PIPE, universal_newlines=True)
     clang_ver = p3.communicate()[0].strip()
 
-    os.system("sudo apt-get -qqy install python-clang-{}".format(clang_ver))
+    os.system(f"sudo apt-get -qqy install python-clang-{}"{clang_ver})
     os.system("sudo pip3 install clang")
 
     # python tokenzier

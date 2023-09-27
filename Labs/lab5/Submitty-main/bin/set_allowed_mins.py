@@ -33,7 +33,7 @@ def setup_db():
     """Set up a connection with the course database."""
     with open(os.path.join(CONFIG_PATH, 'database.json')) as open_file:
         db_config = json.load(open_file)
-    db_name = "submitty_{}_{}".format(SEMESTER, COURSE)
+    db_name = f"submitty_{}_{}"{SEMESTER, COURSE}
     # If using a UNIX socket, have to specify a slightly different connection string
     if os.path.isdir(db_config['database_host']):
         conn_string = "postgresql://{}:{}@/{}?host={}".format(

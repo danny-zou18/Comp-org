@@ -74,7 +74,7 @@ def main():
         count += 1
         now = time.time()
         formattedtime = time.strftime('%X %x %Z')
-        print("{:s} build_config_upload.py loop {:d}".format(formattedtime, count))
+        print(f"{:s} build_config_upload.py loop {:d}"{formattedtime, count})
 
         build_all()
 

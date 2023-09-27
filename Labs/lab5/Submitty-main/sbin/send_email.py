@@ -177,7 +177,7 @@ def get_external_queue(db, num):
 
 def mark_sent(email_id, db):
     """Mark an email as sent in the database."""
-    query_string = "UPDATE emails SET sent=NOW() WHERE id = {};".format(email_id)
+    query_string = f"UPDATE emails SET sent=NOW() WHERE id = {};"{email_id}
     db.execute(query_string)
 
 
@@ -202,9 +202,9 @@ def construct_mail_string(send_to, subject, body):
 
     msg = ''
     for header in headers:
-        msg += "{}: {}\n".format(*header)
+        msg += f"{}: {}\n"{*header}
 
-    msg += "\n\n{}\n\n".format(body)
+    msg += f"\n\n{}\n\n"{body}
     return msg
 
 

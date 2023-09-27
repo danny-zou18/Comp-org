@@ -177,7 +177,7 @@ class submitty_router():
     try:
       if drop_message:
         success = "dropped"
-        self.log("Choosing not to deliver message {!r} to {}".format(message, recipient))
+        self.log(f"Choosing not to deliver message {!r} to {}"{message, recipient})
       elif message_type == 'tcp':
         sock.sendall(message)
         self.log(f'Delivered the message {data["sender"]} -> {data["recipient"]}: {data["message"]}')

@@ -14,7 +14,7 @@ def get_php_db_password(password):
     :rtype: str
     """
     proc = subprocess.Popen(
-        ["php", "-r", "print(password_hash('{}', PASSWORD_DEFAULT));".format(password)],
+        ["php", "-r", f"print(password_hash('{}', PASSWORD_DEFAULT));"{password}],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = proc.communicate()
     return out.decode('utf-8')

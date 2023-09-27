@@ -9,7 +9,7 @@ class TestUser(unittest.TestCase):
         password = user.get_php_db_password('password')
         self.assertTrue(len(password) > 0)
         proc = subprocess.Popen(
-            ["php", "-r", "print(password_verify('{0}', password_hash('{0}', PASSWORD_DEFAULT)));".format(password)],
+            ["php", "-r", f"print(password_verify('{0}', password_hash('{0}', PASSWORD_DEFAULT)));"{password}],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (out, _) = proc.communicate()
         self.assertEqual('1', out.decode('utf-8'))

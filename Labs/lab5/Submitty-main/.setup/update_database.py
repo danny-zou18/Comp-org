@@ -30,8 +30,8 @@ settings = json.load(open(os.path.join(usr_path, ".setup", "submitty_conf.json")
 variables = (settings['database_password'], settings['database_host'], settings['database_user'], 'submitty')
 
 # edits to make timestamps consistent
-os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE sessions ALTER COLUMN session_expires SET DATA TYPE timestamp(6) with time zone'".format(*variables))
-os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE users ALTER COLUMN last_updated SET DATA TYPE timestamp(6) with time zone'".format(*variables))
+os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE sessions ALTER COLUMN session_expires SET DATA TYPE timestamp(6) with time zone'"{*variables})
+os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE users ALTER COLUMN last_updated SET DATA TYPE timestamp(6) with time zone'"{*variables})
 
 # Remove developer group
 os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE users ADD CONSTRAINT users_user_group_check CHECK ((user_group >= 1) AND (user_group <= 4))'""".format(*variables))
@@ -56,21 +56,21 @@ for term in os.scandir(os.path.join(settings['submitty_data_dir'],"courses")):
         print("updating course database " + db)
 
         # edits to migrate v.1.0.1 to v.1.0.2
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY gradeable_component_mark ADD COLUMN gcm_publish boolean DEFAULT false NOT NULL'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY electronic_gradeable ADD COLUMN eg_allow_late_submission boolean DEFAULT true NOT NULL'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component_data ALTER COLUMN gcd_grade_time SET DATA TYPE timestamp(6) with time zone'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY gradeable_component_mark_data DROP CONSTRAINT gradeable_component_mark_data_gd_id_and_gc_id_fkey'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY gradeable_component_mark_data ADD CONSTRAINT gradeable_component_mark_data_gd_id_and_gc_id_fkey FOREIGN KEY (gd_id, gc_id, gcd_grader_id) REFERENCES gradeable_component_data(gd_id, gc_id, gcd_grader_id) ON UPDATE CASCADE ON DELETE CASCADE'".format(*variables))
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY gradeable_component_mark ADD COLUMN gcm_publish boolean DEFAULT false NOT NULL'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY electronic_gradeable ADD COLUMN eg_allow_late_submission boolean DEFAULT true NOT NULL'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component_data ALTER COLUMN gcd_grade_time SET DATA TYPE timestamp(6) with time zone'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY gradeable_component_mark_data DROP CONSTRAINT gradeable_component_mark_data_gd_id_and_gc_id_fkey'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY gradeable_component_mark_data ADD CONSTRAINT gradeable_component_mark_data_gd_id_and_gc_id_fkey FOREIGN KEY (gd_id, gc_id, gcd_grader_id) REFERENCES gradeable_component_data(gd_id, gc_id, gcd_grader_id) ON UPDATE CASCADE ON DELETE CASCADE'"{*variables})
 
         # edits to migrate v.1.0.2 to v.1.0.3
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component ALTER COLUMN gc_lower_clamp SET DATA TYPE numeric'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component ALTER COLUMN gc_default SET DATA TYPE numeric'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component ALTER COLUMN gc_upper_clamp SET DATA TYPE numeric'".format(*variables))
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component ALTER COLUMN gc_lower_clamp SET DATA TYPE numeric'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component ALTER COLUMN gc_default SET DATA TYPE numeric'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE gradeable_component ALTER COLUMN gc_upper_clamp SET DATA TYPE numeric'"{*variables})
 
         # edits to make timestamps consistent
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE late_days ALTER COLUMN since_timestamp SET DATA TYPE timestamp(6) with time zone'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE sessions ALTER COLUMN session_expires SET DATA TYPE timestamp(6) with time zone'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE users ALTER COLUMN last_updated SET DATA TYPE timestamp(6) with time zone'".format(*variables))
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE late_days ALTER COLUMN since_timestamp SET DATA TYPE timestamp(6) with time zone'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE sessions ALTER COLUMN session_expires SET DATA TYPE timestamp(6) with time zone'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE users ALTER COLUMN last_updated SET DATA TYPE timestamp(6) with time zone'"{*variables})
 
         # edits to migrate forum
         os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'CREATE TABLE "viewed_responses" ("thread_id" int NOT NULL, "user_id" character varying NOT NULL, "timestamp" timestamp with time zone NOT NULL)'""".format(*variables))
@@ -127,9 +127,9 @@ for term in os.scandir(os.path.join(settings['submitty_data_dir'],"courses")):
         os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE users ADD CONSTRAINT users_user_group_check CHECK ((user_group >= 1) AND (user_group <= 4))'""".format(*variables))
 
         # revision of merge thread for discussion forum
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY threads DROP COLUMN merged_id'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY threads ADD COLUMN merged_thread_id int DEFAULT -1'".format(*variables))
-        os.system("PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY threads ADD COLUMN merged_post_id int DEFAULT -1'".format(*variables))
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY threads DROP COLUMN merged_id'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY threads ADD COLUMN merged_thread_id int DEFAULT -1'"{*variables})
+        os.system(f"PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY threads ADD COLUMN merged_post_id int DEFAULT -1'"{*variables})
         
         # To allow delete gradeable
         os.system("""PGPASSWORD='{}' psql --host={} --username={} --dbname={} -c 'ALTER TABLE ONLY peer_assign DROP CONSTRAINT peer_assign_g_id_fkey'""".format(*variables))

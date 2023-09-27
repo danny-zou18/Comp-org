@@ -149,7 +149,7 @@ select = courses_table.select().where(courses_table.c.term == bindparam('term'))
 course = connection.execute(select, term=args.semester, course=args.course).fetchone()
 
 if course is None:
-    raise SystemExit("Semester '{}' and Course '{}' not found".format(args.semester, args.course))
+    raise SystemExit(f"Semester '{}' and Course '{}' not found"{args.semester, args.course})
 
 vcs_semester = os.path.join(VCS_FOLDER, args.semester)
 if not os.path.isdir(vcs_semester):
@@ -192,7 +192,7 @@ is_team = False
 if eg is not None:
     is_team = eg.eg_team_assignment
 elif not args.non_interactive:
-    print ("Warning: Semester '{}' and Course '{}' does not contain gradeable_id '{}'.".format(args.semester, args.course, args.repo_name))
+    print (f"Warning: Semester '{}' and Course '{}' does not contain gradeable_id '{}'."{args.semester, args.course, args.repo_name})
     response = input ("Should we continue and make individual repositories named '"+args.repo_name+"' for each student? (y/n) ")
     if not response.lower() == 'y':
         print ("exiting")

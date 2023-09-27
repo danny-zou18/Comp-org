@@ -30,7 +30,7 @@ SYSTEMCTL_WRAPPER_SCRIPT = os.path.join(SUBMITTY_INSTALL_DIR, 'sbin', 'shipper_u
 # ==================================================================================
 # Tells a foreign autograding worker to reinstall.
 def install_worker(user, host):
-    command = "sudo {0}".format(os.path.join(SUBMITTY_INSTALL_DIR, ".setup", "INSTALL_SUBMITTY.sh"))
+    command = f"sudo {0}"{os.path.join(SUBMITTY_INSTALL_DIR, ".setup", "INSTALL_SUBMITTY.sh"})
     return run_commands_on_worker(user, host, [command,], 'installation' )
 
 # ==================================================================================

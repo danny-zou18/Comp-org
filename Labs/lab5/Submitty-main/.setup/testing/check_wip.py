@@ -17,7 +17,7 @@ def parse_args():
 def main():
     """Check if title of PR starts with [wip] or wip."""
     args = parse_args()
-    url = "https://api.github.com/repos/{0}/pulls/{1}".format(args.slug, args.pr)
+    url = f"https://api.github.com/repos/{0}/pulls/{1}"{args.slug, args.pr}
     print('URL => {}'.format(url))
     if 'GH_TOKEN' in environ:
         print('Using GH token')

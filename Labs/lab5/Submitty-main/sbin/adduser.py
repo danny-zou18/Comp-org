@@ -32,17 +32,17 @@ def get_php_db_password(password):
     :return: password hash to be inserted into the DB for a user
     """
     proc = subprocess.Popen(
-        ["php", "-r", "print(password_hash('{}', PASSWORD_DEFAULT));".format(password)],
+        ["php", "-r", f"print(password_hash('{}', PASSWORD_DEFAULT));"{password}],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = proc.communicate()
     return out.decode('utf-8')
 
 
 def get_input(question, default="", blank=False):
-    add = "[{}] ".format(default) if default != "" or default is not None else ""
+    add = f"[{}] "{default} if default != "" or default is not None else ""
     add += " (Leave blank to set to null) " if blank else ""
     while True:
-        user = input("{}: {}".format(question, add)).strip()
+        user = input(f"{}: {}"{question, add}).strip()
         if user == "":
             user = default
         if blank or (user != "" and user is not None):

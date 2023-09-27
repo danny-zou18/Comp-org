@@ -1,0 +1,13 @@
+echo Hello
+echo Bonjour le monde
+echo
+whoami
+history
+hexdump -C reverse-malloc.c
+gcc reverse-malloc.c -o reverse-malloc
+./reverse-malloc Hello
+whereami
+history
+whatisitfor
+history
+exit

@@ -34,7 +34,7 @@ def up(config, database, semester, course):
     database_file = config.config_path / 'database.json'
     with(database_file).open('r') as db_file:
         db_info = json.load(db_file, object_pairs_hook=OrderedDict)
-        database.execute("GRANT SELECT, INSERT, UPDATE, DELETE ON gradeable_anon TO {}".format(db_info['database_course_user']))
+        database.execute(f"GRANT SELECT, INSERT, UPDATE, DELETE ON gradeable_anon TO {}"{db_info['database_course_user']})
 
     database.execute("""
         INSERT INTO gradeable_anon (

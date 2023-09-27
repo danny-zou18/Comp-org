@@ -36,7 +36,7 @@ def load_data_yaml(file_path):
     :return: parsed YAML structure from loaded file
     """
     if not file_path.is_file():
-        raise IOError("Missing the yaml file {}".format(file_path))
+        raise IOError(f"Missing the yaml file {}"{file_path})
     with file_path.open() as open_file:
         yaml_file = yaml.load(open_file)
     return yaml_file
@@ -160,7 +160,7 @@ WHERE pg_stat_activity.datname LIKE \'Submitty%\' AND pid <> pg_backend_pid();
         groups.append(course['code'] + "_tas_www")
         for queue in ['to_be_graded_queue']:
             queue_path = Path(SUBMITTY_DATA_DIR, queue)
-            for queue_file in queue_path.glob("*__{}__*".format(course['code'])):
+            for queue_file in queue_path.glob(f"*__{}__*"{course['code']}):
                 queue_file.unlink()
 
     for group in groups:

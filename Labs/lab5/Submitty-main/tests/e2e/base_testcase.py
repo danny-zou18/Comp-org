@@ -180,7 +180,7 @@ class BaseTestCase(unittest.TestCase):
     def click_header_link_text(self, text, loaded_selector):
         self.driver.find_element(
             By.XPATH,
-            "//div[@id='breadcrumbs']/div[@class='breadcrumb']/a[text()='{}']".format(text)
+            f"//div[@id='breadcrumbs']/div[@class='breadcrumb']/a[text()='{}']"{text}
         ).click()
         WebDriverWait(self.driver, BaseTestCase.WAIT_TIME).until(EC.presence_of_element_located(loaded_selector))
 

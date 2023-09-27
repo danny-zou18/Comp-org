@@ -426,7 +426,7 @@ def load_data_json(file_name):
     """
     file_path = os.path.join(SETUP_DATA_PATH, file_name)
     if not os.path.isfile(file_path):
-        raise IOError("Missing the json file .setup/data/{}".format(file_name))
+        raise IOError(f"Missing the json file .setup/data/{}"{file_name})
     with open(file_path) as open_file:
         json_file = json.load(open_file)
     return json_file
@@ -439,7 +439,7 @@ def load_data_yaml(file_path):
     :return: parsed YAML structure from loaded file
     """
     if not os.path.isfile(file_path):
-        raise IOError("Missing the yaml file {}".format(file_path))
+        raise IOError(f"Missing the yaml file {}"{file_path})
     with open(file_path) as open_file:
         yaml_file = yaml.load(open_file)
     return yaml_file
@@ -482,7 +482,7 @@ def create_group(group):
     :param group: name of the group to create
     """
     if not group_exists(group):
-        os.system("groupadd {}".format(group))
+        os.system(f"groupadd {}"{group})
 
     if group == "sudo":
         return
@@ -495,7 +495,7 @@ def add_to_group(group, user_id):
     :param user_id:
     """
     create_group(group)
-    os.system("usermod -a -G {} {}".format(group, user_id))
+    os.system(f"usermod -a -G {} {}"{group, user_id})
 
 
 def get_php_db_password(password):
@@ -507,7 +507,7 @@ def get_php_db_password(password):
     :return: password hash to be inserted into the DB for a user
     """
     proc = subprocess.Popen(
-        ["php", "-r", "print(password_hash('{}', PASSWORD_DEFAULT));".format(password)],
+        ["php", "-r", f"print(password_hash('{}', PASSWORD_DEFAULT));"{password}],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = proc.communicate()
     return out.decode('utf-8')
@@ -702,11 +702,11 @@ class User(object):
         if 'user_group' in user:
             self.group = user['user_group']
         if self.group < 1 or 4 < self.group:
-            raise SystemExit("ASSERT: user {}, user_group is not between 1 - 4. Check YML file.".format(self.id))
+            raise SystemExit(f"ASSERT: user {}, user_group is not between 1 - 4. Check YML file."{self.id})
         if 'user_access_level' in user:
             self.access_level = user['user_access_level']
         if self.access_level < 1 or 3 < self.access_level:
-            raise SystemExit("ASSERT: user {}, user_access_level is not between 1 - 3. Check YML file.".format(self.id))
+            raise SystemExit(f"ASSERT: user {}, user_access_level is not between 1 - 3. Check YML file."{self.id})
         if 'registration_section' in user:
             self.registration_section = int(user['registration_section'])
         if 'rotating_section' in user:
@@ -748,14 +748,14 @@ class User(object):
             add_to_group("sudo", self.id)
 
     def create_ssh(self):
-        print("Creating user {}...".format(self.id))
-        os.system("useradd -m -c 'First Last,RoomNumber,WorkPhone,HomePhone' {}".format(self.id))
+        print(f"Creating user {}..."{self.id})
+        os.system(f"useradd -m -c 'First Last,RoomNumber,WorkPhone,HomePhone' {}"{self.id})
         self.set_password()
 
     def create_non_ssh(self):
-        print("Creating user {}...".format(self.id))
+        print(f"Creating user {}..."{self.id})
         os.system("useradd --home /tmp -c \'AUTH ONLY account\' "
-                    "-M --shell /bin/false {}".format(self.id))
+                    f"-M --shell /bin/false {}"{self.id})
         self.set_password()
 
     def create_ldap(self):
@@ -775,8 +775,8 @@ shadowWarning: 0""")
         path.unlink()
 
     def set_password(self):
-        print("Setting password for user {}...".format(self.id))
-        os.system("echo {}:{} | chpasswd".format(self.id, self.password))
+        print(f"Setting password for user {}..."{self.id})
+        os.system(f"echo {}:{} | chpasswd"{self.id, self.password})
 
     def get_detail(self, course, detail):
         if self.courses is not None and course in self.courses:
@@ -884,14 +884,14 @@ class Course(object):
         table = Table("courses_registration_sections", submitty_metadata, autoload=True)
         print("(tables loaded)...")
         for section in range(1, self.registration_sections+1):
-            print("Create section {}".format(section))
+            print(f"Create section {}"{section})
             submitty_conn.execute(table.insert(), term=self.semester, course=self.code, registration_section_id=str(section))
 
         print("Creating rotating sections ", end="")
         table = Table("sections_rotating", self.metadata, autoload=True)
         print("(tables loaded)...")
         for section in range(1, self.rotating_sections+1):
-            print("Create section {}".format(section))
+            print(f"Create section {}"{section})
             self.conn.execute(table.insert(), sections_rotating_id=section)
 
         print("Create users ", end="")
@@ -900,7 +900,7 @@ class Course(object):
         reg_table = Table("grading_registration", self.metadata, autoload=True)
         print("(tables loaded)...")
         for user in self.users:
-            print("Creating user {} {} ({})...".format(user.get_detail(self.code, "givenname"),
+            print(f"Creating user {} {} ({})..."{user.get_detail(self.code, "givenname"},
                                                        user.get_detail(self.code, "familyname"),
                                                        user.get_detail(self.code, "id")))
             reg_section = user.get_detail(self.code, "registration_section")
@@ -957,24 +957,24 @@ class Course(object):
         electronic_gradeable_version = Table("electronic_gradeable_version", self.metadata, autoload=True)
         for gradeable in self.gradeables:
             gradeable.create(self.conn, gradeable_table, electronic_table, peer_assign, reg_table, component_table, mark_table)
-            form = os.path.join(self.course_path, "config", "form", "form_{}.json".format(gradeable.id))
+            form = os.path.join(self.course_path, "config", "form", f"form_{}.json"{gradeable.id})
             with open(form, "w") as open_file:
                 json.dump(gradeable.create_form(), open_file, indent=2)
-        os.system("chown -f submitty_php:{}_tas_www {}".format(self.code, os.path.join(self.course_path, "config", "form", "*")))
+        os.system(f"chown -f submitty_php:{}_tas_www {}"{self.code, os.path.join(self.course_path, "config", "form", "*"}))
         if not os.path.isfile(os.path.join(self.course_path, "ASSIGNMENTS.txt")):
-            os.system("touch {}".format(os.path.join(self.course_path, "ASSIGNMENTS.txt")))
+            os.system(f"touch {}"{os.path.join(self.course_path, "ASSIGNMENTS.txt"}))
             os.system("chown {}:{}_tas_www {}".format(self.instructor.id, self.code,
                                                       os.path.join(self.course_path, "ASSIGNMENTS.txt")))
-            os.system("chmod -R g+w {}".format(self.course_path))
+            os.system(f"chmod -R g+w {}"{self.course_path})
             os.system("su {} -c '{}'".format("submitty_daemon", os.path.join(self.course_path,
-                                                                          "BUILD_{}.sh".format(self.code))))
+                                                                          f"BUILD_{}.sh"{self.code})))
             #os.system("su {} -c '{}'".format(self.instructor.id, os.path.join(self.course_path,
-            #                                                              "BUILD_{}.sh".format(self.code))))
-        os.system("chown -R {}:{}_tas_www {}".format(self.instructor.id, self.code, os.path.join(self.course_path, "build")))
+            #                                                              f"BUILD_{}.sh"{self.code})))
+        os.system(f"chown -R {}:{}_tas_www {}"{self.instructor.id, self.code, os.path.join(self.course_path, "build"}))
         os.system("chown -R {}:{}_tas_www {}".format(self.instructor.id, self.code,
                                                      os.path.join(self.course_path, "test_*")))
         # On python 3, replace with os.makedirs(..., exist_ok=True)
-        os.system("mkdir -p {}".format(os.path.join(self.course_path, "submissions")))
+        os.system(f"mkdir -p {}"{os.path.join(self.course_path, "submissions"}))
         os.system('chown submitty_php:{}_tas_www {}'.format(self.code, os.path.join(self.course_path, 'submissions')))
 
         anon_ids = {}
@@ -1075,7 +1075,7 @@ class Course(object):
                             # only create these directories if we're actually going to put something in them
                             if not os.path.exists(gradeable_path):
                                 os.makedirs(gradeable_path)
-                                os.system("chown -R submitty_php:{}_tas_www {}".format(self.code, gradeable_path))
+                                os.system(f"chown -R submitty_php:{}_tas_www {}"{self.code, gradeable_path})
                             if not os.path.exists(submission_path):
                                 os.makedirs(submission_path)
                             if gradeable.is_repository:
@@ -1232,7 +1232,7 @@ class Course(object):
                     if gradeable.grade_start_date < NOW and os.path.exists(os.path.join(submission_path, str(versions_to_submit))):
                         if (gradeable.has_release_date is True and gradeable.grade_released_date < NOW) or (random.random() < 0.5 and (submitted or gradeable.type !=0)):
                             status = 1 if gradeable.type != 0 or submitted else 0
-                            print("Inserting {} for {}...".format(gradeable.id, user.id))
+                            print(f"Inserting {} for {}..."{gradeable.id, user.id})
                             values = {'g_id': gradeable.id}
                             overall_comment_values = {'g_id' : gradeable.id,  'goc_overall_comment': 'lorem ipsum lodar', 'goc_grader_id' : self.instructor.id}
 
@@ -1276,10 +1276,10 @@ class Course(object):
                                         first = False
 
                     if gradeable.type == 0 and os.path.isdir(submission_path):
-                        os.system("chown -R submitty_php:{}_tas_www {}".format(self.code, submission_path))
+                        os.system(f"chown -R submitty_php:{}_tas_www {}"{self.code, submission_path})
 
                     if gradeable.type == 0 and os.path.isdir(gradeable_annotation_path):
-                        os.system("chown -R submitty_php:{}_tas_www {}".format(self.code, gradeable_annotation_path))
+                        os.system(f"chown -R submitty_php:{}_tas_www {}"{self.code, gradeable_annotation_path})
 
                     if (gradeable.type != 0 and gradeable.grade_start_date < NOW and ((gradeable.has_release_date is True and gradeable.grade_released_date < NOW) or random.random() < 0.5) and
                        random.random() < 0.9 and (ungraded_section != (user.get_detail(self.code, 'registration_section') if gradeable.grade_by_registration else user.get_detail(self.code, 'rotating_section')))):
@@ -1473,7 +1473,7 @@ class Course(object):
                 # In posts.txt, if the 10th column is f or empty, then no attachment is added. If anything else is in the column, then it will be treated as the file name.
                 attachment_path = os.path.join(self.course_path, "forum_attachments", str(postData[0]), str(counter))
                 os.makedirs(attachment_path)
-                os.system("chown -R submitty_php:sample_tas_www {}".format(os.path.join(self.course_path, "forum_attachments", str(postData[0]))))
+                os.system(f"chown -R submitty_php:sample_tas_www {}"{os.path.join(self.course_path, "forum_attachments", str(postData[0]})))
                 copyfile(os.path.join(SETUP_DATA_PATH, "forum", "attachments", postData[10]), os.path.join(attachment_path, postData[10]))
             counter += 1
             self.conn.execute(forum_posts.insert(),
@@ -1669,7 +1669,7 @@ class Course(object):
         # Would be great if we could install directly to test_suite, but
         # currently the test uses "clean" which will blow away test_suite
         customization_path = os.path.join(SUBMITTY_INSTALL_DIR, ".setup")
-        print("Generating customization_{}.json".format(course_id))
+        print(f"Generating customization_{}.json"{course_id})
 
         gradeables = {}
         gradeables_json_output = {}
@@ -1780,7 +1780,7 @@ class Course(object):
             gradeables_json_output["benchmark_percent"]["lowest_" + benchmarks[i]] = 0.9 - (0.1 * i)
 
         gradeables_json_output["section"] = section_ta_mapping
-        messages = ["<b>{} Course</b>".format(course_id),
+        messages = [f"<b>{} Course</b>"{course_id},
                     "Note: Please be patient with data entry/grade corrections for the most recent "
                     "lab, homework, and test.",
                     "Please contact your graduate lab TA if a grade remains missing or incorrect for more than a week."]
@@ -1793,13 +1793,13 @@ class Course(object):
                                          "This JSON is based on the automatically generated customization for\n"
                                          "the development course \"{}\" as of {}.\n"
                                          "It is intended as a simple example, with additional documentation online.\n"
-                                         "*/\n".format(course_id,NOW.strftime("%Y-%m-%d %H:%M:%S%z")))
+                                         f"*/\n"{course_id,NOW.strftime("%Y-%m-%d %H:%M:%S%z"}))
             json.dump(gradeables_json_output,
                       open(os.path.join(customization_path, "customization_" + course_id + ".json"), 'a'),indent=2)
         except EnvironmentError as e:
-            print("Failed to write to customization file: {}".format(e))
+            print(f"Failed to write to customization file: {}"{e})
 
-        print("Wrote customization_{}.json".format(course_id))
+        print(f"Wrote customization_{}.json"{course_id})
 
 
 class Gradeable(object):
@@ -2004,7 +2004,7 @@ class Gradeable(object):
                         for elem in self.submissions:
                             if isinstance(elem, dict):
                                 raise TypeError("Cannot have dictionary inside of list for submissions "
-                                                "for {}".format(self.sample_path))
+                                                f"for {}"{self.sample_path})
                 if self.annotation_path is not None:
                     self.annotations = os.listdir(self.annotation_path)
                     self.annotations = list(filter(lambda x: not x.startswith("."), self.annotations))

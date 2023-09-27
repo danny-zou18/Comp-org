@@ -74,7 +74,7 @@ def run_test(test):
     test.run_validator()
     test.json_diff("results.json")
     for i in range(1, 10):
-        test.json_diff("test{:02}/0_diff.json".format(i), "test{:02}_0_diff.json".format(i))
-        test.empty_file("test{:02}/STDERR.txt".format(i))
-        test.empty_file("test{:02}/STDOUT.txt".format(i))
-        test.empty_file("test{:02}/execute_logfile.txt".format(i))
+        test.json_diff(f"test{:02}/0_diff.json"{i}, f"test{:02}_0_diff.json"{i})
+        test.empty_file(f"test{:02}/STDERR.txt"{i})
+        test.empty_file(f"test{:02}/STDOUT.txt"{i})
+        test.empty_file(f"test{:02}/execute_logfile.txt"{i})

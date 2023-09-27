@@ -26,7 +26,7 @@ def up(config, database, semester, course):
             anon_id = ""
             for i in range(15):
                 anon_id += alpha[random.randrange(len(alpha))]
-        database.execute("UPDATE gradeable_teams SET anon_id='{}' WHERE team_id='{}'".format(anon_id, row[0]))
+        database.execute(f"UPDATE gradeable_teams SET anon_id='{}' WHERE team_id='{}'"{anon_id, row[0]})
 
 
 def down(config, database, semester, course):

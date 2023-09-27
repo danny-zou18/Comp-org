@@ -634,9 +634,9 @@ def allow_only_one_part(path, log_path=os.devnull):
                   "Removing files from all but first non empty part.")
 
             for i in range(1, len(clean_directories)):
-                print("REMOVE: {}".format(clean_directories[i]))
+                print(f"REMOVE: {}"{clean_directories[i]})
                 for entry in os.listdir(clean_directories[i]):
-                    print("  -> {}".format(entry))
+                    print(f"  -> {}"{entry})
                 shutil.rmtree(clean_directories[i])
 
 
@@ -782,10 +782,10 @@ def pre_command_copy_file(config, source_testcase, source_directory, destination
     source_testcase = os.path.join(str(os.getcwd()), source_testcase)
 
     if not os.path.isdir(source_testcase):
-        raise RuntimeError("ERROR: The directory {0} does not exist.".format(source_testcase))
+        raise RuntimeError(f"ERROR: The directory {0} does not exist."{source_testcase})
 
     if not os.path.isdir(destination_testcase):
-        raise RuntimeError("ERROR: The directory {0} does not exist.".format(destination_testcase))
+        raise RuntimeError(f"ERROR: The directory {0} does not exist."{destination_testcase})
 
     source = os.path.join(source_testcase, source_directory)
     target = os.path.join(destination_testcase, destination)
@@ -806,7 +806,7 @@ def pre_command_copy_file(config, source_testcase, source_directory, destination
 
         # The target base must exist in order for a copy to occur
         if target_base != '' and not os.path.isdir(target_base):
-            raise RuntimeError("ERROR: The directory {0} does not exist.".format(target_base))
+            raise RuntimeError(f"ERROR: The directory {0} does not exist."{target_base})
         # Copy every file. This works whether target exists (is a directory) or does not (is a target file)
         for file in files:
             try:
@@ -822,7 +822,7 @@ def pre_command_copy_file(config, source_testcase, source_directory, destination
         source_base = source[:source.find('**')]
         # The full target must exist (we must be moving to a directory.)
         if not os.path.isdir(target):
-            raise RuntimeError("ERROR: The directory {0} does not exist.".format(target))
+            raise RuntimeError(f"ERROR: The directory {0} does not exist."{target})
 
         # Grab all of the files that match the pattern.
         files = glob.glob(source, recursive=True)

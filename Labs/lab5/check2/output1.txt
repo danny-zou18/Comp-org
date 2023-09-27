@@ -1,0 +1,5 @@
+MyShell> Current date: 09/27/2023
+MyShell> Current time: 18:13:51
+MyShell> Command not found: ls
+MyShell> Command not found: ls
+MyShell> 

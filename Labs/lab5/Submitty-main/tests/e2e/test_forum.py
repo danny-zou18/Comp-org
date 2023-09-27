@@ -51,7 +51,7 @@ class TestForum(BaseTestCase):
         assert '/threads/new' in self.driver.current_url
         for category, set_it in categories_list:
             category_button = self.driver.find_element(By.XPATH,
-                "//div[contains(@class,'cat-buttons') and contains(string(),'{}')]".format(category))
+                f"//div[contains(@class,'cat-buttons') and contains(string(),'{}')]"{category})
             if ('cat-selected' in category_button.get_attribute('class')) ^ set_it:
                 category_button.click()
 
@@ -83,7 +83,7 @@ class TestForum(BaseTestCase):
 
     def thread_exists(self, title):
         assert '/forum' in self.driver.current_url
-        target_xpath = "//div[contains(@class, 'thread_box') and contains(string(),'{}')]".format(title)
+        target_xpath = f"//div[contains(@class, 'thread_box') and contains(string(),'{}')]"{title}
         self.driver.execute_script('$("#thread_list").scrollTop(0);')
         thread_count = int(self.driver.execute_script('return $("#thread_list .thread_box").length;'))
         while True:
@@ -104,15 +104,15 @@ class TestForum(BaseTestCase):
 
     def icon_exists(self, thread_title, icon_class):
         assert self.thread_exists(thread_title)
-        div = self.driver.find_element(By.XPATH, "//div[contains(@class, 'thread_box') and contains(string(),'{}')]".format(thread_title))
-        icons = div.find_elements(By.XPATH, ".//i[contains(@class, '{}')]".format(icon_class))
+        div = self.driver.find_element(By.XPATH, f"//div[contains(@class, 'thread_box') and contains(string(),'{}')]"{thread_title})
+        icons = div.find_elements(By.XPATH, f".//i[contains(@class, '{}')]"{icon_class})
         return len(icons) > 0
 
     def view_thread(self, title, return_info=False):
         assert '/forum' in self.driver.current_url
         assert self.thread_exists(title)
         div = self.driver.find_element(By.XPATH,
-            "//div[contains(@class, 'thread_box') and contains(string(),'{}')]".format(title))
+            f"//div[contains(@class, 'thread_box') and contains(string(),'{}')]"{title})
         if return_info:
             categories = []
             for element in div.find_elements(By.XPATH, ".//span[contains(@class, 'label_forum')]"):
@@ -141,7 +141,7 @@ class TestForum(BaseTestCase):
             self.wait_for_element(
                 (By.XPATH, (posts_selector + "//div[contains(@class, 'attachment-well')]").format(content))
             )
-            attachmentSrc = posts[0].find_elements(By.XPATH, ".//img[contains(@src, '{}')]".format(check_attachment))
+            attachmentSrc = posts[0].find_elements(By.XPATH, f".//img[contains(@src, '{}')]"{check_attachment})
             assert len(attachmentSrc) > 0
         return posts
 
@@ -149,7 +149,7 @@ class TestForum(BaseTestCase):
         attachment_file = None
         post = self.find_posts(post_content)[0]
         post_id = post.get_attribute("id")
-        edit_form = self.driver.find_elements(By.XPATH, "//input[@value='{}' and @name='parent_id']/..".format(post_id))[-1]  # Last One
+        edit_form = self.driver.find_elements(By.XPATH, f"//input[@value='{}' and @name='parent_id']/.."{post_id})[-1]  # Last One
         text_area = edit_form.find_element(By.XPATH, ".//textarea")
         upload_button = edit_form.find_element(By.XPATH, ".//input[@type='file']")
         submit_button = edit_form.find_element(By.XPATH, ".//input[@type='submit']")
@@ -220,7 +220,7 @@ class TestForum(BaseTestCase):
             submit_button = merge_threads_div.find_element(By.XPATH, ".//input[@value='Merge Thread']")
             possible_parents = merge_threads_div.find_element(By.XPATH, ".//a[@class='chosen-single']").click()
             self.driver.find_element(By.XPATH,
-                                     ".//li[contains(normalize-space(.), '{}')]".format(parent_thread_title)).click()
+                                     f".//li[contains(normalize-space(.), '{}')]"{parent_thread_title}).click()
             if press_cancel:
                 cancel_button.click()
             else:
@@ -235,8 +235,8 @@ class TestForum(BaseTestCase):
         list_content = []
         # Creation of 22 thread and then deleting them will be slow
         for i in range(0, 22):
-            list_title.append("E2E Sample Title {} E2E".format(i))
-            list_content.append("E2E Sample Content {} E2E".format(i))
+            list_title.append(f"E2E Sample Title {} E2E"{i})
+            list_content.append(f"E2E Sample Content {} E2E"{i})
 
         # Create Threads
         for title, content in zip(list_title, list_content):

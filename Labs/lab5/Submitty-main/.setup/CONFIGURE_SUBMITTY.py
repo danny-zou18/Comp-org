@@ -29,8 +29,8 @@ def get_ids(user):
 
 
 def get_input(question, default=""):
-    add = "[{}] ".format(default) if default != "" else ""
-    user = input("{}: {}".format(question, add)).strip()
+    add = f"[{}] "{default} if default != "" else ""
+    user = input(f"{}: {}"{question, add}).strip()
     if user == "":
         user = default
     return user
@@ -134,7 +134,7 @@ FIRST_UNTRUSTED_UID, FIRST_UNTRUSTED_GID = get_ids('untrusted00')
 
 # confirm that the uid/gid of the untrusted users are sequential
 for i in range(1, NUM_UNTRUSTED):
-    untrusted_user = "untrusted{:0=2d}".format(i)
+    untrusted_user = f"untrusted{:0=2d}"{i}
     uid, gid = get_ids(untrusted_user)
     if uid != FIRST_UNTRUSTED_UID + i:
         raise SystemExit('CONFIGURATION ERROR: untrusted UID not sequential: ' + untrusted_user)

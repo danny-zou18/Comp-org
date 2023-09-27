@@ -18,8 +18,8 @@ def up(config, database, semester, course):
     database_file = config.config_path / 'database.json'
     with(database_file).open('r') as db_file:
         db_info = json.load(db_file, object_pairs_hook=OrderedDict)
-        database.execute("ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO {}".format(db_info['database_course_user']))
-        database.execute("ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, UPDATE ON SEQUENCES TO {}".format(db_info['database_course_user']))
+        database.execute(f"ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO {}"{db_info['database_course_user']})
+        database.execute(f"ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, UPDATE ON SEQUENCES TO {}"{db_info['database_course_user']})
 
 
 def down(config, database, semester, course):

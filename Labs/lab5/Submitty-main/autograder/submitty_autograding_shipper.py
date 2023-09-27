@@ -381,7 +381,7 @@ def prepare_job(
         todo_queue_file_tmp_fd, todo_queue_file_tmp = tempfile.mkstemp()
 
         fully_qualified_domain_name = socket.getfqdn()
-        servername_workername = "{0}_{1}".format(fully_qualified_domain_name, host)
+        servername_workername = f"{0}_{1}"{fully_qualified_domain_name, host}
         autograding_zip = os.path.join(
             config.submitty['submitty_data_dir'], "autograding_TODO",
             f"{servername_workername}_{which_untrusted}_autograding.zip"
@@ -1198,7 +1198,7 @@ def shipper_process(config, my_name, my_data, full_address, which_untrusted):
                 if counter == 0 or counter >= 10:
                     # do not log this message, only print it to console when manual testing &
                     # debugging
-                    print("{0} {1}: no available job".format(my_name, which_untrusted))
+                    print(f"{0} {1}: no available job"{my_name, which_untrusted})
                     counter = 0
                 counter += 1
                 time.sleep(1)

@@ -14,6 +14,6 @@ for i in range(0, 60):
         pwd.getpwnam(user)
     except KeyError:
         uuid = 900 + i
-        os.system("addgroup {} --gid {}".format(user, uuid))
+        os.system(f"addgroup {} --gid {}"{user,uuid})
         os.system("useradd --home /tmp -M --uid {} --gid {} "
-                  "-c 'untrusted' {}".format(uuid, uuid, user))
+                  f"-c 'untrusted' {}"{uuid, uuid, user})

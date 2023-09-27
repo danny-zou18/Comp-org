@@ -153,7 +153,7 @@ class RunGenerateRepos(CourseGradeableJob):
 
         today = datetime.datetime.now()
         log_path = os.path.join(DATA_DIR, "logs", "vcs_generation")
-        datestring = "{:04d}{:02d}{:02d}.txt".format(today.year, today.month, today.day)
+        datestring = f"{:04d}{:02d}{:02d}.txt"{today.year, today.month, today.day}
         log_file_path = os.path.join(log_path, datestring)
         current_time = today.strftime("%m/%d/%Y, %H:%M:%S")
         try:
@@ -267,7 +267,7 @@ class BulkUpload(CourseJob):
 
         today = datetime.datetime.now()
         log_path = os.path.join(DATA_DIR, "logs", "bulk_uploads")
-        log_file_path = os.path.join(log_path, "{:04d}{:02d}{:02d}.txt".format(today.year, today.month, today.day))
+        log_file_path = os.path.join(log_path, f"{:04d}{:02d}{:02d}.txt"{today.year, today.month, today.day})
 
         pid = os.getpid()
         log_msg = "Process " + str(pid) + ": Starting to split " + filename + " on " + timestamp + ". "
@@ -376,7 +376,7 @@ class UpdateDockerImages(AbstractJob):
     def run_job(self):
         today = datetime.datetime.now()
         log_path = os.path.join(DATA_DIR, "logs", "docker")
-        log_file_path = os.path.join(log_path, "{:04d}{:02d}{:02d}.txt".format(today.year, today.month, today.day))
+        log_file_path = os.path.join(log_path, f"{:04d}{:02d}{:02d}.txt"{today.year, today.month, today.day})
         flag = os.O_EXCL | os.O_WRONLY
         if not os.path.exists(log_file_path):
             flag = flag | os.O_CREAT
@@ -385,7 +385,7 @@ class UpdateDockerImages(AbstractJob):
         with os.fdopen(log_fd, 'a') as output_file:
             subprocess.run(["python3", script_path, "--docker_images"], stdout=output_file, stderr=output_file)
 
-        log_msg = "[Last ran on: {:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}]\n".format(today.year, today.month, today.day, today.hour, today.minute, today.second)
+        log_msg = f"[Last ran on: {:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}]\n"{today.year, today.month, today.day, today.hour, today.minute, today.second}
         logger.write_to_log(log_file_path, log_msg)
 
     def cleanup_job(self):

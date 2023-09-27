@@ -120,7 +120,7 @@ def replay(starttime,endtime):
             file_name = os.path.join(SUBMITTY_DATA_DIR, "to_be_graded_queue", file_name)
             with open(file_name, "w") as open_file:
                 json.dump(item, open_file, sort_keys=True, indent=4)
-                os.system("chmod o+rw {}".format(file_name))  
+                os.system(f"chmod o+rw {}"{file_name})  
     print (datetime.datetime.now(),"replay end: ",endtime)
 
 
@@ -152,7 +152,7 @@ def main():
         # must be in the known submitty base data directory
         if dirs[0:len(data_dirs)] != data_dirs:
             print("ERROR: BAD REGRADE SUBMISSIONS PATH",input_path)
-            raise SystemExit("You need to point to a directory within {}".format(data_dir))
+            raise SystemExit(f"You need to point to a directory within {}"{data_dir})
 
         # Extract directories from provided pattern path (path may be incomplete)
         pattern_semester="*"
@@ -253,7 +253,7 @@ def main():
 
     # Check before adding a very large number of systems to the queue
     if len(grade_queue) > 50 and not args.no_input:
-        inp = input("Found {:d} matching submissions. Add to queue? [y/n]".format(len(grade_queue)))
+        inp = input(f"Found {:d} matching submissions. Add to queue? [y/n]"{len(grade_queue}))
         if inp.lower() not in ["yes", "y"]:
             raise SystemExit("Aborting...")
 
@@ -262,9 +262,9 @@ def main():
         file_name = os.path.join(SUBMITTY_DATA_DIR, "to_be_graded_queue", file_name)
         with open(file_name, "w") as open_file:
             json.dump(item, open_file, sort_keys=True, indent=4)
-        os.system("chmod o+rw {}".format(file_name))
+        os.system(f"chmod o+rw {}"{file_name})
 
-    print("Added {:d} to the queue for regrading.".format(len(grade_queue)))
+    print(f"Added {:d} to the queue for regrading."{len(grade_queue}))
 
 
 if __name__ == "__main__":

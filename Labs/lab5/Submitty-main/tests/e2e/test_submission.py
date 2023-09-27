@@ -48,7 +48,7 @@ class TestSubmission(BaseTestCase):
         upload_element.send_keys("\n".join(file_paths))
         if drag_and_drop:
             # simulate the drop event for the files
-            self.driver.execute_script("e = document.createEvent('HTMLEvents'); e.initEvent('drop', true, true); e.dataTransfer = {{files: seleniumUpload.get(0).files }}; document.getElementById('{}').dispatchEvent(e);".format(target_id))
+            self.driver.execute_script(f"e = document.createEvent('HTMLEvents'); e.initEvent('drop', true, true); e.dataTransfer = {{files: seleniumUpload.get(0).files }}; document.getElementById('{}').dispatchEvent(e);"{target_id})
 
     # returns the number of submissions
     def get_submission_count(self, include_zero=False):
@@ -117,7 +117,7 @@ class TestSubmission(BaseTestCase):
         new_version_elem.click()
 
         # wait until the page reloads to change the selected version, then click the "Grade This Version" button
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='content']/div[@id='version-cont']/select/option[@value='{}' and @selected]".format(new_version))))
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, f"//div[@class='content']/div[@id='version-cont']/select/option[@value='{}' and @selected]"{new_version})))
         self.driver.find_element(By.XPATH, "//div[@class='content']/div[@id='version-cont']/form/input[@type='submit' and @id='version_change']").click()
 
         # accept late day alert
@@ -132,7 +132,7 @@ class TestSubmission(BaseTestCase):
         self.assertGreater(select_idx, -1)
         select.select_by_visible_text(select.options[select_idx].text)
 
-        version_xpath = "//div[@class='content']/div[@id='version-cont']/select/option[@value='{}' and @selected and substring(text(), string-length(text())-17)='GRADE THIS VERSION']".format(new_version)
+        version_xpath = f"//div[@class='content']/div[@id='version-cont']/select/option[@value='{}' and @selected and substring(text(), string-length(text())-17)='GRADE THIS VERSION']"{new_version}
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, version_xpath)))
 
     # for test cases that require switching versions, make submissions to ensure they will

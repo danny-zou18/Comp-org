@@ -82,7 +82,7 @@ def sample_rainbow_grades_test():
     # Verify resources exist, set up initial temporary directories and configuration
     print("Creating temporary RainbowGrades test directories")
     test_tmp = tempfile.mkdtemp("", "",script_path)
-    print("Made new directory {}".format(test_tmp))
+    print(f"Made new directory {}"{test_tmp})
 
     if not os.path.isdir(test_tmp):
         error_and_cleanup(test_tmp, "Failed to create temporary directory")
@@ -115,8 +115,8 @@ def sample_rainbow_grades_test():
             if os.path.isfile(os.path.join(rainbow_path,f)):
                 shutil.copy(os.path.join(rainbow_path, f), rainbow_tmp)
     except Exception as e:
-        print("Rainbow Path: {} Rainbow tmp: {}".format(rainbow_path,rainbow_tmp))
-        error_and_cleanup(test_tmp, "{}".format(e))
+        print(f"Rainbow Path: {} Rainbow tmp: {}"{rainbow_path,rainbow_tmp})
+        error_and_cleanup(test_tmp, f"{}"{e})
 
     # Copy non-standard files over
     print("Copying test-specific files")
@@ -127,7 +127,7 @@ def sample_rainbow_grades_test():
         shutil.copy(os.path.join(repository_path, "grading", "json_syntax_checker.py"),
                     os.path.join(grading_tmp, "json_syntax_checker.py"))
     except Exception as e:
-        error_and_cleanup(test_tmp, "{}".format(e))
+        error_and_cleanup(test_tmp, f"{}"{e})
 
     # Update Makefile to use the temporary location of RainbowGrades
     print("Updating Rainbow Grades Makefile")
@@ -149,7 +149,7 @@ def sample_rainbow_grades_test():
                 else:
                     make_file.write(line)
     except Exception as e:
-        error_and_cleanup(test_tmp, "{}".format(e))
+        error_and_cleanup(test_tmp, f"{}"{e})
 
     # Use the same method a user would to pull reports from Submitty to Rainbow Grades
     print("Attempting to rsync contents")
@@ -157,7 +157,7 @@ def sample_rainbow_grades_test():
     return_code = subprocess.call(["make", "pull_test"])
 
     if return_code != 0:
-        error_and_cleanup(test_tmp, "Failed to rsync data (Error {})".format(return_code))
+        error_and_cleanup(test_tmp, f"Failed to rsync data (Error {})"{return_code})
 
     if not os.path.isdir(os.path.join(summary_tmp, "raw_data")):
         error_and_cleanup(test_tmp, "Could not find raw_data folder after rsync'ing")
@@ -170,7 +170,7 @@ def sample_rainbow_grades_test():
     return_code = subprocess.call(["tar", "-xf", os.path.join(script_path, "raw_data_10090542_sample.tar"),
                                    "-C", known_raw_path])
     if return_code != 0:
-        error_and_cleanup(test_tmp, "Extracting raw data failed (Error {}".format(return_code))
+        error_and_cleanup(test_tmp, f"Extracting raw data failed (Error {}"{return_code})
     print("Comparing known raw data to rsync'd raw data")
 
     # Construct a list of all files in the Submitty and test versions of reports to make sure the name/number matches
@@ -188,10 +188,10 @@ def sample_rainbow_grades_test():
                                         "summaries?")
         elif len(known_files) > len(summary_files):
             error_and_cleanup(test_tmp,
-                              "There are {} fewer files in the rsync'd raw_data than expected.".format(file_diff))
+                              f"There are {} fewer files in the rsync'd raw_data than expected."{file_diff})
         else:
             error_and_cleanup(test_tmp,
-                              "There are {} more files in the rsync'd raw_data than expected.".format(-1 * file_diff))
+                              f"There are {} more files in the rsync'd raw_data than expected."{-1 * file_diff})
 
     # Verify the content (except for time-dependent fields) of Submitty raw_data files match with test version
     for f in known_files:
@@ -207,14 +207,14 @@ def sample_rainbow_grades_test():
             with open(filename2, 'r') as file2:
                 contents2 = file2.readlines()
         except Exception as e:
-            error_and_cleanup(test_tmp, "{}".format(e))
+            error_and_cleanup(test_tmp, f"{}"{e})
 
         # Use filters to avoid time-dependent fields and speed up comparison
         filter1 = filter(remove_extra_raw_data_fields, contents1)
         filter2 = filter(remove_extra_raw_data_fields, contents2)
         for x, y in zip(filter1, filter2):
             if x != y:
-                error_and_cleanup(test_tmp, "{} and {} differ".format(filename1, filename2))
+                error_and_cleanup(test_tmp, f"{} and {} differ"{filename1, filename2})
 
     print("All raw files match")
 
@@ -224,7 +224,7 @@ def sample_rainbow_grades_test():
     try:
         make_output = subprocess.check_output(["make"])
     except subprocess.CalledProcessError as e:
-        error_and_cleanup(test_tmp, "Make failed with code {}".format(e.returncode))
+        error_and_cleanup(test_tmp, f"Make failed with code {}"{e.returncode})
 
     if not os.path.isfile(os.path.join(summary_tmp, "output.html")):
         error_and_cleanup(test_tmp, "Failed to create output.html")
@@ -248,7 +248,7 @@ def sample_rainbow_grades_test():
             output_generated_contents = output_generated_file.read()
             output_known_contents = output_known_file.read()
     except Exception as e:
-        error_and_cleanup(test_tmp, "{}".format(e))
+        error_and_cleanup(test_tmp, f"{}"{e})
 
     if output_generated_contents != output_known_contents:
         error_and_cleanup(test_tmp, "Generated output.html did not match expected output.html")
@@ -260,7 +260,7 @@ def sample_rainbow_grades_test():
     return_code = subprocess.call(["tar", "-xf", os.path.join(script_path, "individual_summary_10090542_sample.tar"),
                                    "-C", known_individual_path])
     if return_code != 0:
-        error_and_cleanup(test_tmp, "Extracting raw data failed (Error {}".format(return_code))
+        error_and_cleanup(test_tmp, f"Extracting raw data failed (Error {}"{return_code})
 
     # Construct lists of generated and test individual_grade_summary_html files
     known_files = []
@@ -274,10 +274,10 @@ def sample_rainbow_grades_test():
     if len(known_files) != len(summary_files):
         file_diff = len(known_files) - len(summary_files)
         if len(known_files) > len(summary_files):
-            error_and_cleanup(test_tmp, "There are {} more files in the generated ".format(file_diff) +
+            error_and_cleanup(test_tmp, f"There are {} more files in the generated "{file_diff} +
                               "individual_summary_html than expected.")
         else:
-            error_and_cleanup(test_tmp, "There are {} fewer files in the generated ".format(-1*file_diff) +
+            error_and_cleanup(test_tmp, f"There are {} fewer files in the generated "{-1*file_diff} +
                               "individual_summary_html than expected.")
 
     # Compare the contents (excluding time-sensitive parts) of generated and test individual_grade_summary_html files
@@ -298,14 +298,14 @@ def sample_rainbow_grades_test():
             with open(filename2, 'r') as file2:
                 contents2 = file2.readlines()
         except Exception as e:
-            error_and_cleanup(test_tmp, "{}".format(e))
+            error_and_cleanup(test_tmp, f"{}"{e})
 
         # Construct and use filters to ignore time-dependent contents during comparison
         filter1 = filter(remove_info_last_updated, contents1)
         filter2 = filter(remove_info_last_updated, contents2)
         for x, y in zip(filter1, filter2):
             if x != y:
-                error_and_cleanup(test_tmp, "{} and {} differ".format(filename1, filename2))
+                error_and_cleanup(test_tmp, f"{} and {} differ"{filename1, filename2})
 
     print("All generated files match")
 

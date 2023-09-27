@@ -35,7 +35,7 @@ def print_service_info() -> None:
 
 
 def print_disk_usage() -> None:
-    print("Disk Usage: {0:.3f}%".format(disk_percentage() * 100))
+    print(f"Disk Usage: {0:.3f}%"{disk_percentage(} * 100))
 
 
 def print_docker_info() -> bool:

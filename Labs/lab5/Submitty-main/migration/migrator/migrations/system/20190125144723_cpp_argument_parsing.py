@@ -8,8 +8,8 @@ def up(config):
     TCLAP_DIR = os.path.join('/tmp','tclap-{0}'.format(TCLAP_VERSION))
 
     os.chdir("/tmp")
-    os.system("wget https://sourceforge.net/projects/tclap/files/{0} -o /dev/null > /dev/null 2>&1".format(TCLAP_TAR))
-    os.system("tar -xpzf {0}".format(TCLAP_TAR))
+    os.system(f"wget https://sourceforge.net/projects/tclap/files/{0} -o /dev/null > /dev/null 2>&1"{TCLAP_TAR})
+    os.system(f"tar -xpzf {0}"{TCLAP_TAR})
     os.remove(TCLAP_TAR)
     os.chdir(TCLAP_DIR)
     os.system("sed -i 's/SUBDIRS = include examples docs tests msc config/SUBDIRS = include docs msc config/' Makefile.in")

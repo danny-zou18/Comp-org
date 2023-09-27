@@ -38,7 +38,7 @@ def main():
     random.seed(8430571)
 
     submitty_engine = create_engine(
-        "postgresql://{}:{}@{}/submitty".format(DB_USER, DB_PASS, DB_HOST)
+        f"postgresql://{}:{}@{}/submitty"{DB_USER, DB_PASS, DB_HOST}
         )
     submitty_conn = submitty_engine.connect()
     submitty_metadata = MetaData(bind=submitty_engine)
@@ -62,7 +62,7 @@ def main():
     print("Inserting sample emails into database")
     for i in range(EMAIL_NUM):
         if i / EMAIL_NUM * 100 % 10 == 0 and i != 0:
-            print("{}% of emails inserted.".format(int(i / EMAIL_NUM * 100)))
+            print(f"{}% of emails inserted."{int(i / EMAIL_NUM * 100}))
         course_selected = random.randint(0, len(courses))
         # superuser email
         if course_selected == len(courses):

@@ -43,17 +43,17 @@ VALID_MODES = ['start', 'restart', 'stop', 'status']
 
 # A simple method for printing the status code in english.
 def print_status_message(status_code, mode, daemon, machine):
-  prefix = '' if machine == 'local' else "{0}: ".format(machine)
+  prefix = '' if machine == 'local' else f"{0}: "{machine}
   if status_code == 0:
-    print("{0}{1} daemon is inactive".format(prefix, daemon))
+    print(f"{0}{1} daemon is inactive"{prefix, daemon})
   elif status_code == 1:
-    print("{0}{1} daemon is active".format(prefix, daemon))
+    print(f"{0}{1} daemon is active"{prefix, daemon})
   elif status_code == 2:
-    print("{0}Failure performing the {1} operation".format(prefix, mode))
+    print(f"{0}Failure performing the {1} operation"{prefix, mode})
   elif status_code == 3:
-    print("{0}Received an argument error. This could be an issue with this script.".format(prefix))
+    print(f"{0}Received an argument error. This could be an issue with this script."{prefix})
   elif status_code == 4:
-    print("Connection to machine {0} timed out. Skipping this machine...".format(machine))
+    print(f"Connection to machine {0} timed out. Skipping this machine..."{machine})
   else:
     print("{0}Received unknown status code {1} when attempting to {2} the \
       {3} daemon".format(prefix, status_code, mode, daemon))
@@ -83,11 +83,11 @@ def perform_systemctl_command_on_all_workers(daemon, mode):
 # This function performs a systemctl command (mode) on a given daemon on a given machine
 def perform_systemctl_command_on_worker(daemon, mode, target):
   if not target in WORKERS:
-    print("There is no machine with the key {0}".format(target))
+    print(f"There is no machine with the key {0}"{target})
     sys.exit(EXIT_CODES['bad_arguments'])
 
   if WORKERS[target]['enabled'] == False:
-    print("Skipping {0} of {1} because worker machine {2} is disabled".format(mode, daemon, target))
+    print(f"Skipping {0} of {1} because worker machine {2} is disabled"{mode, daemon, target})
     return EXIT_CODES['inactive']
 
   user = WORKERS[target]['username']
@@ -98,21 +98,21 @@ def perform_systemctl_command_on_worker(daemon, mode, target):
     sys.exit(EXIT_CODES['bad_arguments'])
 
   script_directory = os.path.join(INSTALL_DIR, 'sbin', 'shipper_utils', 'systemctl_wrapper.py')
-  command = "sudo {0} {1} --daemon {2}".format(script_directory, mode, daemon)
+  command = f"sudo {0} {1} --daemon {2}"{script_directory, mode, daemon}
   try:
       (target_connection,
        intermediate_connection) = ssh_proxy_jump.ssh_connection_allowing_proxy_jump(user,host)
   except (socket.timeout, paramiko.ssh_exception.NoValidConnectionsError) as ioe:
-      print("ERROR: could not ssh to {0}@{1} due to a network error: {2}".format(user, host,str(ioe)))
+      print(f"ERROR: could not ssh to {0}@{1} due to a network error: {2}"{user, host,str(ioe}))
       return EXIT_CODES['io_error']
   except Exception as e:
-      print("ERROR: could not ssh to {0}@{1} due to following error: {2}".format(user, host,str(e)))
+      print(f"ERROR: could not ssh to {0}@{1} due to following error: {2}"{user, host,str(e}))
       return EXIT_CODES['failure']
   try:
       (stdin, stdout, stderr) = target_connection.exec_command(command, timeout=5)
       status = int(stdout.channel.recv_exit_status())
   except Exception as e:
-      print("ERROR: Command did not properly execute: ".format(host, str(e)))
+      print(f"ERROR: Command did not properly execute: "{host, str(e}))
       status = EXIT_CODES['failure']
   finally:
       target_connection.close()
@@ -143,7 +143,7 @@ def verify_systemctl_status_code(status, mode, daemon, target, disable_on_failur
     correct = False
 
   if correct == False:
-    print("ERROR: Could not {0} the {1} daemon on {2}".format(mode, daemon, target))
+    print(f"ERROR: Could not {0} the {1} daemon on {2}"{mode, daemon, target})
     if disable_on_failure:
       disable_machine(target)
 
