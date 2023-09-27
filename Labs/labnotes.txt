@@ -1,0 +1,49 @@
+Lab 5 Checkpoint 1 Commands
+
+B) find . -type f -regextype posix-egrep -iregex '.*/[a-z]{4,7}[0-9]{0,2}.(c|cc|cpp|cxx|h|hxx|c++|php|py)$'
+
+-regextype posix-egrep: Specifies the regular expression syntax to use. In this case, it's using POSIX extended regular expressions.
+-iregex: Specifies that the regular expression pattern is case-insensitive.
+
+d) find . -type f -name "*.py" -exec sed -i 's/\("\)\([^"]\+\)\("\).format(\([^)]\+\))/f\1\2\3{\4}/g' {} \;
+
+-exec option in find:
+
+This option is used to execute a command on the files found by the find command.
+The {} placeholder is a placeholder for the name of each file found.
+
+sed command:
+
+sed is a stream editor for filtering and transforming text.
+-i: This option tells sed to edit the files in place.
+The expression within single quotes is the actual sed command.
+
+s/("\)\([^"]\+\)\("\).format(\([^)]\+\))/f\1\2\3{\4}/g:
+s: Indicates substitution.
+\("\): This captures a double quote (") and stores it in a group (referenced as \1 later).
+\([^"]\+\): This captures one or more characters that are not a double quote and stores them in a group (referenced as \2 later).
+\("\): This captures another double quote and stores it in a group (referenced as \3 later).
+.format(: This part matches the literal text ".format(".
+\([^)]\+\): This captures one or more characters that are not a closing parenthesis and stores them in a group (referenced as \4 later).
+): This matches the closing parenthesis.
+The replacement part is f\1\2\3{\4}, which changes the .format( to {.
+So, the sed command is replacing instances of .format( with { inside the Python files.
+
+
+c) grep -r -E -B 4 -A 4 '\[.* for .* in .* if .*]' .
+
+-r: Recursively search subdirectories.
+-E: Interpret the pattern as an extended regular expression (ERE). This allows the use of extended features like +, ?, () for grouping, etc.
+-B 4: Print 4 lines of leading context (lines before the match).
+-A 4: Print 4 lines of trailing context (lines after the match).
+
+'\[.* for .* in .* if .*]': This is a regular expression pattern that matches a Python list comprehension with a condition. Breaking it down:
+\[: Matches an opening square bracket [.
+.*: Matches any sequence of characters (except for a newline).
+for: Matches the keyword "for".
+.*: Matches any sequence of characters.
+in: Matches the keyword "in".
+.*: Matches any sequence of characters.
+if: Matches the keyword "if".
+.*: Matches any sequence of characters.
+]: Matches a closing square bracket ].
