@@ -422,24 +422,168 @@
 
     $MLOPS_{P2} = \frac{4.0e8}{.25 * 1.0e6} = 1.6e3$
     
+    \subsection*{4.15.14}
 
+    Total Time = 250 seconds
 
+    FP Instructions Time = 70 seconds
 
+    Load/Store Instructions Time = 85 seconds
 
-    \vspace*{6pt}
+    Branch Instruction Time = 40 seconds
 
+    \subsection*{(a)}
 
+    Reduced time for FP instructions = 70 * .80 = 56 seconds
 
+    Total Time = 56 + (250 - 70) = 236 seconds
 
+    Total Time Reduced = 250 - 236 = 14 seconds
 
+    $\frac{14}{250} * 100$ = 5.6\%
 
+    Reducing FP operations by 20\% will cause a 5.6\% reduction in total time
 
+    \subsection*{(b)}
 
+    Original Int Time = 250 - 70 - 85 - 40 = 55
 
+    Total Time reduced by 20\% = $250 * (1-.20) = 200$ seconds
 
+    Total Time = FP time + l/s time + branch time + new int time
 
+    200 = 70 + 85 + 40 + new int time
 
+    new int time = 5 seconds
+
+    $\frac{5}{55} * 100 = 90.9\%$
+
+    Int operation time is reduced by 90.9\% when total time is reduced by 20\%
+
+    \subsection*{(c)}
+
+    Total Time reduced by 20\% = $250 * (1-.20) = 200$ seconds
+
+    Let x represent branch time
+
+    200 = 70 + 85 + x + 55
+
+    200 = 210 + x
+
+    x = -10
+
+    We see here that in order for Total time to be reduced by 20\%, branch time will have to go into the negatives, which is not possible. Thus the total time cannot be reduced by 20\% by reducing only the time for branch instructions.
+
+    \subsection*{4.15.15}
+
+    \subsection*{(a)}
+
+    Execution Time = Clock Cycles / Clock Rate
+
+    Clock Rate = 2Ghz = 2e9
+
+    Clock Cycles = $(CPI_{FP} * Instructions_{FP}) + (CPI_{INT} * Instructions_{INT}) + (CPI_{L/S} * Instructions_{L/S}) + (CPI_{branch}* Instructions_{branch})$
+
+    Clock Cycles = $(50e6 * 1) + (110e6 * 1) + (80e6 * 4) + (16e6 * 2)$
+
+    Clock Cycles = $50e6 + 110e6 + 320e6 + 32e6$
+
+    Clock Cycles = $512e6$
+
+    Execution Time = $\frac{512e6}{2e9} = 256e_{-3} = 0.256$ seconds
+
+    Execution Time two times faster = $\frac{.256}{2}$ = 0.128 seconds
+
+    Let x represent what FP instructions average CPI has to be to make execution time 2 times faster
+
+    0.128 = $\frac{(50e6 * x) + (110e6 * 1) + (80e6 * 4) + (16e6 * 2)}{2e9}$
+
+    0.128 = $\frac{(50e6 * x) + 110e6 + 320e6 + 32e6}{2e9}$
+
+    0.128 = $\frac{(50e6 * x) + 462e6}{2e9}$
+
+    0.128 = $\frac{50e6*x}{2e9} + \frac{462e6}{2e9}$
+
+    0.128 = $\frac{50e6*x}{2e9} + .231$
+
+    -0.103 = $\frac{50e6*x}{2e9}$
+
+    -0.103 = $25e_{-3} * x$
+
+    -0.103 = $0.025 * x$
+
+    x = -4.12
+
+    Since x comes out to be negative, it is impossible to make the program run two times faster by only improving CPI of FP instructions
+
+    \subsection*{(b)}
+
+    Execution Time = Clock Cycles / Clock Rate
+
+    Clock Rate = 2Ghz = 2e9
+
+    Clock Cycles = $(CPI_{FP} * Instructions_{FP}) + (CPI_{INT} * Instructions_{INT}) + (CPI_{L/S} * Instructions_{L/S}) + (CPI_{branch}* Instructions_{branch})$
+
+    Clock Cycles = $(50e6 * 1) + (110e6 * 1) + (80e6 * 4) + (16e6 * 2)$
+
+    Clock Cycles = $50e6 + 110e6 + 320e6 + 32e6$
+
+    Clock Cycles = $512e6$
+
+    Execution Time = $\frac{512e6}{2e9} = 256e_{-3} = 0.256$ seconds
+
+    Execution Time two times faster = $\frac{.256}{2}$ = 0.128 seconds
+
+    Let x represent what L/S instructions average CPI has to be to make execution time 2 times faster
+
+    0.128 = $\frac{(50e6 * 1) + (110e6 * 1) + (80e6 * x) + (16e6 * 2)}{2e9}$
+
+    0.128 = $\frac{50e6 + 110e6 + 32e6 + (80e6 * x)}{2e9}$
+
+    0.128 = $\frac{(80e6 * x) + 192e6}{2e9}$
+
+    0.128 = $\frac{(80e6 * x)}{2e9} + \frac{192e6}{2e9}$
+
+    0.128 = $\frac{(80e6 * x)}{2e9} + .096$
+
+    0.032 = $.040 * x$
+
+    x = 0.8
+
+    $\frac{4}{.8} * 100$ = 500\%
+
+    We would have to improve CPI of L/S Instructions by 500\% if we want the program to run two times faster
+
+    \subsection*{(c)}
+
+    New $CPI_{INT}$ = 1 * (1 - .40) = .6
+
+    New $CPI_{FP}$ = 1 * (1 - .40) = .6
+
+    New $CPI_{L/S}$ = 4 * (1 - .30) = 2.8
+
+    New $CPI_{Branch}$ = 2 * (1 - .30) = 1.4
+
+    Execution Time = Clock Cycles / Clock Rate
+
+    Clock Rate = 2Ghz = 2e9
+
+    Clock Cycles = $(CPI_{FP} * Instructions_{FP}) + (CPI_{INT} * Instructions_{INT}) + (CPI_{L/S} * Instructions_{L/S}) + (CPI_{branch}* Instructions_{branch})$
+
+    Clock Cycles = $(50e6 * .6) + (110e6 * .6) + (80e6 * 2.8) + (16e6 * 1.4)$
+
+    Clock Cycles = $30e6 + 66e6 + 224e6 + 22.4e6$
+
+    Clock Cycles = $342.4e6$
+
+    Execution Time = $\frac{342.4e6}{2e9} = 171.2e_{-3} = 0.1712$ seconds
+
+    $\frac{0.256}{.1712}$ = 1.495
+
+    Execution Time improved by 1.495 times.
+
+    \subsection*{4.15.16}
     
 
-    
+
 \end{document}
