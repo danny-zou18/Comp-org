@@ -6,154 +6,440 @@
 
 \usepackage[left=.7in, right=.7in, top=0.5in, bottom=0.5in]{geometry}
 \usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{setspace}
 
 \begin{document}
     \pagenumbering{gobble}
     \maketitle
+    \onehalfspacing
 
-    \section{Overview}
+    \section*{Problems}
+
+    \subsection*{4.15.5}
     
-    \subsection*{4.15.1}
-    \paragraph*{1} A personal computer is a computer designed for individual use, usually incorporating hardwares like a monitor for graphical display and a keyboard/mouse for input.
-    \paragraph*{2} A embedded computer is a computer inside of another device designed to perform dedicated functions or tasks within a larger system. Unlike general-purpose computers like desktops or laptops, embedded computers are typically designed for specific applications and are integrated into other devices or systems.
-    \paragraph*{3} A server is a computer used for running larger programs for multiple users, often simultaneously, and typically only accessed via networks. Used to store and manage data in most cases.
+    \subsubsection*{(a)}
     
-    \subsection*{4.15.2}
-    \paragraph*{a} Assembly lines in automobile manufacturing - Make the common case fast
-    \paragraph*{b} Suspension bridge cables - Performance via Pipelining
-    \paragraph*{c} Aircraft and marine navigation systems that incorporate wind information - Performance via Prediction
-    \paragraph*{d} Express elevators in buildings - Performance via Parallelism
-    \paragraph*{e} Library reserve desk - Use Abstraction to Simplify Design
-    \paragraph*{f} Increasing the gate area on a CMOS transistor to decrease its switching time - Hierarchy of Memories
-    \paragraph*{g} Building self-driving cars whose control systems partially rely on existing sensor systems already installed into the base vehicle, such as lane departure systems and smart cruise control systems - Dependability via Redundancy
+    $Performance = {Clock Rate}/CPI$\\
 
-    \subsection*{4.15.3}
-    \paragraph*{a} So it starts off with obviously the programmers(us) writing a program in a high-level language like C, then the compiler converts this high level program into an assembly language program(like MIPS). Lastly the assembler coverts the assembly language program into binary language that gets executed by our cpu.
+    P1 = ${3.0 * 10^9}/1.5$ = $2.0 * 10^9$ IPS
 
-    \subsection*{4.15.4}
-    \paragraph*{a} 
-    Frame Buffer Size = (Frame Width * Frame Height * Color Depth) / 8 \\
+    P2 = ${2.5 * 10^9}/1.0$ =  ${2.5 * 10^9}$ IPS
 
-    Frame Width = 1024px 
+    P3 = ${4.0 * 10^9}/2.2$ = ${1.8 * 10^9}$  IPS\\
 
-    Frame Height = 1280px 
-
-    Color Depth = 8 + 8 + 8 \\
-
-    Frame Buffer Size = (1024 * 1280 * 24) / 8 = 3,932,160 Bytes \\
+    Processor P2 has the highest performance expressed in giga instructions per second
     
-    Mininum size in bytes of the frame buffer to store a frame is 3932160 Bytes
-    \paragraph*{b} Framesize in Bits = 3932160 x 8 = 31457280 bits \\
+    \subsection*{(b)}
     
-    100Mbits = 100,000,000 bits
+    $Number of cycles = (Clock\ Rate) * (Execution\ Time\ in\ seconds)$
 
-    Time(s) = 31457280 / 100000000 = .3145728 secs\\
+    $Number of instructions = (IPS) * (Execution\ Time\ in\ seconds)$
 
-    It would take at minumum 0.3145728 seconds for the frame to be over a 100 Mbits/s network.
+    \vspace{12pt}
 
-    \subsection*{4.15.6}
-    \paragraph*{a} 
-    Number of Years = 2019 - 2010 = 9
-    \subparagraph*{Tech Average Yearly Increase and Years to double}
+    For P1
     
-    \[ \text{Initial Value} = \left(\frac{1}{32}\right)^2 = 0.00097 \]   
-    \[ \text{Final Value} = \left(\frac{1}{14}\right)^2 = 0.0051 \]    
+    -Number of cycles = $(3.0 * 10^9) * (10) = 3.0 * 10^{10}$ cycles
 
-   \begin{align*}
-        \frac{0.0051-0.00097}{9(0.00097)} * 100 = 47.30%
-    \end{align*}
-    Increases at a average rate of 47.30\% per year
-    \begin{align*}
-        \frac{\log(2)}{\log(1+.4730)} = 1.78
-    \end{align*}
-    Takes approximately 1.8 years to double
+    -Number of instructions = $(2.0 * 10^9) * (10) = 2.0 * 10^{10}$ instructions
 
-    \subparagraph*{Max. Clock Speed (GHz) Average Yearly Increase and Years to double}
+    \vspace*{6pt}
+
+    For P2
+
+    -Number of cycles = $(2.5 * 10^9) * (10) = 2.5 * 10^{10}$ cycles
+
+    -Number of instructions = $(2.5 * 10^9) * (10) = 2.5 * 10^{10}$ instructions
+
+    \vspace{6pt}
+
+    For P3
+
+    -Number of cycles = ${4.0 * 10^9} * (10) = 4.0 * 10^{10}$
+
+    -Number of instructions = $(1.8 * 10^9) * (10) = 1.8 * 10^{10}$
+
+    \subsection*{(c)}
+
+    Clock Rate = $((Total\ number\ of\ instructions) * (CPI)) / (Execution\ Time)$
+
+    For P1
+
+    -Total number of instructions = $2.0 * 10^{10}$
+
+    -CPI = $1.2 * 1.5 = 1.8$
+
+    -Execution Time = $0.7 * 10 = 7$ seconds
+
+    Clock Rate = $((2.0 * 10^{10}) * 1.8)/7 = 5.14$ GHZ
+
+    For P2
+
+    -Total number of instructions = $2.5 * 10^{10}$
+
+    -CPI = $1.2 * 1 = 1.2$
+
+    -Execution Time = $0.7 * 10 = 7$ seconds
+
+    Clock Rate = $((2.5 * 10^{10}) * 1.2)/7 = 4.28$ GHZ
+
+    For P3 
+
+    -Total number of instructions = $1.8 * 10^{10}$
+
+    -CPI = $1.2 * 2.2 = 2.64$
+
+    -Execution Time = $0.7 * 10 = 7$ seconds
+
+    Clock Rate = $((1.8 * 10^{10}) * 2.64)/7 = 6.79$ GHZ
+
+    \subsection*{4.15.8}
+
+    \subsubsection*{(a)}
+
+    Execution Time = Instruction Count * CPI * Clock Cycle Time
+
+    Average CPI = (Execution Time) / (Instruction Count * Clock Cycle Time)
+
+    \vspace*{6pt}
+
+    Compiler A - $1.1 / {1.0e^9 * 1}$ = 1.1
+
+    Compiler B - $ 1.5 / {1.2e^9 * 1}$ = 1.25
+
+    \subsection*{(b)}
+
+    Execution Time = Instruction Count * CPI * Clock Cycle Time
+
+    Execution Time/Clock Cycle Time = Instruction Count * CPI
+
+    1 / Clock Cycle Time = (Instruction Count * CPI) / Execution Time
+
+    1 / Clock Cycle Time = Clock Rate
+
+    Clock Rate = (Instruction Count * CPI) / Execution Time
+
+    Same CPU time so allow Execution Time to be 1 
+
+    Clock Rate = CR
+
+    \vspace*{6pt}
+
+    $CR_B/CR_A = (Instruction\ Count_B * CPI_B)/(Instruction\ Count_A * CPI_A)$ 
+
+    $CR_B/CR_A = (1.2e^9 * 1.25)/(1.0e^9 * 1.1) \approx 1.37$
+
+    1.37 times faster
+
+    \subsection*{(c)}
+
+    Speedup = $\frac{Execution\ Time_A}{Execution\ Time_{new}}$
+
+    \vspace*{6pt}
     
-    \[ \text{Initial Value} = 3.33 \]   
-    \[ \text{Final Value} = 4.90 \]    
+    $\frac{Execution\ Time_A}{Execution\ Time_{new}} = \frac{(Instruction\ Count_A * CPI_A)}{(Instruction\ Count_{new} * CPI_{new})} = (1.0e^9 * 1.1)/(6.0e^8) \approx 1.67$ times faster
 
-   \begin{align*}
-        \frac{4.90-3.33}{9(3.33)} * 100 = 5.24%
-    \end{align*}
-    Increases at a average rate of 5.24\% per year
-    \begin{align*}
-        \frac{\log(2)}{\log(1+.0524)} = 13.57
-    \end{align*}
-    Takes approximately 13.5 years to double
+    \vspace*{6pt}
 
-    \subparagraph*{Integer IPC/ core Average Yearly Increase and Years to double}
+    $\frac{Execution\ Time_B}{Execution\ Time_{new}} = \frac{(Instruction\ Count_B * CPI_B)}{(Instruction\ Count_{new} * CPI_{new})} = (1.2e^9 * 1.25)/(6.0e^8) \approx 2.27$ times faster
+
+    \newpage
+
+    \subsection*{4.5.10}
+
+    \subsection*{(a)}
+
+    \subsubsection*{Processors - 1}
+
+    Execution Time = Clock Cycle / Clock Rate
+
+    Clock Rate = 2GHz = $2e9$
+
+    \vspace*{6pt}
+
+    Clock Cycles = $(CPI_{arithmetic} * Instructions_{arithmetic}) + (CPI_{load/store} * Instructions_{load/store}) + (CPI_{branch} * Instructions_{branch}) $
+
+    \vspace*{6pt}
+
+    Clock Cycles = $(2.56e9 * 1) + (1.28e9 * 12) + (2.56e8 * 5)$
+
+    Clock Cycles = $(2.56e9) + (1.536e{10}) + (1.28e9) = 19.2e9$ cycles
+
+    Execution Time = $\frac{19.2e9\ cycles}{2e9\ cycles/sec} = 9.6$ seconds
     
-    \[ \text{Initial Value} = 4 \]   
-    \[ \text{Final Value} = 8 \]    
+    \vspace*{6pt}
 
-   \begin{align*}
-        \frac{8-4}{9(4)} * 100 = 11.11%
-    \end{align*}
-    Increases at a average rate of 11.11\% per year
-    \begin{align*}
-        \frac{\log(2)}{\log(1+.1111)} = 6.58  
-    \end{align*}
-    Takes approximately 6.5 years to double
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{9.6} = 1$
 
-    \subparagraph*{Cores Average Yearly Increase and Years to double}
+    \subsubsection*{(Processors - 2)}
+
+    Clock cycles = $\frac{(2.56e9 * 1)}{0.7 * 2} + \frac{(1.28e9 * 12)}{0.7*2} + (2.56e8 * 5)$
+
+    \vspace*{6pt}
+
+    Clock cycles = $\frac{2.56e9}{1.4} + \frac{1.536e{10}}{1.4} + (1.28e9) $
     
-    \[ \text{Initial Value} = 2 \]   
-    \[ \text{Final Value} = 8 \]    
+    \vspace*{6pt}
 
-   \begin{align*}
-        \frac{8-2}{9(2)} * 100 = 33.33%
-    \end{align*}
-    Increases at a average rate of 33.33\% per year
-    \begin{align*}
-        \frac{\log(2)}{\log(1+.4444)} = 2.41
-    \end{align*}
-    Takes approximately 2.5 years to double
-
-    \subparagraph*{Max. DRAM Bandwidth (GB/s) Average Yearly Increase and Years to double}
+    Clock cycles = $1.404e10$ cycles
+    \vspace*{6pt}
     
-    \[ \text{Initial Value} = 17.1 \]   
-    \[ \text{Final Value} = 42.7 \]    
+    Execution Time = $\frac{1.404e10\ cycles}{2e9\ cycles/sec}$ = 7.02 seconds
+    \vspace*{6pt}
 
-   \begin{align*}
-        \frac{42.7-17.1}{9(17.1)} * 100 = 16.63%
-    \end{align*}
-    Increases at a average rate of 16.63\% per year
-    \begin{align*}
-        \frac{\log(2)}{\log(1+.1663)} = 4.5
-    \end{align*}
-    Takes approximately 4.5 years to double
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{7.02} = 1.37 $
 
-    \subparagraph*{SP floating point (Gflop/s) Average Yearly Increase and Years to double}
+    \subsubsection*{Processors - 4}
+
+    Clock cycles = $\frac{(2.56e9 * 1)}{0.7 * 4} + \frac{(1.28e9 * 12)}{0.7*4} + (2.56e8 * 5)$
+
+    \vspace*{6pt}
+
+    Clock cycles = $\frac{2.56e9}{2.8} + \frac{1.536e{10}}{2.8} + (1.28e9) $
     
-    \[ \text{Initial Value} = 107 \]   
-    \[ \text{Final Value} = 627 \]    
+    \vspace*{6pt}
 
-   \begin{align*}
-        \frac{627-107}{9(107)} * 100 = 54.00%
-    \end{align*}
-    Increases at a average rate of 54\% per year
-    \begin{align*}
-        \frac{\log(2)}{\log(1+5.77777)} = 1.6
-    \end{align*}
-    Takes approximately 1.6 years to double
-
-    \subparagraph*{L3 Cache (MiB) Average Yearly Increase and Years to double}
+    Clock cycles = $7.22e9$ cycles
+    \vspace*{6pt}
     
-    \[ \text{Initial Value} = 4 \]   
-    \[ \text{Final Value} = 12 \]    
+    Execution Time = $\frac{7.22e9\ cycles}{2e9\ cycles/sec}$ = 3.86 seconds
+    \vspace*{6pt}
 
-   \begin{align*}
-        \frac{12-4}{9(4)} * 100 = 22.22%
-    \end{align*}
-    Increases at a average rate of 5777.77\% per year
-    \begin{align*}
-        \frac{\log(2)}{\log(1+.2222)} = 3.45
-    \end{align*}
-    Takes approximately 3.5 years to double
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{3.86} = 2.49 $
 
+    \subsubsection*{Processors - 8}
+
+    Clock cycles = $\frac{(2.56e9 * 1)}{0.7 * 8} + \frac{(1.28e9 * 12)}{0.7*8} + (2.56e8 * 5)$
+
+    \vspace*{6pt}
+
+    Clock cycles = $\frac{2.56e9}{5.6} + \frac{1.536e{10}}{5.6} + (1.28e9) $
+    
+    \vspace*{6pt}
+
+    Clock cycles = $4.5e9$ cycles
+    \vspace*{6pt}
+    
+    Execution Time = $\frac{4.5e9\ cycles}{2e9\ cycles/sec}$ = 2.25 seconds
+    \vspace*{6pt}
+
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{2.25} = 4.27 $
+
+    \subsection*{(b)}
+
+    \subsubsection*{Processors - 1}
+
+    Execution Time = Clock Cycle / Clock Rate
+
+    Clock Rate = 2 Ghz = $2e9$
+
+    Clock Cycle = $(2.56e9 * 2) + (1.28e9 * 12) + (2.56e8 * 5)$
+
+    Clock Cycle = $(5.12e9) + (1.536e10) + (1.28e9) = 21.76e9$
+    \vspace*{6pt}
+
+    Execution Time = $\frac{21.76e9\ cycles}{2e9\ cycles/secs}$ = 10.88 seconds
+
+    \subsubsection*{Processors - 2}
+
+    Execution Time = Clock Cycle / Clock Rate
+
+    Clock Rate = 2 Ghz = $2e9$
+    \vspace*{6pt}
+
+    Clock Cycle = $\frac{(2.56e9 * 2)}{0.7 * 2} + \frac{(1.28e9 * 12)}{0.7 * 2} + (2.56e8 * 5)$
+    \vspace*{6pt}
+
+    Clock Cycle = $(3.657e9) + (1.097e10) + (1.280e9) = 15.94e9$
+    \vspace*{6pt}
+
+    Execution Time = $\frac{15.907e9\ cycles}{2e9\ cycles/secs}$ = 7.954 seconds
+
+    \subsubsection*{Processors - 4}
+
+    Execution Time = Clock Cycle / Clock Rate
+
+    Clock Rate = 2 Ghz = $2e9$
+    \vspace*{6pt}
+
+    Clock Cycle = $\frac{(2.56e9 * 2)}{0.7 * 4} + \frac{(1.28e9 * 12)}{0.7 * 4} + (2.56e8 * 5)$
+    \vspace*{6pt}
+
+    Clock Cycle = $(1.829e9) + (5.486e9) + (1.280e9) = 8.595e9$
+    \vspace*{6pt}
+
+    Execution Time = $\frac{8.595e9\ cycles}{2e9\ cycles/secs}$ = 4.298 seconds
+
+    \subsubsection*{Processors - 8}
+
+    Execution Time = Clock Cycle / Clock Rate
+
+    Clock Rate = 2 Ghz = $2e9$
+    \vspace*{6pt}
+
+    Clock Cycle = $\frac{(2.56e9 * 2)}{0.7 * 8} + \frac{(1.28e9 * 12)}{0.7 * 8} + (2.56e8 * 5)$
+    \vspace*{6pt}
+
+    Clock Cycle = $(9.142e8) + (2.743e9) + (1.280e9) = 4.937e9$
+    \vspace*{6pt}
+
+    Execution Time = $\frac{4.937e9\ cycles}{2e9\ cycles/secs}$ = 2.469 seconds
+
+    \subsection*{(c)}
+
+    \subsubsection*{Execution Time for 4 Processors}
+
+    Clock cycles = $\frac{(2.56e9 * 1)}{0.7 * 4} + \frac{(1.28e9 * 12)}{0.7*4} + (2.56e8 * 5)$
+
+    \vspace*{6pt}
+
+    Clock cycles = $\frac{2.56e9}{2.8} + \frac{1.536e{10}}{2.8} + (1.28e9) $
+    
+    \vspace*{6pt}
+
+    Clock cycles = $7.22e9$ cycles
+    \vspace*{6pt}
+    
+    Execution Time = $\frac{7.22e9\ cycles}{2e9\ cycles/sec}$ = 3.86 seconds
+
+    \subsubsection*{Find new CPI for single processor}
+
+    x will represent the new CPI for load/store instructions that we will find
+
+    Clock Cycles = $(2.56e9 * 1) + (1.28e9 * x) + (2.56e8 * 5)$
+
+    Clock Cycles = $(2.56e9) + (1.28e9 * x) + (1.28e9)$
+
+    Clock Cycles = $(3.84e9) + (1.28e9 * x)$
+    \vspace*{6pt}
+
+    Execution Time = $\frac{3.84e9 + (1.28e9 * x)}{2e9}$
+    \vspace*{6pt}
+
+    $3.86 = \frac{3.84e9}{2e9} + \frac{1.28e9 * x}{2e9}$
+    \vspace*{6pt}
+
+    $3.86 = 1.92 + .64 * x$
+    \vspace*{6pt}
+
+    $x = 3.03$
+
+    $\frac{3.03}{12} = .25 = 25\%$ 
+    \vspace*{6pt}
+
+    The CPI of load/store instructions should be reduced by 25\% in order for a single processors to match the performance of four processors using its original CPI value
+
+    \subsection*{4.15.13}
+
+    \subsection*{(a)}
+
+    Execution Time = Clock Cycles / Clock Rate
+
+    Clock Cycles = (CPI * Instructions)
+
+    P1 Clock Rate = 4GHz = 4.0e9
+    
+    P1 CPI = 0.9
+
+    P1 Instructions = 5.0e9
+    \vspace*{6pt}
+
+    P2 Clock Rate = 3GHz = 3.0e9
+    
+    P2 CPI = 0.75
+
+    P2 Instructions = 1.0e9
+    \vspace*{6pt}
+
+    $Execution\ Time_{P1} = \frac{0.9 * 5.0e9}{4.0e9} = \frac{4.5e9}{4.0e9} = 1.125$ seconds
+
+    $Execution\ Time_{P2} = \frac{0.75 * 1.0e9}{3.0e9} = \frac{0.75e9}{3.0e9} = 0.25$ seconds
+
+    We can see that this fallacy is not true for P1 and P2, although P1 has a higher clock rate, it is slower than P2 as shown above
+
+    \subsection*{(b)}
+
+    \subsubsection*{Find P1 execution time}
+
+    Execution Time = Clock Cycles / Clock Rate
+
+    Clock Cycles = (CPI * Instructions)
+
+    P1 Clock Rate = 4GHz = 4.0e9
+    
+    P1 CPI = 0.9
+
+    P1 Instructions = 1.0e9
+
+    \vspace*{6pt}
+
+    $Execution\ Time_{P1} = \frac{0.9 * 1.0e9}{4.0e9} = .225\ seconds$
+
+    \subsubsection*{Find the numbers of instructions P2 can execute}
+
+    Let x represent the numbers of instructions P2 can execute
+
+    P2 Clock Rate = 3GHz = 3.0e9
+    
+    P2 CPI = 0.75
+
+    P2 Instructions = 1.0e9
+    \vspace*{6pt}
+
+    $Execution\ Time_{P1} = \frac{(0.75 * x)}{3.0e9}$
+
+    .225 = $\frac{.75*x}{3.0e9}$
+
+    $0.675e9 = .75 * x$
+
+    $0.9e9 = x$
+
+    $x = 9.0e8$
+
+    P2 can execute 9.0e8 instructions in the same time that P1 executes 1.0e9 instructions
+
+    \subsection*{(c)}
+
+    MIPS = Number of Instructions / Execution Time * $10^6$
+
+    $MIPS_{P1} = \frac{5.0e9}{1.125e6} = 4.44e3$
+
+    $MIPS_{P2} = \frac{1.0e9}{0.25e6} = 4.0e3$
+
+    This fallacy is not true for P1 and P2, although P1 has a bigger MIPS, it is slower than P2 regarding performance
+    \subsection*{(d)}
+
+    MFLOPS = \# FP Operations / Execution Time * 1.0e6
+
+    $\#\ FP\ Operations_{P1} = 5.0e9 * .40 = 2.0e9$
+
+    $\#\ FP\ Operations_{P2} = 1.0e9 * .40 = 4.0e8$
+    \vspace*{6pt}
+
+    $MLOPS_{P1} = \frac{2.0e9}{1.125 * 1.0e6} = 1.77e3$
+    \vspace*{6pt}
+
+    $MLOPS_{P2} = \frac{4.0e8}{.25 * 1.0e6} = 1.6e3$
     
 
+
+
+
+    \vspace*{6pt}
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     
 \end{document}
