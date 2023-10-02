@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1696260698 "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw1/overview.tex" "overview.pdf" "overview" 1696260699 0
-  "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw1/overview.tex" 1696260698 16689 f5be2a22b557da45d16bcd69797c74f1 ""
+["pdflatex"] 1696269467 "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw1/hw1.tex" "hw1.pdf" "hw1" 1696269468 0
+  "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw1/hw1.tex" 1696260698 16689 f5be2a22b557da45d16bcd69797c74f1 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -47,10 +47,10 @@
   "/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1695745207 4623355 b8cad38412faebe1ce5b780a45db67bd ""
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1695745166 7883453 7a51f666aea8591ab82394f19cde5ec8 ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
-  "overview.aux" 1696260699 32 1b174032087fb90900fa6203d3bb0a7e "pdflatex"
-  "overview.tex" 1696260698 16689 f5be2a22b557da45d16bcd69797c74f1 ""
+  "hw1.aux" 1696269468 32 1b174032087fb90900fa6203d3bb0a7e "pdflatex"
+  "hw1.tex" 1696260698 16689 f5be2a22b557da45d16bcd69797c74f1 ""
   (generated)
-  "overview.aux"
-  "overview.log"
-  "overview.pdf"
+  "hw1.aux"
+  "hw1.log"
+  "hw1.pdf"
   (rewritten before read)
