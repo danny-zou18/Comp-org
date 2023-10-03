@@ -130,7 +130,9 @@
 
     $CR_B/CR_A = (1.2e^9 * 1.25)/(1.0e^9 * 1.1) \approx 1.37$
 
-    1.37 times faster
+    B is 1.37 times faster, so A is .73 times slower
+
+
 
     \subsection*{(c)}
 
@@ -162,15 +164,15 @@
 
     \vspace*{6pt}
 
-    Clock Cycles = $(2.56e9 * 1) + (1.28e9 * 12) + (2.56e8 * 5)$
+    Clock Cycles = $\frac{(2.56e9 * 1)}{0.7 * 1} + \frac{(1.28e9 * 12) }{0.7 * 1}+ (2.56e8 * 5)$
 
-    Clock Cycles = $(2.56e9) + (1.536e{10}) + (1.28e9) = 19.2e9$ cycles
+    Clock Cycles = $(3.66e9) + (2.194e{10}) + (1.28e9) = 26.88e9$ cycles
 
-    Execution Time = $\frac{19.2e9\ cycles}{2e9\ cycles/sec} = 9.6$ seconds
+    Execution Time = $\frac{26.88e9\ cycles}{2e9\ cycles/sec} = 13.44$ seconds
     
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{9.6} = 1$
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{13.44} = 1$
 
     \subsubsection*{(Processors - 2)}
 
@@ -188,7 +190,7 @@
     Execution Time = $\frac{1.404e10\ cycles}{2e9\ cycles/sec}$ = 7.02 seconds
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{7.02} = 1.37 $
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{7.02} = 1.91 $
 
     \subsubsection*{Processors - 4}
 
@@ -206,7 +208,7 @@
     Execution Time = $\frac{7.22e9\ cycles}{2e9\ cycles/sec}$ = 3.86 seconds
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{3.86} = 2.49 $
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{3.86} = 3.48$
 
     \subsubsection*{Processors - 8}
 
@@ -224,7 +226,7 @@
     Execution Time = $\frac{4.5e9\ cycles}{2e9\ cycles/sec}$ = 2.25 seconds
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{9.6}{2.25} = 4.27 $
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{2.25} = 4.27 $
 
     \subsection*{(b)}
 
@@ -652,15 +654,5 @@
 
     Ratio = $\frac{20.91}{128} = 0.163$
     \vspace*{6pt}
-
-    
-
-
-    
-
-    
-
-
-
 
 \end{document}
