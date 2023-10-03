@@ -126,13 +126,11 @@
 
     \vspace*{6pt}
 
-    $CR_B/CR_A = (Instruction\ Count_B * CPI_B)/(Instruction\ Count_A * CPI_A)$ 
+    $CR_A/CR_B = (Instruction\ Count_A * CPI_A)/(Instruction\ Count_B * CPI_B)$ 
 
-    $CR_B/CR_A = (1.2e^9 * 1.25)/(1.0e^9 * 1.1) \approx 1.37$
+    $CR_B/CR_A = (1.0e^9 * 1.1)/(1.2e^9 * 1.25) \approx .733$
 
-    B is 1.37 times faster, so A is .73 times slower
-
-
+    Compiler A is .733 times faster
 
     \subsection*{(c)}
 
@@ -172,7 +170,7 @@
     
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{13.44} = 1$
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{13.44} = 1$ 
 
     \subsubsection*{(Processors - 2)}
 
@@ -190,7 +188,7 @@
     Execution Time = $\frac{1.404e10\ cycles}{2e9\ cycles/sec}$ = 7.02 seconds
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{7.02} = 1.91 $
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{7.02} = 1.91 $ times faster
 
     \subsubsection*{Processors - 4}
 
@@ -208,7 +206,7 @@
     Execution Time = $\frac{7.22e9\ cycles}{2e9\ cycles/sec}$ = 3.86 seconds
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{3.86} = 3.48$
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{3.86} = 3.48$ times faster
 
     \subsubsection*{Processors - 8}
 
@@ -226,7 +224,7 @@
     Execution Time = $\frac{4.5e9\ cycles}{2e9\ cycles/sec}$ = 2.25 seconds
     \vspace*{6pt}
 
-    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{2.25} = 4.27 $
+    Relative Speedup = $\frac{Processors - 1}{Processors - p}$ = $\frac{13.44}{2.25} = 5.97 $ times faster
 
     \subsection*{(b)}
 
@@ -594,63 +592,63 @@
 
     T(2) = $\frac{100}{2} + 4 = 54$ seconds
 
-    Speedup = $\frac{100}{54} = 1.85$ 
+    Speedup = $\frac{100}{54} = 1.85$ times faster
 
-    Ideal Speedup = $\frac{100}{\frac{100}{2}} = \frac{100}{50} = 2$
+    Ideal Speedup = $\frac{100}{\frac{100}{2}} = \frac{100}{50} = 2$ times faster
 
     Ratio = $\frac{1.85}{2} = 0.925$
     \vspace*{6pt}
 
     T(4) = $\frac{100}{4} + 4 = 29$ seconds
 
-    Speedup = $\frac{100}{29} = 3.44$ 
+    Speedup = $\frac{100}{29} = 3.44$ times faster
 
-    Ideal Speedup = $\frac{100}{\frac{100}{4}} = \frac{100}{25} = 4$
+    Ideal Speedup = $\frac{100}{\frac{100}{4}} = \frac{100}{25} = 4$ times faster
 
     Ratio = $\frac{3.44}{4} = 0.86$
     \vspace*{6pt}
 
     T(8) = $\frac{100}{8} + 4 = 16.5$ seconds
 
-    Speedup = $\frac{100}{16.5} = 6.06$ 
+    Speedup = $\frac{100}{16.5} = 6.06$ times faster
 
-    Ideal Speedup = $\frac{100}{\frac{100}{8}} = \frac{100}{12.5} = 8$
+    Ideal Speedup = $\frac{100}{\frac{100}{8}} = \frac{100}{12.5} = 8$ times faster
 
     Ratio = $\frac{6.06}{8} = 0.7575$
     \vspace*{6pt}
 
     T(16) = $\frac{100}{16} + 4 = 10.25$ seconds
 
-    Speedup = $\frac{100}{10.25} = 9.75$ 
+    Speedup = $\frac{100}{10.25} = 9.75$ times faster
 
-    Ideal Speedup = $\frac{100}{\frac{100}{16}} = \frac{100}{6.25} = 16$
+    Ideal Speedup = $\frac{100}{\frac{100}{16}} = \frac{100}{6.25} = 16$ times faster
 
     Ratio = $\frac{9.75}{16} = 0.609$
     \vspace*{6pt}
 
     T(32) = $\frac{100}{32} + 4 = 7.125$ seconds
 
-    Speedup = $\frac{100}{7.125} = 14.035$ 
+    Speedup = $\frac{100}{7.125} = 14.035$ times faster
 
-    Ideal Speedup = $\frac{100}{\frac{100}{32}} = \frac{100}{3.125} = 32$
+    Ideal Speedup = $\frac{100}{\frac{100}{32}} = \frac{100}{3.125} = 32$ times faster
 
     Ratio = $\frac{14.035}{32} = 0.439$
     \vspace*{6pt}
 
     T(64) = $\frac{100}{64} + 4 = 5.5625$ seconds
 
-    Speedup = $\frac{100}{5.5625} = 17.97$ 
+    Speedup = $\frac{100}{5.5625} = 17.97$ times faster
 
-    Ideal Speedup = $\frac{100}{\frac{100}{64}} = \frac{100}{1.5625} = 64$
+    Ideal Speedup = $\frac{100}{\frac{100}{64}} = \frac{100}{1.5625} = 64$ times faster
 
     Ratio = $\frac{17.97}{64} = 0.28$
     \vspace*{6pt}
 
     T(128) = $\frac{100}{128} + 4 = 4.781$ seconds
 
-    Speedup = $\frac{100}{4.781} = 20.91$ 
+    Speedup = $\frac{100}{4.781} = 20.91$ times faster
 
-    Ideal Speedup = $\frac{100}{\frac{100}{128}} = \frac{100}{0.78125} = 128$
+    Ideal Speedup = $\frac{100}{\frac{100}{128}} = \frac{100}{0.78125} = 128$ times faster
 
     Ratio = $\frac{20.91}{128} = 0.163$
     \vspace*{6pt}
