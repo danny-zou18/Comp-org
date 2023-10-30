@@ -67,8 +67,11 @@ int main(int argc, char *argv[]){
 
     char buffer[128];
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        printf("# %s\n", buffer);
-        char* token = strtok(buffer, " \t\r");
+        printf("# %s", buffer);
+        if (buffer[strlen(buffer)-1]!='\n'){
+            printf("\n");
+        }
+        char* token = strtok(buffer, " \t\n\r");
         char* parts[128];
         int partCount = 0;
         bool needTempReg = false;
@@ -78,7 +81,7 @@ int main(int argc, char *argv[]){
             }
             parts[partCount] = token;
             partCount++;
-            token = strtok(NULL, " \t\r");
+            token = strtok(NULL, " \t\n\r");
         }
         if (partCount == 3) {
             saveRegister(registers, size, *parts[0], atoi(parts[2]));
