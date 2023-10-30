@@ -131,11 +131,24 @@ int main(int argc, char *argv[]){
                             } else {
                                 printf("addi %s,%s,-%s\n", findRegister(registers,size, *parts[0]), findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
                             }
-                        }
+                        } else {
+                            printf("addi $t0,%s,-%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                            needTempReg = true;
+                        }   
                     } else {
-                        printf("sub $t0,%s,%s\n",findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                        if (instructions == i){
+                            saveRegister(registers, size, *parts[0], 1);
+                            size++;
+                            if (needTempReg == true){
+                                printf("sub %s,$t0, %s\n", findRegister(registers, size, *parts[0]), parts[secondOperandIndex]);
+                            } else {
+                                printf("sub %s, %s, %s", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                            }
+                        } else {
+                            printf("sub $t0,%s,%s\n",findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                            needTempReg = true;
+                        }
                     }
-                    needTempReg = true;
                 } else if (operator == '*'){
 
                 }
