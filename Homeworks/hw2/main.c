@@ -59,7 +59,6 @@ int main(int argc, char *argv[]){
         printf("Failed to open file: %s", filename);
         return 1;
     }
-
     struct registerMapping* registers = NULL;
     int size = 0;
     int capacity = 100;
@@ -68,7 +67,7 @@ int main(int argc, char *argv[]){
     char buffer[128];
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
         printf("# %s\n", buffer);
-        char* token = strtok(buffer, " \t\n\r");
+        char* token = strtok(buffer, " \t\r");
         char* parts[128];
         int partCount = 0;
         bool needTempReg = false;
@@ -78,7 +77,7 @@ int main(int argc, char *argv[]){
             }
             parts[partCount] = token;
             partCount++;
-            token = strtok(NULL, " \t\n\r");
+            token = strtok(NULL, " \t\r");
         }
         if (partCount == 3) {
             saveRegister(registers, size, *parts[0], atoi(parts[2]));
@@ -140,9 +139,9 @@ int main(int argc, char *argv[]){
                             saveRegister(registers, size, *parts[0], 1);
                             size++;
                             if (needTempReg == true){
-                                printf("sub %s,$t0, %s\n", findRegister(registers, size, *parts[0]), parts[secondOperandIndex]);
+                                printf("sub %s,$t0,%s\n", findRegister(registers, size, *parts[0]), parts[secondOperandIndex]);
                             } else {
-                                printf("sub %s, %s, %s", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("sub %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
                             }
                         } else {
                             printf("sub $t0,%s,%s\n",findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
@@ -150,7 +149,45 @@ int main(int argc, char *argv[]){
                         }
                     }
                 } else if (operator == '*'){
-
+                    if (isNumeric(parts[secondOperandIndex])){
+                        continue;
+                    } else {
+                        if (instructions == i){
+                            saveRegister(registers, size, *parts[0], 1);
+                            size++;
+                            if (needTempReg == true){
+                                printf("mult $t0,%s\n", findRegister(registers, size, secondOperandVar));
+                                printf("mflo %s\n", findRegister(registers, size, *parts[0]));
+                            } else {
+                                printf("mult %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("mflo %s\n", findRegister(registers, size, *parts[0]));
+                            }
+                        } else {
+                            printf("mult %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                            printf("mflo $t0\n");
+                            needTempReg = true;
+                        }
+                    }
+                } else if (operator == '/'){
+                    if (isNumeric(parts[secondOperandIndex])){
+                        continue;
+                    } else {
+                        if (instructions == i){
+                            saveRegister(registers, size, *parts[0], 1);
+                            size++;
+                            if (needTempReg == true){
+                                printf("div $t0,%s\n", findRegister(registers, size, secondOperandVar));
+                                printf("mflo %s\n", findRegister(registers, size, *parts[0]));
+                            }  else {
+                                printf("div %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("mflo %s\n", findRegister(registers, size, *parts[0]));
+                            }
+                        } else {
+                            printf("div %s, %s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                            printf("mflo $t0\n");
+                            needTempReg = true;
+                        }
+                    }
                 }
 
             }
