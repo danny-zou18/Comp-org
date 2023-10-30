@@ -2,23 +2,36 @@
 #include <string.h>
 #include <stdlib.h>
 
+typedef int bool;
+#define true 1
+#define false 0
+
 struct registerMapping {
     char variableLetter;
     char mipsRegister[4];
     int value;
 };
 
-
-void loadImediate(struct registerMapping* registers, int index, char letter, int value){
+void saveRegister(struct registerMapping* registers, int index, char letter, int value){
     registers[index].variableLetter = letter;
-    // printf("%c ", registers[index].variableLetter);
+    // printf("%c \n", registers[index].variableLetter);
     char registerString[4]; // Assuming a maximum register name size of 8 characters
     sprintf(registerString, "$s%d", index);
     strcpy(registers[index].mipsRegister, registerString);
     // printf("%s ",registers[index].mipsRegister);
     registers[index].value = value;
     // printf("%d \n",registers[index].value);
+    (index)++;
 }
+char* findRegister(struct registerMapping* registers, int size, char variable){
+    for (int i = 0; i < size; i++){
+        if (registers[i].variableLetter == variable){
+            return registers[i].mipsRegister;
+        }
+    }
+    return "";
+}
+
 int calculateInstructions(int partCount){
     int instructions = partCount / 2;
     return instructions;
@@ -52,12 +65,13 @@ int main(int argc, char *argv[]){
     int capacity = 100;
     registers = (struct registerMapping*)malloc(capacity * sizeof(struct registerMapping));
 
-    char buffer[100];
+    char buffer[128];
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        printf("# %s", buffer);
+        printf("# %s\n", buffer);
         char* token = strtok(buffer, " \t\n\r");
-        char* parts[100];
+        char* parts[128];
         int partCount = 0;
+        bool needTempReg = false;
         while (token != NULL) {
             if (token[strlen(token)-1] == ';'){
                 token[strlen(token) - 1] = '\0';
@@ -67,7 +81,7 @@ int main(int argc, char *argv[]){
             token = strtok(NULL, " \t\n\r");
         }
         if (partCount == 3) {
-            loadImediate(registers, size, *parts[0], atoi(parts[2]));
+            saveRegister(registers, size, *parts[0], atoi(parts[2]));
             printf("li %s,%d\n", registers[size].mipsRegister, registers[size].value);
             size++;
         } else if (partCount >= 5) {
@@ -76,11 +90,54 @@ int main(int argc, char *argv[]){
                 int firstOperandIndex = 2 * i;
                 int secondOperandIndex = firstOperandIndex + 2;
                 int operatorIndex = firstOperandIndex + 1;
-
-                if (*parts[operatorIndex] == '+'){
+                char firstOperandVar = *parts[firstOperandIndex];
+                char secondOperandVar = *parts[secondOperandIndex];
+                char operator = *parts[operatorIndex];
+                if (operator == '+'){
                     if (isNumeric(parts[secondOperandIndex])){
-                        printf("addi $t0,%s", parts[secondOperandIndex]);
+                        if (instructions == i){
+                            saveRegister(registers, size, *parts[0], 1);
+                            size++;
+                            if (needTempReg == true){
+                                printf("addi %s,$t0,%s\n", findRegister(registers, size, *parts[0]),parts[secondOperandIndex]);
+                            } else {
+                                printf("addi %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
+                            }
+                        } else {
+                            printf("addi $t0,%s,%s\n", findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
+                            needTempReg = true;
+                        } 
+                    } else {
+                        if (instructions == i){
+                            saveRegister(registers, size, *parts[0], 1);
+                            size++;
+                            if (needTempReg == true){
+                                printf("add %s,$t0,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, secondOperandVar));
+                            } else {
+                                printf("add %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar),  findRegister(registers, size, secondOperandVar));
+                            }
+                        } else {
+                            printf("add $t0,%s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                            needTempReg = true;
+                        }
                     }
+                } else if (operator == '-'){
+                    if (isNumeric(parts[secondOperandIndex])){
+                        if (instructions == i){
+                            saveRegister(registers, size, *parts[0], 1);
+                            size++;
+                            if (needTempReg == true){
+                                printf("addi %s,$t0,-%s\n", findRegister(registers, size, *parts[0]), parts[secondOperandIndex]);
+                            } else {
+                                printf("addi %s,%s,-%s\n", findRegister(registers,size, *parts[0]), findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
+                            }
+                        }
+                    } else {
+                        printf("sub $t0,%s,%s\n",findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                    }
+                    needTempReg = true;
+                } else if (operator == '*'){
+
                 }
 
             }
