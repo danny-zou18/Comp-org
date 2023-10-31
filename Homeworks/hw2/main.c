@@ -122,7 +122,6 @@ int main(int argc, char *argv[]){
                         } 
                     } else {
                         if (instructions == i){
-                          
                             if (needTempReg == true){
                                 printf("add %s,$t%d,%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1 ,findRegister(registers, size, secondOperandVar));
                             } else {
@@ -143,7 +142,6 @@ int main(int argc, char *argv[]){
                 } else if (operator == '-'){
                     if (isNumeric(parts[secondOperandIndex])){
                         if (instructions == i){
-                           
                             if (needTempReg == true){
                                 printf("addi %s,$t%d,-%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1 ,parts[secondOperandIndex]);
                             } else {
@@ -158,13 +156,11 @@ int main(int argc, char *argv[]){
                                 printf("addi $t%d,$t%d,-%s\n", tempRegisters, tempRegisters-1, parts[secondOperandIndex]);
                                 tempRegisters++;
                             }
-                           
                         }   
                     } else {
                         if (instructions == i){
-                          
                             if (needTempReg == true){
-                                printf("sub %s,$t%d,%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1 ,parts[secondOperandIndex]);
+                                printf("sub %s,$t%d,%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1 ,findRegister(registers, size, secondOperandVar));
                             } else {
                                 printf("sub %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
                             }
@@ -177,7 +173,6 @@ int main(int argc, char *argv[]){
                                 printf("sub $t%d,$t%d,%s\n",tempRegisters ,tempRegisters-1 ,findRegister(registers,size,secondOperandVar));
                                 tempRegisters++;
                             }
-                            
                         }
                     }
                 } else if (operator == '*'){
@@ -185,7 +180,6 @@ int main(int argc, char *argv[]){
                         continue;
                     } else {
                         if (instructions == i){
-                            
                             if (needTempReg == true){
                                 printf("mult $t0,%s\n", findRegister(registers, size, secondOperandVar));
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
@@ -194,9 +188,17 @@ int main(int argc, char *argv[]){
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
                             }
                         } else {
-                            printf("mult %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
-                            printf("mflo $t0\n");
-                            needTempReg = true;
+                            if (tempRegisters == 0){
+                                printf("mult %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("mflo $t0\n");
+                                needTempReg = true;
+                                tempRegisters++;
+                            } else {
+                                printf("mult $t%d, %s\n", tempRegisters-1,findRegister(registers, size, secondOperandVar));
+                                printf("mflo $t%d\n", tempRegisters);
+                                tempRegisters++;
+                            }
+                            
                         }
                     }
                 } else if (operator == '/'){
@@ -204,7 +206,6 @@ int main(int argc, char *argv[]){
                         continue;
                     } else {
                         if (instructions == i){
-                            
                             if (needTempReg == true){
                                 printf("div $t0,%s\n", findRegister(registers, size, secondOperandVar));
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
@@ -213,9 +214,16 @@ int main(int argc, char *argv[]){
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
                             }
                         } else {
-                            printf("div %s, %s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
-                            printf("mflo $t0\n");
-                            needTempReg = true;
+                            if (tempRegisters == 0){
+                                printf("div %s, %s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("mflo $t0\n");
+                                needTempReg = true;
+                                tempRegisters++;
+                            } else {
+                                printf("div $t%d,%s\n", tempRegisters-1, findRegister(registers, size, secondOperandVar));
+                                printf("mflo $t%d\n", tempRegisters);
+                                tempRegisters++;
+                            }
                         }
                     }
                 }
