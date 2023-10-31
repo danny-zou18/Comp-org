@@ -68,13 +68,15 @@ int main(int argc, char *argv[]){
     char buffer[128];
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
         printf("# %s", buffer);
+        bool needTempReg = false;
+        int tempRegisters = 0;
+
         if (buffer[strlen(buffer)-1]!='\n'){
             printf("\n");
         }
         char* token = strtok(buffer, " \t\n\r");
         char* parts[128];
         int partCount = 0;
-        bool needTempReg = false;
         while (token != NULL) {
             if (token[strlen(token)-1] == ';'){
                 token[strlen(token) - 1] = '\0';
@@ -107,8 +109,15 @@ int main(int argc, char *argv[]){
                                 printf("addi %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
                             }
                         } else {
-                            printf("addi $t0,%s,%s\n", findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
-                            needTempReg = true;
+                            if (tempRegisters == 0){
+                                printf("addi $t0,%s,%s\n", findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
+                                needTempReg = true;
+                                tempRegisters++;
+                            } else {
+                                printf("addi $t%d,$t%d,%s\n", tempRegisters, tempRegisters - 1, parts[secondOperandIndex]);
+                                tempRegisters++;
+                            }
+                            
                         } 
                     } else {
                         if (instructions == i){
@@ -120,8 +129,15 @@ int main(int argc, char *argv[]){
                                 printf("add %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar),  findRegister(registers, size, secondOperandVar));
                             }
                         } else {
-                            printf("add $t0,%s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
-                            needTempReg = true;
+                            if (tempRegisters == 0){
+                                printf("add $t0,%s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                needTempReg = true;
+                                tempRegisters++;
+                            } else {
+                                printf("add $t%d,$t%d,%s\n",tempRegisters, tempRegisters - 1,findRegister(registers, size, secondOperandVar));
+                                tempRegisters++;
+                            }
+                            
                         }
                     }
                 } else if (operator == '-'){
@@ -135,8 +151,15 @@ int main(int argc, char *argv[]){
                                 printf("addi %s,%s,-%s\n", findRegister(registers,size, *parts[0]), findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
                             }
                         } else {
-                            printf("addi $t0,%s,-%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
-                            needTempReg = true;
+                            if (tempRegisters == 0){
+                                printf("addi $t0,%s,-%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                needTempReg = true;
+                                tempRegisters++;
+                            } else {
+                                printf("addi $t%d,$t%d,-%s\n", tempRegisters, tempRegisters-1, parts[secondOperandIndex]);
+                                tempRegisters++;
+                            }
+                           
                         }   
                     } else {
                         if (instructions == i){
@@ -148,8 +171,15 @@ int main(int argc, char *argv[]){
                                 printf("sub %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
                             }
                         } else {
-                            printf("sub $t0,%s,%s\n",findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
-                            needTempReg = true;
+                            if (tempRegisters == 0){
+                                printf("sub $t0,%s,%s\n",findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                needTempReg = true;
+                                tempRegisters++;
+                            } else {
+                                printf("sub $t%d,$t%d,%s\n",tempRegisters ,tempRegisters-1 ,findRegister(registers,size,secondOperandVar));
+                                tempRegisters++;
+                            }
+                            
                         }
                     }
                 } else if (operator == '*'){
