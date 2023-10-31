@@ -90,6 +90,8 @@ int main(int argc, char *argv[]){
             printf("li %s,%d\n", registers[size].mipsRegister, registers[size].value);
             size++;
         } else if (partCount >= 5) {
+            saveRegister(registers, size, *parts[0], 1);
+            size++;
             int instructions = partCount / 2 - 1;
             for (int i = 1; i <= instructions; i++){
                 int firstOperandIndex = 2 * i;
@@ -101,10 +103,9 @@ int main(int argc, char *argv[]){
                 if (operator == '+'){
                     if (isNumeric(parts[secondOperandIndex])){
                         if (instructions == i){
-                            saveRegister(registers, size, *parts[0], 1);
-                            size++;
+
                             if (needTempReg == true){
-                                printf("addi %s,$t0,%s\n", findRegister(registers, size, *parts[0]),parts[secondOperandIndex]);
+                                printf("addi %s,$t%d,%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1,parts[secondOperandIndex]);
                             } else {
                                 printf("addi %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
                             }
@@ -121,10 +122,9 @@ int main(int argc, char *argv[]){
                         } 
                     } else {
                         if (instructions == i){
-                            saveRegister(registers, size, *parts[0], 1);
-                            size++;
+                          
                             if (needTempReg == true){
-                                printf("add %s,$t0,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, secondOperandVar));
+                                printf("add %s,$t%d,%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1 ,findRegister(registers, size, secondOperandVar));
                             } else {
                                 printf("add %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar),  findRegister(registers, size, secondOperandVar));
                             }
@@ -143,10 +143,9 @@ int main(int argc, char *argv[]){
                 } else if (operator == '-'){
                     if (isNumeric(parts[secondOperandIndex])){
                         if (instructions == i){
-                            saveRegister(registers, size, *parts[0], 1);
-                            size++;
+                           
                             if (needTempReg == true){
-                                printf("addi %s,$t0,-%s\n", findRegister(registers, size, *parts[0]), parts[secondOperandIndex]);
+                                printf("addi %s,$t%d,-%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1 ,parts[secondOperandIndex]);
                             } else {
                                 printf("addi %s,%s,-%s\n", findRegister(registers,size, *parts[0]), findRegister(registers, size, firstOperandVar), parts[secondOperandIndex]);
                             }
@@ -163,10 +162,9 @@ int main(int argc, char *argv[]){
                         }   
                     } else {
                         if (instructions == i){
-                            saveRegister(registers, size, *parts[0], 1);
-                            size++;
+                          
                             if (needTempReg == true){
-                                printf("sub %s,$t0,%s\n", findRegister(registers, size, *parts[0]), parts[secondOperandIndex]);
+                                printf("sub %s,$t%d,%s\n", findRegister(registers, size, *parts[0]),tempRegisters-1 ,parts[secondOperandIndex]);
                             } else {
                                 printf("sub %s,%s,%s\n", findRegister(registers, size, *parts[0]), findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
                             }
@@ -187,8 +185,7 @@ int main(int argc, char *argv[]){
                         continue;
                     } else {
                         if (instructions == i){
-                            saveRegister(registers, size, *parts[0], 1);
-                            size++;
+                            
                             if (needTempReg == true){
                                 printf("mult $t0,%s\n", findRegister(registers, size, secondOperandVar));
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
@@ -207,8 +204,7 @@ int main(int argc, char *argv[]){
                         continue;
                     } else {
                         if (instructions == i){
-                            saveRegister(registers, size, *parts[0], 1);
-                            size++;
+                            
                             if (needTempReg == true){
                                 printf("div $t0,%s\n", findRegister(registers, size, secondOperandVar));
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
