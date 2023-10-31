@@ -181,7 +181,7 @@ int main(int argc, char *argv[]){
                     } else {
                         if (instructions == i){
                             if (needTempReg == true){
-                                printf("mult $t0,%s\n", findRegister(registers, size, secondOperandVar));
+                                printf("mult $t%d,%s\n",tempRegisters-1 ,findRegister(registers, size, secondOperandVar));
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
                             } else {
                                 printf("mult %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
@@ -194,7 +194,7 @@ int main(int argc, char *argv[]){
                                 needTempReg = true;
                                 tempRegisters++;
                             } else {
-                                printf("mult $t%d, %s\n", tempRegisters-1,findRegister(registers, size, secondOperandVar));
+                                printf("mult $t%d,%s\n", tempRegisters-1,findRegister(registers, size, secondOperandVar));
                                 printf("mflo $t%d\n", tempRegisters);
                                 tempRegisters++;
                             }
@@ -207,7 +207,7 @@ int main(int argc, char *argv[]){
                     } else {
                         if (instructions == i){
                             if (needTempReg == true){
-                                printf("div $t0,%s\n", findRegister(registers, size, secondOperandVar));
+                                printf("div $t%d,%s\n",tempRegisters - 1 ,findRegister(registers, size, secondOperandVar));
                                 printf("mflo %s\n", findRegister(registers, size, *parts[0]));
                             }  else {
                                 printf("div %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
@@ -215,13 +215,38 @@ int main(int argc, char *argv[]){
                             }
                         } else {
                             if (tempRegisters == 0){
-                                printf("div %s, %s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("div %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
                                 printf("mflo $t0\n");
                                 needTempReg = true;
                                 tempRegisters++;
                             } else {
                                 printf("div $t%d,%s\n", tempRegisters-1, findRegister(registers, size, secondOperandVar));
                                 printf("mflo $t%d\n", tempRegisters);
+                                tempRegisters++;
+                            }
+                        }
+                    }
+                } else if (operator == '%'){
+                    if (isNumeric(parts[secondOperandIndex])){
+                        continue;
+                    } else {
+                        if (instructions == i){
+                            if (needTempReg == true){
+                                printf("div $t%d,%s\n", tempRegisters -1, findRegister(registers, size, secondOperandVar));
+                                printf("mfhi %s\n",findRegister(registers, size, *parts[0]));
+                            } else {
+                                printf("div %s,%s\n",findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("mfhi %s\n", findRegister(registers, size, *parts[0]));
+                            }
+                        } else {
+                            if (tempRegisters == 0){
+                                printf("div %s,%s\n", findRegister(registers, size, firstOperandVar), findRegister(registers, size, secondOperandVar));
+                                printf("mfhi $t0\n");
+                                needTempReg = true;
+                                tempRegisters++;
+                            } else {
+                                printf("div $t%d,%s\n",tempRegisters-1, findRegister(registers, size, secondOperandVar));
+                                printf("mfhi $t%d\n", tempRegisters);
                                 tempRegisters++;
                             }
                         }
