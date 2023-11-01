@@ -270,7 +270,7 @@ int main(int argc, char *argv[]){
                                 needTempReg = true;
                                 tempRegisters++;
                             } else {
-                                printf("mult $t%d,%s\n", tempRegisters-1,findRegister(registers, size, secondOperandVar));
+                                printf("mult %s,%s\n", findRegister(registers,size,firstOperandVar),findRegister(registers, size, secondOperandVar));
                                 printf("mflo $t%d\n", tempRegisters);
                                 tempRegisters++;
                             }
@@ -298,15 +298,15 @@ int main(int argc, char *argv[]){
                                 }
                             }
                         } else {
-                            bool isNegative = false;
-                            if (parts[secondOperandIndex][0] == '-'){
-                                isNegative = true;
-                                int len = strlen(parts[secondOperandIndex]);
-                                for (int i = 0; i < len; i++) {
-                                    parts[secondOperandIndex][i] = parts[secondOperandIndex][i + 1];
-                                }
-                            }
                             if (isPowerOfTwo(atoi(parts[secondOperandIndex]))){
+                                bool isNegative = false;
+                                if (parts[secondOperandIndex][0] == '-'){
+                                    isNegative = true;
+                                    int len = strlen(parts[secondOperandIndex]);
+                                    for (int i = 0; i < len; i++) {
+                                        parts[secondOperandIndex][i] = parts[secondOperandIndex][i + 1];
+                                    }
+                                }
                                 int powerOfTwo = powerOfTwoExponent(atoi(parts[secondOperandIndex]));
                                 if (needTempReg){
                                     printf("bltz $t%d,L%d\n",tempRegisters - 1,labels);
