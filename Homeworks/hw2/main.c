@@ -57,7 +57,7 @@ int isNumeric(const char* str) {
     return 1; // It's a number
 }
 bool isPowerOfTwo(int number) {
-    if (number == 0) {
+    if (number <= 0) {
         return false; // Numbers less than or equal to 0 are not powers of 2
     }
     // Check if there is only one set bit in the binary representation
@@ -298,15 +298,15 @@ int main(int argc, char *argv[]){
                                 }
                             }
                         } else {
-                            if (isPowerOfTwo(atoi(parts[secondOperandIndex]))){
-                                bool isNegative = false;
-                                if (parts[secondOperandIndex][0] == '-'){
-                                    isNegative = true;
-                                    int len = strlen(parts[secondOperandIndex]);
-                                    for (int i = 0; i < len; i++) {
-                                        parts[secondOperandIndex][i] = parts[secondOperandIndex][i + 1];
-                                    }
+                            bool isNegative = false;
+                            if (parts[secondOperandIndex][0] == '-'){
+                                isNegative = true;
+                                int len = strlen(parts[secondOperandIndex]);
+                                for (int i = 0; i < len; i++) {
+                                    parts[secondOperandIndex][i] = parts[secondOperandIndex][i + 1];
                                 }
+                            }
+                            if (isPowerOfTwo(atoi(parts[secondOperandIndex]))){
                                 int powerOfTwo = powerOfTwoExponent(atoi(parts[secondOperandIndex]));
                                 if (needTempReg){
                                     printf("bltz $t%d,L%d\n",tempRegisters - 1,labels);
@@ -340,11 +340,19 @@ int main(int argc, char *argv[]){
                                 }
                             } else {
                                 if (instructions == i){
-                                    printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    if (isNegative){
+                                        printf("li $t%d,-%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    } else {
+                                        printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    }
                                     printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
                                     printf("mflo %s\n",findRegister(registers,size,*parts[0]));
                                 } else {
-                                    printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    if (isNegative){
+                                         printf("li $t%d,-%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    } else {
+                                         printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    }
                                     printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
                                     printf("mflo $t%d\n",tempRegisters+1);
                                     needTempReg = true;
