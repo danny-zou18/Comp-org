@@ -57,7 +57,7 @@ int isNumeric(const char* str) {
     return 1; // It's a number
 }
 bool isPowerOfTwo(int number) {
-    if (number <= 0) {
+    if (number == 0) {
         return false; // Numbers less than or equal to 0 are not powers of 2
     }
     // Check if there is only one set bit in the binary representation
@@ -344,7 +344,6 @@ int main(int argc, char *argv[]){
                                     printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
                                     printf("mflo %s\n",findRegister(registers,size,*parts[0]));
                                 } else {
-                                    printf("%s\n",parts[secondOperandIndex]);
                                     printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
                                     printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
                                     printf("mflo $t%d\n",tempRegisters+1);
