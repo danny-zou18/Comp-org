@@ -84,10 +84,10 @@ int main(int argc, char *argv[]){
     registers = (struct registerMapping*)malloc(capacity * sizeof(struct registerMapping));
 
     char buffer[128];
+    bool needTempReg = false;
+    int tempRegisters = 0;
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
         printf("# %s", buffer);
-        bool needTempReg = false;
-        int tempRegisters = 0;
 
         if (buffer[strlen(buffer)-1]!='\n'){
             printf("\n");
@@ -198,29 +198,52 @@ int main(int argc, char *argv[]){
                     }
                 } else if (operator == '*'){
                     if (isNumeric(parts[secondOperandIndex])){
-                        needTempReg = true;
-                        int neededExponents[32];
-                        int constant = atoi(parts[secondOperandIndex]);
-                        int numExponents;
-                        findExponents(constant, neededExponents, &numExponents);
-                        for (int i = 0; i < numExponents; i++){
-                            if (i == 0){
-                                printf("sll $t%d,%s,%d\n",tempRegisters, findRegister(registers, size, firstOperandVar), neededExponents[numExponents-i-1]);
-                                printf("move $t%d,$t%d\n", tempRegisters+1, tempRegisters);
-                                continue;
+                        if (strcmp(parts[secondOperandIndex], "1") == 0 ||strcmp(parts[secondOperandIndex], "-1") == 0){
+                            printf("move $t%d,%s\n",tempRegisters,findRegister(registers,size,firstOperandVar));
+                            if (strcmp(parts[secondOperandIndex], "1") == 0) {
+                                printf("move %s,$t%d\n",findRegister(registers,size,*parts[0]),tempRegisters);
+                            } else if (strcmp(parts[secondOperandIndex], "-1") == 0){
+                                printf("sub %s,$zero,$t%d\n",findRegister(registers,size,*parts[0]), tempRegisters);
                             }
-                            if (neededExponents[numExponents-i-1] != 0){
-                                printf("sll $t%d,%s,%d\n",tempRegisters, findRegister(registers, size, firstOperandVar), neededExponents[numExponents-i-1]);
-                                printf("add $t%d,$t%d,$t%d\n",tempRegisters+1, tempRegisters+1, tempRegisters);
-                            } else {
-                                printf("add $t%d,$t%d,%s\n",tempRegisters+1, tempRegisters+1, findRegister(registers, size, firstOperandVar));
-                            }
-                        }
-                        if (instructions == i){
-                            printf("move %s,$t%d\n",findRegister(registers, size, *parts[0]), tempRegisters+1);
+                            tempRegisters++;
+                            needTempReg=true;
                         } else {
-                            tempRegisters += 2;
-                            printf("move $t%d,$t%d\n", tempRegisters, tempRegisters-1);
+                            bool isNegative = false;
+                            if (parts[secondOperandIndex][0] == '-'){
+                                isNegative = true;
+                                int len = strlen(parts[secondOperandIndex]);
+                                for (int i = 0; i < len; i++) {
+                                    parts[secondOperandIndex][i] = parts[secondOperandIndex][i + 1];
+                                }
+                            }
+                            needTempReg = true;
+                            int neededExponents[32];
+                            int constant = atoi(parts[secondOperandIndex]);
+                            int numExponents;
+                            findExponents(constant, neededExponents, &numExponents);
+                            for (int i = 0; i < numExponents; i++){
+                                if (i == 0){
+                                    printf("sll $t%d,%s,%d\n",tempRegisters, findRegister(registers, size, firstOperandVar), neededExponents[numExponents-i-1]);
+                                    printf("move $t%d,$t%d\n", tempRegisters+1, tempRegisters);
+                                    continue;
+                                }
+                                if (neededExponents[numExponents-i-1] != 0){
+                                    printf("sll $t%d,%s,%d\n",tempRegisters, findRegister(registers, size, firstOperandVar), neededExponents[numExponents-i-1]);
+                                    printf("add $t%d,$t%d,$t%d\n",tempRegisters+1, tempRegisters+1, tempRegisters);
+                                } else {
+                                    printf("add $t%d,$t%d,%s\n",tempRegisters+1, tempRegisters+1, findRegister(registers, size, firstOperandVar));
+                                }
+                            }
+                            if (instructions == i){
+                                if (isNegative){
+                                    printf("sub %s,$zero,$t%d\n",findRegister(registers, size, *parts[0]),tempRegisters+1);
+                                } else {
+                                    printf("move %s,$t%d\n",findRegister(registers, size, *parts[0]), tempRegisters+1);
+                                }
+                            } else {
+                                tempRegisters += 2;
+                                printf("move $t%d,$t%d\n", tempRegisters, tempRegisters-1);
+                            }
                         }
                     } else {
                         if (instructions == i){
