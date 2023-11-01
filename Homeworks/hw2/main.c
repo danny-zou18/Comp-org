@@ -270,7 +270,7 @@ int main(int argc, char *argv[]){
                                 needTempReg = true;
                                 tempRegisters++;
                             } else {
-                                printf("mult %s,%s\n", findRegister(registers,size,firstOperandVar),findRegister(registers, size, secondOperandVar));
+                                printf("mult $t%d,%s\n", tempRegisters-1,findRegister(registers, size, secondOperandVar));
                                 printf("mflo $t%d\n", tempRegisters);
                                 tempRegisters++;
                             }
@@ -344,6 +344,7 @@ int main(int argc, char *argv[]){
                                     printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
                                     printf("mflo %s\n",findRegister(registers,size,*parts[0]));
                                 } else {
+                                    printf("%s\n",parts[secondOperandIndex]);
                                     printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
                                     printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
                                     printf("mflo $t%d\n",tempRegisters+1);
