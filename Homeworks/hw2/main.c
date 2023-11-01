@@ -63,8 +63,14 @@ bool isPowerOfTwo(int number) {
     // Check if there is only one set bit in the binary representation
     return (number & (number - 1)) == 0;
 }
-
-
+int powerOfTwoExponent(int number) {
+    int exponent = 0;
+    while ((number & 1) == 0) {
+        number >>= 1;
+        exponent++;
+    }
+    return exponent;
+}
 int main(int argc, char *argv[]){
     if (argc < 2) {
         printf("Missing command line argument\n");
@@ -86,6 +92,7 @@ int main(int argc, char *argv[]){
     char buffer[128];
     bool needTempReg = false;
     int tempRegisters = 0;
+    int labels = 0;
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
         printf("# %s", buffer);
 
@@ -198,7 +205,9 @@ int main(int argc, char *argv[]){
                     }
                 } else if (operator == '*'){
                     if (isNumeric(parts[secondOperandIndex])){
-                        if (strcmp(parts[secondOperandIndex], "1") == 0 ||strcmp(parts[secondOperandIndex], "-1") == 0){
+                        if (strcmp(parts[secondOperandIndex], "0") == 0){
+                            printf("li %s,0\n",findRegister(registers,size,*parts[0]));
+                        } else if (strcmp(parts[secondOperandIndex], "1") == 0 ||strcmp(parts[secondOperandIndex], "-1") == 0){
                             printf("move $t%d,%s\n",tempRegisters,findRegister(registers,size,firstOperandVar));
                             if (strcmp(parts[secondOperandIndex], "1") == 0) {
                                 printf("move %s,$t%d\n",findRegister(registers,size,*parts[0]),tempRegisters);
@@ -270,7 +279,79 @@ int main(int argc, char *argv[]){
                     }
                 } else if (operator == '/'){
                     if (isNumeric(parts[secondOperandIndex])){
-                        continue;
+                        if (strcmp(parts[secondOperandIndex], "1") == 0 || strcmp(parts[secondOperandIndex], "-1") == 0){
+                            if (strcmp(parts[secondOperandIndex], "1") == 0){
+                                if (instructions == i){
+                                    printf("move %s,%s\n",findRegister(registers,size,*parts[0]),findRegister(registers,size,firstOperandVar));
+                                } else {
+                                    printf("move $t%d,%s\n",tempRegisters, findRegister(registers,size,firstOperandVar));
+                                    needTempReg = true;
+                                    tempRegisters++;
+                                }
+                            } else if (strcmp(parts[secondOperandIndex], "-1") == 0){
+                                if (instructions == i){
+                                    printf("sub %s,$zero,%s\n", findRegister(registers,size,*parts[0]),findRegister(registers,size,firstOperandVar));
+                                } else {
+                                    printf("sub $t%d,$zero,%s\n",tempRegisters,findRegister(registers,size,firstOperandVar));
+                                    needTempReg = true;
+                                    tempRegisters++;
+                                }
+                            }
+                        } else {
+                            bool isNegative = false;
+                            if (parts[secondOperandIndex][0] == '-'){
+                                isNegative = true;
+                                int len = strlen(parts[secondOperandIndex]);
+                                for (int i = 0; i < len; i++) {
+                                    parts[secondOperandIndex][i] = parts[secondOperandIndex][i + 1];
+                                }
+                            }
+                            if (isPowerOfTwo(atoi(parts[secondOperandIndex]))){
+                                int powerOfTwo = powerOfTwoExponent(atoi(parts[secondOperandIndex]));
+                                if (needTempReg){
+                                    printf("bltz $t%d,L%d\n",tempRegisters - 1,labels);
+                                    printf("srl %s,$t%d,%d\n",findRegister(registers,size,*parts[0]),tempRegisters -1, powerOfTwo);
+                                    if (isNegative){
+                                        printf("sub %s,$zero,%s\n", findRegister(registers,size,*parts[0]),findRegister(registers,size,*parts[0]));
+                                    }
+                                    printf("j L%d\n",labels+1);
+                                    printf("L%d:\n",labels);
+                                    printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    printf("div $t%d,$t%d\n",tempRegisters - 1,tempRegisters);
+                                    printf("mflo %s\n",findRegister(registers,size,*parts[0]));
+                                    printf("L%d:\n",labels+1);
+                                    tempRegisters++;
+                                    labels += 2;
+                                } else {
+                                    printf("bltz %s,L%d\n",findRegister(registers,size,firstOperandVar), labels);
+                                    printf("srl %s,%s,%d\n",findRegister(registers,size,*parts[0]),findRegister(registers,size,firstOperandVar), powerOfTwo);
+                                    if (isNegative){
+                                        printf("sub %s,$zero,%s\n",findRegister(registers,size,*parts[0]),findRegister(registers,size,*parts[0]));
+                                    }
+                                    printf("j L%d\n",labels+1);
+                                    printf("L%d:\n",labels);
+                                    printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    printf("div %s,$t%d\n",findRegister(registers,size,firstOperandVar),tempRegisters);
+                                    printf("mflo %s\n",findRegister(registers,size,*parts[0]));
+                                    printf("L%d:\n",labels+1);
+                                    needTempReg = true;
+                                    tempRegisters++;
+                                    labels += 2;
+                                }
+                            } else {
+                                if (instructions == i){
+                                    printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
+                                    printf("mflo %s\n",findRegister(registers,size,*parts[0]));
+                                } else {
+                                    printf("li $t%d,%s\n",tempRegisters,parts[secondOperandIndex]);
+                                    printf("div %s,$t%d\n", findRegister(registers, size, firstOperandVar), tempRegisters);
+                                    printf("mflo $t%d\n",tempRegisters+1);
+                                    needTempReg = true;
+                                    tempRegisters += 2;
+                                }
+                            }
+                        }
                     } else {
                         if (instructions == i){
                             if (needTempReg == true){
