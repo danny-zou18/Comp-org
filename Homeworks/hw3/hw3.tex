@@ -1,0 +1,159 @@
+\documentclass{article}
+
+\title{Homework 3}
+\date{11-09-2023}
+\author{Danny Zou}
+
+\usepackage[left=.7in, right=.7in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{graphicx}
+
+\newcommand{\boxedanswer}[1]{%
+
+    \fbox{\large\textbf{#1}}%
+}
+
+\begin{document}
+    \pagenumbering{gobble}
+    \maketitle
+    \onehalfspacing
+
+    \section*{Boolean Algebra}
+
+    \subsection*{1}
+
+    \subsubsection*{(a) $A * (\overline{A} + B * B) + \overline{(B+A)} * (\overline{A} + B)$} 
+    
+    $A * (\overline{A} + B * B) + (\overline{B} * \overline{A}) * (\overline{A} + B)$ \hspace*{0.1in} DeMorgan's 
+
+    $A * (\overline{A} + B) + (\overline{B} * \overline{A}) * (\overline{A} + B)$ \hspace*{0.1in} Idempotent Law ($B * B = B$)
+
+    $(A + (\overline{B} * \overline{A}))(\overline{A} + B)$ \hspace*{0.1in} Distributive Law (Inversed)
+
+    $(A + (\overline{A} * \overline{B}))(\overline{A} + B)$ \hspace*{0.1in} Commutative Law
+    
+    $(A + \overline{B})(\overline{A} + B)$ \hspace*{0.1in}  Redundacy Law ($A + (\overline{A} * \overline{B}) = A + \overline{B}$)
+
+    $A(\overline{A} + B) + \overline{B}(\overline{A} + B)$ \hspace*{0.1in} Distributive Law
+
+    $(A * \overline{A} + A * B) + \overline{B}(\overline{A} + B)$ \hspace*{0.1in} Distributive Law
+
+    $(0 + A * B) + \overline{B}(\overline{A} + B)$ \hspace*{0.1in} Inverse Law ($A * \overline{A} = 0$)
+
+    $(A * B) + \overline{B}(\overline{A} + B)$ \hspace*{0.1in} Identity Law ($0+A*B = A*B$)
+
+    $(A * B) + (\overline{B}*\overline{A} + \overline{B} * B)$ \hspace*{0.1in} Distributive Law
+
+    $(A * B) + (\overline{B}*\overline{A} + 0)$ \hspace*{0.1in} Inverse Law ($\overline{B} * B = 0$)
+
+    $(A * B) + (\overline{B}*\overline{A})$ \hspace*{0.1in} Identity Law ($\overline{B}*\overline{A} + 0 = \overline{B}*\overline{A}$)
+
+    \vspace*{0.1in}
+
+    \boxedanswer{$A * B + \overline{B}*\overline{A}$}
+
+    \subsubsection*{(b) $\overline{C * B} + (A * B * C) + \overline{A + C + \overline{B}}$}
+
+    $\overline{C} + \overline{B} + (A * B * C) + \overline{A + C + \overline{B}}$ \hspace*{0.1in} DeMorgan's
+
+    $\overline{C} + (A * B * C) + \overline{B} + \overline{A + C + \overline{B}}$ \hspace*{0.1in} Commutative Law
+
+    $\overline{C} + (C * A * B) + \overline{B} + \overline{A + C + \overline{B}}$ \hspace*{0.1in} Commutative Law
+
+    $\overline{C} + ( A * B) + \overline{B} + \overline{A + C + \overline{B}}$ \hspace*{0.1in} Redundacy Law ($\overline{C} + (C * A * B) = \overline{C} + (A * B))$
+
+    $\overline{C} + \overline{B} + ( A * B) + \overline{A + C + \overline{B}}$ \hspace*{0.1in} Commutative Law
+
+    $\overline{C} + \overline{B} + (B * A) + \overline{A + C + \overline{B}}$ \hspace*{0.1in} Commutative Law
+    
+    $\overline{C} + (\overline{B} + A) + \overline{A + C + \overline{B}}$ \hspace*{0.1in} Redundacy Law ($\overline{B} + (B*A) = \overline{B} + A$)
+
+    $\overline{C} + (\overline{B} + A) + \overline{A} * \overline{C} * \overline{\overline{B}}$ \hspace*{0.1in} DeMorgan's
+
+    $\overline{C} + (\overline{B} + A) + \overline{A} * \overline{C} * B$ \hspace*{0.1in} Double Negation Law
+
+    $\overline{C} + (\overline{A} * \overline{C} * B)+  (\overline{B} + A)  $ \hspace*{0.1in} Commutative Law
+
+    $\overline{C} + (\overline{C} * \overline{A} * B)+  (\overline{B} + A)  $ \hspace*{0.1in} Commutative Law
+
+    $\overline{C} +  (\overline{B} + A)  $ \hspace*{0.1in} Absorption Law ($\overline{C} + (\overline{C} * \overline{A} * B) = \overline{C}$)
+
+    \vspace*{0.1in}
+
+    \boxedanswer{$\overline{C} + \overline{B} + A$}
+
+    \newpage
+
+    \subsubsection*{(c) $(A+B) * (\overline{A} + C) * (\overline{C} + B)$}
+
+    $(A(\overline{A} + C) + B(\overline{A} + C))* (\overline{C} + B)$ \hspace*{0.1in} Distributive Law
+
+    $((A*\overline{A} + A*C)+B(\overline{A} + C))* (\overline{C} + B)$ \hspace*{0.1in} Distributive Law
+
+    $(A*\overline{A} + A*C+ B*\overline{A} + B*C)* (\overline{C} + B)$ \hspace*{0.1in} Distributive Law
+
+    $((A*\overline{A}*\overline{C}) + (A*C*\overline{C})+ (B*\overline{A}*\overline{C}) + (B*C*\overline{C})) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*\overline{A}*B) + (B*C*B))$ \hspace*{0.1in} Distributive Law
+
+    $((A*\overline{A}*\overline{C}) + (A*C*\overline{C})+ (B*\overline{A}*\overline{C}) + (B*C*\overline{C})) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*\overline{A}*B) + (B*B*C))$ \hspace*{0.1in} Commutative Law
+
+    $((A*\overline{A}*\overline{C}) + (A*C*\overline{C})+ (B*\overline{A}*\overline{C}) + (B*C*\overline{C})) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*\overline{A}*B) + (B*C))$ \hspace*{0.1in} Idempotent Law
+
+    $((A*\overline{A}*\overline{C}) + (A*C*\overline{C})+ (B*\overline{A}*\overline{C}) + (B*C*\overline{C})) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*B*\overline{A}) + (B*C))$ \hspace*{0.1in} Commutative Law
+
+    $((A*\overline{A}*\overline{C}) + (A*C*\overline{C})+ (B*\overline{A}*\overline{C}) + (B*C*\overline{C})) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*\overline{A}) + (B*C))$ \hspace*{0.1in} Idempotent Law
+
+    $((0*\overline{C}) + (A*C*\overline{C})+ (B*\overline{A}*\overline{C}) + (B*C*\overline{C})) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*\overline{A}) + (B*C))$ \hspace*{0.1in} Inverse Law
+
+    $((0*\overline{C}) + (A*0)+ (B*\overline{A}*\overline{C}) + (B*C*\overline{C})) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*\overline{A}) + (B*C))$ \hspace*{0.1in} Inverse Law
+
+    $((0*\overline{C}) + (A*0)+ (B*\overline{A}*\overline{C}) + (B*0)) + $
+    
+    $((A*\overline{A}*B) + (A*C*B)+ (B*\overline{A}) + (B*C))$ \hspace*{0.1in} Inverse Law
+
+    $((0*\overline{C}) + (A*0)+ (B*\overline{A}*\overline{C}) + (B*0)) + $
+    
+    $((0*B) + (A*C*B)+ (B*\overline{A}) + (B*C))$ \hspace*{0.1in} Inverse Law
+
+    $((0) + (0)+ (B*\overline{A}*\overline{C}) + (0)) + $
+    
+    $((0) + (A*C*B)+ (B*\overline{A}) + (B*C))$ \hspace*{0.1in} Law of Zeros (Too much to do them one by one ...)
+
+    $(B*\overline{A}*\overline{C}) + (A*C*B)+ (B*\overline{A}) + (B*C)$ \hspace*{0.1in} Identity Law (Too much to do them one by one...)
+
+    $(B*\overline{A})+ (B*\overline{A}*\overline{C}) + (A*C*B) + (B*C)$ \hspace*{0.1in} Commutative Law
+
+    $(B*\overline{A}) + (A*C*B) + (B*C)$ \hspace*{0.1in} Absorption Law (($B*\overline{A})+ (B*\overline{A}*\overline{C}) = (B*\overline{A})$)
+
+    $(B*\overline{A}) + (B*C) + (A*C*B)$ \hspace*{0.1in} Commutative Law
+
+    $(B*\overline{A}) + (B*C) + (B*C*A)$ \hspace*{0.1in} Commutative Law
+
+    $(B*\overline{A}) + (B*C)$ \hspace*{0.1in} Absorption Law ($(B*C) + (B*C*A) = (B*C)$)
+
+    $B*(\overline{A}+C)$ Distributive Law (Inversed)
+
+    \vspace*{0.1in}
+
+    \boxedanswer{$B*(\overline{A}+C)$}
+
+    \subsection*{2}
+
+    \subsubsection*{(a)}
+    
+\end{document}
