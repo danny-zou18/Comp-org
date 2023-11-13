@@ -9,6 +9,9 @@
 \usepackage{indentfirst}
 \usepackage{setspace}
 \usepackage{graphicx}
+\usepackage{multirow} 
+\usepackage{amssymb}
+\usepackage[table]{xcolor}
 
 \newcommand{\boxedanswer}[1]{%
 
@@ -152,12 +155,548 @@
 
     \boxedanswer{$B*(\overline{A}+C)$}
 
+    \newpage
+
     \subsection*{2}
 
     \subsubsection*{(a) $(\overline{A} + C) * (\overline{B} + D + A) * (D + A * \overline{C}) * (\overline{D} + A) = 1$}
 
+    $(\overline{A} + C) * (\overline{B} + D + A) * (D + \overline{\overline{A} + \overline{\overline{C}}}) * (\overline{D} + A)$ \hspace*{0.1in} DeMorgan's
+
+    $(\overline{A} + C) * (\overline{B} + D + A) * (D + \overline{\overline{A} + C}) * (\overline{D} + A)$ \hspace*{0.1in} Double Negation Law
+
+    $(\overline{A} + C) * (D + \overline{\overline{A} + C}) * (\overline{B} + D + A) * (\overline{D} + A)$ \hspace*{0.1in} Commutative Law
+
+    $(\overline{A} + C) * (\overline{\overline{A} + C} + D) * (\overline{B} + D + A) * (\overline{D} + A)$ \hspace*{0.1in} Commutative Law
+
+    $((\overline{A} + C) * D) * (\overline{B} + D + A) * (\overline{D} + A)$ \hspace*{0.1in} Redundacy Law ($(\overline{A} + C) * (\overline{\overline{A} + C} + D) = (\overline{A} + C) * D $)
+
+    $(\overline{A} + C) * D * (D + A + \overline{B}) * (\overline{D} + A)$ \hspace*{0.1in} Commutative Law
+
+    $(\overline{A} + C) * D * (\overline{D} + A)$ \hspace*{0.1in} Absorption Law ($D * (D + A + \overline{B}) = D$)
+
+    $(\overline{A} + C) * (D * A)$ \hspace*{0.1in} Redundacy Law ($D * (\overline{D} + A) = D * A$)
+
+    $A * (\overline{A} + C) * D$ \hspace*{0.1in} Commutative Law
+
+    $A * C * D$ \hspace*{0.1in} Redundacy Law ($A * (\overline{A} + C) = A * C$)
+
+    $A * C * D = 1$
+
+    \vspace*{0.1in}
+
+    \boxedanswer{A = 1, C = 1, D = 1, B = 0 or 1}
+
+    \subsubsection*{(b) $(((\overline{K} * L * N) * (L+M)) + ((\overline{K}+L+N) * (K*\overline{L}*\overline{M}))) * (\overline{K} + \overline{N}) = 1$}
+
+    $((\overline{K} * L * (L+M) * N) + ((\overline{K}+L+N) * (K*\overline{L}*\overline{M}))) * (\overline{K} + \overline{N})$ \hspace*{0.1in} Commutative Law
+
+    $((\overline{K} * L * N) + ((\overline{K}+L+N) * (K*\overline{L}*\overline{M}))) * (\overline{K} + \overline{N})$ \hspace*{0.1in} Absorption Law ($L * (L+M) = L$)
+
+    $((\overline{K} * L * N) + (K * (\overline{K}+L+N) * \overline{L}*\overline{M})) * (\overline{K} + \overline{N})$ \hspace*{0.1in} Commutative Law
+
+    $((\overline{K} * L * N) + (K * (L+N) * \overline{L}*\overline{M})) * (\overline{K} + \overline{N})$ \hspace*{0.1in} Redundacy Law ($K * (\overline{K}+L+N) = K*(L+N)$)
+
+    $((\overline{K} * L * N) + (K * \overline{L} * (L+N)*\overline{M})) * (\overline{K} + \overline{N})$ \hspace*{0.1in} Commutative Law
+
+    $((\overline{K} * L * N) + (K * \overline{L}* N *\overline{M})) * (\overline{K} + \overline{N})$ \hspace*{0.1in} Redundacy Law ($\overline{L} * (L+N) = L * N$) 
+
+    $N * ((\overline{K} * L) + (K * \overline{L} *\overline{M})) * (\overline{K} + \overline{N})$ \hspace*{0.1in} Distributive Law (Inversed)
+
+    $N * (\overline{K} + \overline{N}) * ((\overline{K} * L) + (K * \overline{L} *\overline{M}))$ \hspace*{0.1in} Commutative Law
+
+    $N * (\overline{N} + \overline{K}) * ((\overline{K} * L) + (K * \overline{L} *\overline{M}))$ \hspace*{0.1in} Commutative Law
+
+    $N * \overline{K} * ((\overline{K} * L) + (K * \overline{L} *\overline{M}))$ \hspace*{0.1in} Redundacy Law ($N * (\overline{N} + \overline{K}) = N * \overline{K}$)
+
+    $(\overline{K} * L * N * \overline{K} ) + (K * \overline{L} *\overline{M} * N * \overline{K} )$ \hspace*{0.1in} Distributive Law
+
+    $(\overline{K} * \overline{K} * L * N ) + (K * \overline{L} *\overline{M} * N * \overline{K} )$ \hspace*{0.1in} Commutative Law
+
+    $(\overline{K} * L * N ) + (K * \overline{L} *\overline{M} * N * \overline{K} )$ \hspace*{0.1in} Idempotent Law
+
+    $(\overline{K} * L * N ) + (K * \overline{K}  * \overline{L} *\overline{M} * N)$ \hspace*{0.1in} Commutative Law
+
+    $(\overline{K} * L * N ) + (0 * \overline{L} *\overline{M} * N)$ \hspace*{0.1in} Inverse Law
+
+    $(\overline{K} * L * N ) + (0)$ \hspace*{0.1in} Law of Zeros
+
+    $(\overline{K} * L * N )$ \hspace*{0.1in} Identity Law
+
+    $\overline{K} * L * N = 1$ 
+
+    \boxedanswer{K = 0, L = 1, N = 1, M = 0 or 1}
+
+    \newpage
+
+    \subsection*{3}
+
+    \subsubsection*{Truth Table}
+
+    \begin{flushleft}
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    $X$ & $Y$ & $Z$ & $Q$ \\
+    \hline
+    0 & 0 & 0 & 0\\
+    0 & 0 & 1 & 1\\
+    0 & 1 & 0 & 1\\
+    0 & 1 & 1 & 0\\
+    1 & 0 & 0 & 1\\
+    1 & 0 & 1 & 0\\
+    1 & 1 & 0 & 1\\
+    1 & 1 & 1 & 0\\
+    \hline
+    \end{tabular}
+    \end{flushleft}
+
+    \subsubsection*{K-Map}
     
+    \begin{table}[h]
+        
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \multirow{2}{*}{\textbf{Z}} & \multicolumn{4}{c|}{\textbf{XY}} \\
+            \cline{2-5}
+             & \textbf{00} & \textbf{01} & \textbf{11} & \textbf{10} \\
+            \hline
+            0 & 0& 1& 1& 1\\
+            \hline
+            1 & 1& 0& 0& 0\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[h]
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \multirow{2}{*}{\textbf{Z}} & \multicolumn{4}{c|}{\textbf{XY}} \\
+            \cline{2-5}
+             & \textbf{00} & \textbf{01} & \textbf{11} & \textbf{10} \\
+            \hline
+            0 & 0& \cellcolor{yellow!}1& \cellcolor{yellow}1& 1\\
+
+            \hline
+            1 & 1& 0& 0& 0\\
+            \hline
+        \end{tabular}
+    \end{table}
+    \noindent
+    The merge shown by the yellow means "if Z is 0 and Y is 1, it doesn't matter what the value of X is."
+
+    \noindent
+    In the function, it expresses -- $X * Y *\overline{Z} + \overline{X} * Y * \overline{Z} = Y * \overline{Z}$
+
+    \begin{table}[h]
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \multirow{2}{*}{\textbf{Z}} & \multicolumn{4}{c|}{\textbf{XY}} \\
+            \cline{2-5}
+             & \textbf{00} & \textbf{01} & \textbf{11} & \textbf{10} \\
+            \hline
+            0 & 0& 1& \cellcolor{green}1& \cellcolor{green!}1\\
+
+            \hline
+            1 & 1& 0& 0& 0\\
+            \hline
+        \end{tabular}
+    \end{table}
+    \noindent
+    The merge shown by the yellow means "if Z is 0 and X is 1, it doesn't matter what the value of Y is."
+
+    \noindent
+    In the function, it expresses -- $X*Y*\overline{Z} + X*\overline{Y}*\overline{Z} = X * \overline{Z}$
+
+    \vspace*{0.1in}
+
+    \noindent
+    After applying those two reductions, we get
+
+    \vspace*{0.1in}
+
+    Original : $\overline{X} * \overline{Y} * Z + X * Y * \overline{Z} + \overline{X} * Y * \overline{Z} + X * \overline{Y} * \overline{Z}$
+
+    \vspace*{0.1in}
+
+    Reduced:
+    \vspace*{0.1in}
+    \boxedanswer{$Y*\overline{Z} + X * \overline{Z} + \overline{X}*\overline{Y} * Z$}
+
+    \newpage
+
+    \section*{Logical Circuits}
+
+    \subsection*{4}
+
+    To obtain the sums of products representation, we look for the rows where the output is 1 and then form a product 
+    
+    term for each row.
+
+    From the truth table, we get 
 
 
+    \vspace*{0.1in}
+
+    \boxedanswer{$(\overline{A} * \overline{B} * \overline{C}) + (\overline{A} * B * \overline{C}) + (\overline{A} * B * C) + (A*B*C)$}
+
+    \subsection*{6}
+
+    \includegraphics*[width=0.45\textwidth]{circuit1.png}
+
+    \small When input A = 0, B = 0, C = 0, the output is 1, like in the truth table (Also satisfies expression ($\overline{A} * \overline{B} * \overline{C}$) as it should)
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.45\textwidth]{circuit2.png}
+
+    \small When input A = 0, B = 0, C = 1, the output is 0, like in the truth table (Doesn't satisfy none of the expressions)
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.45\textwidth]{circuit3.png}
+
+    \small When input A = 0, B = 1, C = 0, the output is 1, like in the truth table (Also satisfies expression ($\overline{A} * B * \overline{C}$))
+
+    \includegraphics*[width=0.45\textwidth]{circuit4.png}
+
+    \small When input A = 0, B = 1, C = 1, the output is 1, like in the truth table (Also satisfies expression ($\overline{A} * B * C$))
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.45\textwidth]{circuit5.png}
+
+    \small When input A = 1, B = 0, C = 0, the output is 0, like in the truth table (Doesn't satisfy none of the expressions)
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.45\textwidth]{circuit6.png}
+
+    \small When input A = 1, B = 0, C = 1, the output is 0, like in the truth table (Doesn't satisfy none of the expressions)
     
+    \newpage
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.45\textwidth]{circuit7.png}
+
+    \small When input A = 1, B = 1, C = 0, the output is 0, like in the truth table (Doesn't satisfy none of the expressions)
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.45\textwidth]{circuit8.png}
+
+    \small When input A = 1, B = 1, C = 1, the output is 1, like in the truth table (Also satisfies expression ($A*B*C$))
+
+    \vspace*{0.2in}
+
+    After going through all possible combination of inputs, I find that the expected output with each different set of inputs is exactly like it is in the truth table. When the output is 1, the appropriate AND components also lights up, matching the appropriate expression in the boolean function (i.e., ($A*B*C$) is an expression that lights up when A = 1, B = 1, C = 1). Through these findings, I believe there is sufficient proof that my logical circuit does in fact implement the required Boolean function, and that the boolean function also correctly represents the truth table.
+
+    \subsection*{7}
+
+    \newpage
+
+    \section*{Numerical Conversions and Arithmetic}
+
+    \subsection*{8}
+
+    \subsubsection*{50.4375}
+
+    $\underline{50}.4375$
+
+    $50 = \underline{25} * 2 + \mathbf{0}$
+
+    $25 = \underline{12} * 2 + \mathbf{1}$
+
+    $12 = \underline{6} * 2 + \mathbf{0}$
+
+    $6 = \underline{3} * 2 + \mathbf{0}$
+
+    $3 = \underline{1} * 2 + \mathbf{1}$
+
+    $1 = 0 * 2 + \mathbf{1}$
+
+    We get $\mathbf{110010}$, which is 50 in binary representation
+
+    \vspace*{0.1in}
+
+    $50\underline{.4375}$
+
+    $.4375 * 2 = \mathbf{0}.875$
+
+    $.0875 * 2 = \mathbf{1}.75$
+
+    $.75 * 2 = \mathbf{1}.5$
+
+    $.5 * 2 = \mathbf{1}.0$
+
+    We get $\mathbf{0111}$, which is .4375 in binary representation
+
+    \vspace*{0.1in}
+
+    Combining, we get -- $\mathbf{110010.0111}$
+
+    Convert to scientific notation, we get -- $\mathbf{1\underline{.100100111} * 2^{\underline{5}}}$
+
+    Where $\mathbf{100100111}$ is the mantisa
+
+    And $\mathbf{5}$ is the exponent
+
+    Convert the exponent to the bias(127 + 5 = $\mathbf{132}$) in binary, we get $\mathbf{1000\: 0100}$
+
+    We have everything we need, lets list them out
+
+    \vspace*{0.1in}
+
+    Sign = $\mathbf{0}$, because positive
+
+    Exponent Bias Binary = $\mathbf{1000\: 0100}$
+
+    Mantisa/Fraction = $\mathbf{10010011100000000000000}$
+
+    Combine to get Single Precision IEEE 754 Floating Point Representation 
+    
+    Where Sign = 1 bit, Exponent = 8 bits, Mantisa/Fraction = 23 bits
+
+    \vspace*{0.1in}
+
+    \boxedanswer{0100 0010 0100 1001 1100 0000 0000 0000}
+
+    Get the hexidecimal value by converting each set of 4 binaries to respective value
+
+    \vspace*{0.1in}
+
+    \boxedanswer{32-bit Hexadecimal -- 0x4249c000}
+
+    \subsubsection*{0.0}
+
+    Sign = $\mathbf{0}$, because positive
+
+    Exponent = 0, Bias Binary = $\mathbf{0000\: 0000}$
+
+    Mantisa/Fraction = $\mathbf{00000000000000000000000}$
+
+    Combine to get Single Precision IEEE 754 Floating Point Representation 
+    
+    Where Sign = 1 bit, Exponent = 8 bits, Mantisa/Fraction = 23 bits
+
+    \vspace*{0.1in}
+
+    \boxedanswer{0000 0000 0000 0000 0000 0000 0000 0000}
+    
+    Get the hexidecimal value by converting each set of 4 binaries to respective value
+
+    \vspace*{0.1in}
+
+    \boxedanswer{32-bit Hexadecimal -- 0x00000000}
+
+    \newpage
+
+    \subsubsection*{-Infinity}
+
+    Sign = $\mathbf{1}$, because Negative
+
+    Exponent = 128, Bias(128 + 127 = $\mathbf{255}$) Binary = $\mathbf{1111\: 1111}$
+
+    Mantisa/Fraction = $\mathbf{00000000000000000000000}$
+
+    Combine to get Single Precision IEEE 754 Floating Point Representation 
+    
+    Where Sign = 1 bit, Exponent = 8 bits, Mantisa/Fraction = 23 bits
+
+    \vspace*{0.1in}
+
+    \boxedanswer{1111 1111 1000 0000 0000 0000 0000 0000}
+    
+    Get the hexidecimal value by converting each set of 4 binaries to respective value
+
+    \vspace*{0.1in}
+
+    \boxedanswer{32-bit Hexadecimal -- 1xff800000}
+
+    \subsubsection*{1.0000001}
+
+    $\underline{1}.0000001$
+
+    $1 = 0 * 2 + \mathbf{1}$
+
+    We get $\mathbf{1}$, which is 1 in binary representation
+
+    \vspace*{0.1in}
+
+    $1\underline{.0000001}$
+
+    $.0000001 * 2 = \mathbf{0}.0000002$
+
+    $.0000002 * 2 = \mathbf{0}.0000004$
+
+    $.0000004 * 2 = \mathbf{0}.0000008$
+
+    $.0000008 * 2 = \mathbf{0}.0000016$
+
+    $.0000016 * 2 = \mathbf{0}.0000032$
+
+    $.0000032 * 2 = \mathbf{0}.0000064$
+
+    $.0000064 * 2 = \mathbf{0}.0000128$
+
+    $.0000128 * 2 = \mathbf{0}.0000256$
+
+    $.0000256 * 2 = \mathbf{0}.0000512$
+
+    $.0000512 * 2 = \mathbf{0}.0001024$
+
+    $.0001024 * 2 = \mathbf{0}.0002048$
+
+    $.0002048 * 2 = \mathbf{0}.0004096$
+
+    $.0004096 * 2 = \mathbf{0}.0008192$
+
+    $.0008192 * 2 = \mathbf{0}.0016384$
+
+    $.0016384 * 2 = \mathbf{0}.0032768$
+
+    $.0032768 * 2 = \mathbf{0}.0065536$
+
+    $.0065536 * 2 = \mathbf{0}.0131072$
+
+    $.0131072 * 2 = \mathbf{0}.0262144$
+
+    $.0262144 * 2 = \mathbf{0}.0524288$
+
+    $.0524288 * 2 = \mathbf{0}.1048576$
+
+    $.1048576 * 2 = \mathbf{0}.2097152$
+
+    $.2097152 * 2 = \mathbf{0}.4194304$
+
+    $.4194304 * 2 = \mathbf{0}.8388608$
+
+    $.8388608 * 2 = \mathbf{1}.6777216$
+    
+    We get $\mathbf{\overline{00000000000000000000001}}$, which is 0.0000001 in binary representation
+    
+    \vspace*{0.1in}
+
+    Combining, we get -- $\mathbf{1.\overline{00000000000000000000001}}$
+
+    Convert to scientific notation, we get -- $\mathbf{1.\underline{00000000000000000000001} * 2^{\underline{0}}}$
+
+    Where $\mathbf{00000000000000000000001}$ is the mantisa/fraction
+
+    And $\mathbf{0}$ is the exponent
+
+    Convert the exponent to the bias(127 + 0 = $\mathbf{127}$) in binary, we get $\mathbf{0111\:1111}$
+
+    We have everything we need, lets list them out
+
+    \vspace*{0.1in}
+
+    Sign = $\mathbf{0}$, because positive
+
+    Exponent Bias Binary = $\mathbf{0111\:1111}$
+
+    Mantisa/Fraction = $\mathbf{00000000000000000000001}$
+
+    Combine to get Single Precision IEEE 754 Floating Point representation
+
+    Where Sign = 1 bit, Exponent = 8 bits, Mantisa/Fraction = 23 bits
+
+    \vspace*{0.1in}
+
+    \boxedanswer{0011 1111 1000 0000 0000 0000 0000 0001}
+
+    Get the hexidecimal value by converting each set of 4 binaries to respective value
+
+    \vspace*{0.1in}
+
+    \boxedanswer{32-bit Hexadecimal -- 0x3f800001}
+
+    \vspace*{0.2in}
+
+    \subsection*{9}
+
+    \subsubsection*{0xc349a000}
+
+    IEEE 7354 Representation -- $\mathbf{1100\: 0011\: 0100\: 1001\: 1010\: 0000\: 0000\: 0000}$
+
+    Sign = 1
+
+    Exponent Bias Binary = $\mathbf{1000\: 0110}$
+
+    Mantisa/Fraction = $\mathbf{10010011010000000000000}$
+
+    Exponent Bias Decimal Value = 134
+
+    Exponent = 134 - 127 = $\mathbf{7}$
+
+    Fraction Value From Mantisa = $2^{-1} + 2^{-4} + 2^{-7} + 2^{-8}+ 2^{-10}$ = $\frac{589}{1024}$
+
+    \vspace*{0.1in}
+
+    Equation to plug into \hspace*{0.1in} $-1^{Sign} * (1 + (Fraction Value)) * 2^{Exponent}$
+
+    Plug in, we get
+
+    $-1^1 * (1 + \frac{589}{1024}) * 2^7$ = $-(\frac{1613}{1024}) * 2^7 = -201.625$
+
+    \vspace*{0.1in}
+
+    \boxedanswer{-201.625}
+
+    \subsubsection*{0xffe00001}
+
+    IEEE 7354 Representation -- $\mathbf{1111\: 1111\: 1110\: 0000\: 0000\: 0000\: 0000\: 0001}$
+
+    Sign = 1
+
+    Exponent Bias Binary = $\mathbf{1111\: 1111}$
+
+    Mantisa/Fraction = $\mathbf{110 0000 0000 0000 0000 0001}$
+
+    Because the exponent field is all 1s and the fraction field is non-zero, we can conclude what we are trying to find is \textbf{NaN}
+
+    \vspace*{0.1in}
+
+    \boxedanswer{NaN(Not a Number)}
+
+    \subsubsection*{0x80000000}
+
+    IEEE 7354 Representation -- $\mathbf{1000\:0000\:0000\:0000\:0000\:0000\:0000\:0000}$
+
+    Sign = 1
+
+    Exponent Bias Binary = $\mathbf{0000\:0000}$
+
+    Mantisa/Fraction = $\mathbf{00000000000000000000000}$
+
+    Both Fraction Value and Exponent Value is 0, so Decimal Value = -0, negative because sign is 1
+
+    \boxedanswer{-0}
+
+    \subsubsection*{0x00400000}
+
+    IEEE 7354 Representation -- $\mathbf{0000\: 0000\: 0100\: 0000\:0000\:0000\:0000\:0000}$
+
+    Sign = 0
+
+    Exponent Bias Binary = $\mathbf{0000\:0000}$
+
+    Mantisa/Fraction = $\mathbf{10000000000000000000000}$
+
+    Exponent Bias Decimal Value = 0
+
+    Exponent = 0 - 127 = 127
+
+    Fraction Value From Mantisa = $2^{-1} = \frac{1}{2}$
+
+    Plug in, we get 
+
+    $-1^0 * (1+\frac{1}{2}) * 2^{-127} = \frac{3}{2} * 2^{-127} = \frac{3}{2^{128}}$ \hspace*{0.3in} \boxed{\frac{3}{2^{128}}}
+
+
+
+
+
+
+
 \end{document}
