@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1699855836 "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw3/hw3.tex" "hw3.pdf" "hw3" 1699855838 0
-  "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw3/hw3.tex" 1699855836 23452 d1c9359e6f9e575184e0959fe3379fb5 ""
+["pdflatex"] 1699891022 "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw3/hw3.tex" "hw3.pdf" "hw3" 1699891023 0
+  "/Users/dannyzou/Dropbox/Mac/Desktop/Comp-org/Homeworks/hw3/hw3.tex" 1699891022 23676 348a5deb52477954281eece8bb11caa0 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -92,8 +92,8 @@
   "circuit6.png" 1699759238 57896 a786d59b4a2545fe7a9956d8b303e8a7 ""
   "circuit7.png" 1699759311 61013 e95fcc37271e095165ae76c114f11d74 ""
   "circuit8.png" 1699759379 69470 ec04831892bf9ee4c7be7fa756197f45 ""
-  "hw3.aux" 1699855838 33 06c322e1d88c4778ac780ba5e7d05c77 "pdflatex"
-  "hw3.tex" 1699855836 23452 d1c9359e6f9e575184e0959fe3379fb5 ""
+  "hw3.aux" 1699891023 33 cd8a9e253be16178be412705367a589a "pdflatex"
+  "hw3.tex" 1699891022 23676 348a5deb52477954281eece8bb11caa0 ""
   (generated)
   "hw3.aux"
   "hw3.log"

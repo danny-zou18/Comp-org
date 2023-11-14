@@ -671,7 +671,11 @@
 
     Both Fraction Value and Exponent Value is 0, so Decimal Value = -0, negative because sign is 1
 
+    \vspace*{0.1in}
+
     \boxedanswer{-0}
+
+    \newpage
 
     \subsubsection*{0x00400000}
 
@@ -685,13 +689,19 @@
 
     Exponent Bias Decimal Value = 0
 
-    Exponent = 0 - 127 = 127
-
     Fraction Value From Mantisa = $2^{-1} = \frac{1}{2}$
 
-    Plug in, we get 
+    Because Fraction Value is non-zero and the Exponent Value is 0, the number is \textbf{subnormal}
 
-    $-1^0 * (1+\frac{1}{2}) * 2^{-127} = \frac{3}{2} * 2^{-127} = \frac{3}{2^{128}}$ \hspace*{0.3in} \boxed{\frac{3}{2^{128}}}
+    We can then use this formula \hspace*{0.2in} $-1^{Sign} * (Fraction Value) * 2^{-126}$
+
+    Plug in, we get
+
+    $-1^0 * (\frac{1}{2}) * 2^{-126} = \frac{1}{2} * 2^{-126} = \frac{1}{2^{127}}$ \hspace*{0.3in} \boxed{\frac{1}{2^{127}}}
+
+    \subsection*{10}
+
+    
 
 
 
