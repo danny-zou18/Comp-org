@@ -393,6 +393,38 @@
 
     \subsection*{7}
 
+    First of all
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.5\textwidth]{NOTA.png}
+
+    And
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.5\textwidth]{A+0.png}
+
+    Using these logics, we can implement \textbf{AND\{(A*B)\}} using only NOR Gates by
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.5\textwidth]{AND.png}
+
+    We can also implement \textbf{OR\{(A+B)\}} using only NOR Gates by
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.5\textwidth]{or.png}
+
+    And finally implement \textbf{NOT\{$\overline{A}$\}} simply as
+
+    \vspace*{0.1in}
+
+    \includegraphics*[width=0.5\textwidth]{not.png}
+
+    Thus we have shown \textbf{NOR\{$\overline{(A+B)}$\}} is functionally complete by giving the logical circuit equivalents to each AND(A*B), OR(A+B) and NOT($\overline{A}$).
+
     \newpage
 
     \section*{Numerical Conversions and Arithmetic}
@@ -701,11 +733,28 @@
 
     \subsection*{10}
 
+    The use of 2's complement representation for negative numbers in computer arithmetic is primarily due to its simplicity and efficiency in performing arithmetic operations, especially addition and subtraction. One such reason is.
     
+    Using 2's complement simplifies arithmetic operations because addition and subtraction can be performed using the same hardware for both positive and negative numbers without the need for separate logic for subtraction.
 
+    Another reason is that 2's complement naturally supports modular arithmetic, making it easier to perform operations like addition, subtraction, and multiplication within a finite range.
 
+    \vspace*{0.2in}
 
+    For example: Let's add 3 and -5
 
+    3 in binary is \textbf{0000 0011}
+
+    -5 in binary is \textbf{1111 1011}
+
+    \: \: 0000 0011
+
+    + 1111 1011
+
+    \: 1111 1110 
+
+    This showcases how addition between positive and negative numbers is performed using the same binary arithmetic, making the process simpler and more efficient for computers.
+    
 
 
 
